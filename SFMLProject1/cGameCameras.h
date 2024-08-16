@@ -20,6 +20,9 @@ private:
 	const int WindowWidth = 1280;
 
 	
+	const int MapXSize = 3000;
+	const int MapYSize = 3000;
+
 
 };
 

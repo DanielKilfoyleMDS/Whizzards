@@ -22,6 +22,50 @@ void cGameCameras::setView2()
 
 void cGameCameras::UpdatePositions(sf::Vector2f _P1, sf::Vector2f _P2)
 {
-	m_P1View->setCenter(_P1);
-	m_P2View->setCenter(_P2);
+	float Cx = _P1.x;
+	float Cy = _P1.y;
+	//Basically, follow player until border is reached
+	if (_P1.x + WindowWidth / 4 >= MapXSize / 2)
+	{
+		Cx = MapXSize / 2 - WindowWidth / 4;
+	}
+	else if (_P1.x - WindowWidth / 4 < -MapXSize / 2)
+	{
+		Cx = -MapXSize / 2 + WindowWidth / 4;
+	}
+
+	if (_P1.y + WindowWidth / 2 >= MapYSize / 2)
+	{
+		Cy = MapYSize / 2 - WindowWidth / 2;
+	}
+	else if (_P1.y - WindowWidth / 2 < -MapYSize / 2)
+	{
+		Cy = -MapYSize / 2 + WindowWidth / 2;
+	}
+
+	m_P1View->setCenter(Cx,Cy);
+
+	Cx = _P2.x;
+	Cy = _P2.y;
+
+	if (_P2.x + WindowWidth / 4 >= MapXSize / 2)
+	{
+		Cx = MapXSize / 2 - WindowWidth / 4;
+	}
+	else if (_P2.x - WindowWidth / 4 < -MapXSize / 2)
+	{
+		Cx = -MapXSize / 2 + WindowWidth / 4;
+	}
+
+	if (_P2.y + WindowWidth / 2 >= MapYSize / 2)
+	{
+		Cy = MapYSize / 2 - WindowWidth / 2;
+	}
+	else if (_P2.y - WindowWidth / 2 < -MapYSize / 2)
+	{
+		Cy = -MapYSize / 2 + WindowWidth / 2;
+	}
+
+
+	m_P2View->setCenter(Cx,Cy);
 }
