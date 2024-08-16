@@ -45,7 +45,9 @@ float SignedAngleBetweenVectors(sf::Vector2f _Vector1, sf::Vector2f _Vector2)
 
 	float C = (A.x * B.x) + (A.y * B.y);
 	std::cout << C << std::endl;
-	return C;
+
+
+	return C * 180/3.14;
 
 	//float Angle1 = atan2(_Vector1.y, _Vector1.x);
 	//float Angle2 = atan2(_Vector2.y, _Vector2.x);
