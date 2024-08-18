@@ -146,11 +146,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CameraTest.cpp" />
+    <ClCompile Include="cGameCameras.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayerCharacter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cGameCameras.h" />
+    <ClInclude Include="MathLibrary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
