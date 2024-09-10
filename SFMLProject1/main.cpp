@@ -72,14 +72,25 @@ int main()
         //Do all your drawing in here/////
 
         //Player1->Draw();
-        m_Cameras.setView1();
-        window.draw(map);
-        window.draw(Player1->playerSprite);
-        window.draw(Player2->playerSprite);
-        m_Cameras.setView2();
-        window.draw(map);
-        window.draw(Player1->playerSprite);
-        window.draw(Player2->playerSprite);
+        if (m_Cameras.SetFullView())
+        {
+            //Render everything once
+            window.draw(map);
+            window.draw(Player1->playerSprite);
+            window.draw(Player2->playerSprite);
+        }
+        else
+        {
+            //Render everything twice
+            m_Cameras.setView1();
+            window.draw(map);
+            window.draw(Player1->playerSprite);
+            window.draw(Player2->playerSprite);
+            m_Cameras.setView2();
+            window.draw(map);
+            window.draw(Player1->playerSprite);
+            window.draw(Player2->playerSprite);
+        }
 
         //////////////////////////////////
         window.display();

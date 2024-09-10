@@ -11,9 +11,15 @@ public:
 
 	void UpdatePositions(sf::Vector2f _P1, sf::Vector2f _P2);
 
+	bool SetFullView();
+
 private:
 	sf::View* m_P1View;
 	sf::View* m_P2View;
+	sf::View* m_FullView;
+
+	
+	
 	sf::RenderWindow* m_Window;
 
 	const int WindowHeight = 720;
@@ -23,7 +29,9 @@ private:
 	const int MapXSize = 3000;
 	const int MapYSize = 3000;
 
-
+	void UpdateCameraRelative(sf::Vector2f P1, sf::Vector2f P2);
+	sf::Vector2f cameraGapVector;
+	float distance = 0;
 };
 
 
