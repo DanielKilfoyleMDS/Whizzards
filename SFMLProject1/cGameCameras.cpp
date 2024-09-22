@@ -2,103 +2,94 @@
 #include <iostream>
 #include "MathLibrary.h"
 
-cGameCameras::cGameCameras(sf::RenderWindow* Window)
+cGameCameras::cGameCameras(sf::RenderWindow* Window, int _LevelXSize, int _LevelYSize)
 {
-	m_P1View = new sf::View(sf::Vector2f(WindowWidth/2, WindowHeight), sf::Vector2f(WindowWidth/4, WindowHeight/2));
-	m_P2View = new sf::View(sf::Vector2f(WindowWidth/2, WindowHeight), sf::Vector2f(WindowWidth/4, WindowHeight/2));
-	m_FullView = new sf::View(sf::Vector2f(WindowWidth, WindowHeight), sf::Vector2f(WindowWidth / 2, WindowHeight / 2));
-	m_Window = Window;
-	m_P1View->setViewport(sf::FloatRect(0.0f, 0.0f, 0.5f, 1.0f)); //Looks wonky due to scaling
-    m_P2View->setViewport(sf::FloatRect(0.5f, 0.0f, 0.5f, 1.0f));
-	cameraGapVector = sf::Vector2f(0, 0);
+	m_PlayerOneView = new sf::View(sf::Vector2f(iWindowWidth/2, iWindowHeight), sf::Vector2f(iWindowWidth/4, iWindowHeight/2));
+	m_PlayerTwoView = new sf::View(sf::Vector2f(iWindowWidth/2, iWindowHeight), sf::Vector2f(iWindowWidth/4, iWindowHeight/2));
+	m_PlayerCombinedView = new sf::View(sf::Vector2f(iWindowWidth, iWindowHeight), sf::Vector2f(iWindowWidth / 2, iWindowHeight / 2));
+	m_WindowRef = Window;
+	m_PlayerOneView->setViewport(sf::FloatRect(0.0f, 0.0f, 0.5f, 1.0f)); //Looks wonky due to scaling
+    m_PlayerTwoView->setViewport(sf::FloatRect(0.5f, 0.0f, 0.5f, 1.0f));
+	m_PlayerCameraRelativeVector = sf::Vector2f(0, 0);
+
+	iWindowHeight = Window->getSize().y;
+	iWindowWidth = Window->getSize().x;
+
+	iMapXSize = _LevelXSize;
+	iMapYSize = _LevelYSize;
+
+}
+
+cGameCameras::~cGameCameras()
+{
+	delete m_PlayerOneView;
+	m_PlayerOneView = nullptr;
+	delete m_PlayerTwoView;
+	m_PlayerTwoView = nullptr;
+	delete m_PlayerCombinedView;
+	m_PlayerCombinedView = nullptr;
+	m_WindowRef = nullptr; //Window is not owned by Camera so is not Deleted;
+
 }
 
 void cGameCameras::setView1()
 {
-	m_Window->setView(*m_P1View);
+	m_WindowRef->setView(*m_PlayerOneView);
 }
 
 void cGameCameras::setView2()
 {
-	m_Window->setView(*m_P2View);
+	m_WindowRef->setView(*m_PlayerTwoView);
 }
 
 
 
-void cGameCameras::UpdatePositions(sf::Vector2f _P1, sf::Vector2f _P2)
+void cGameCameras::UpdatePositions(sf::Vector2f _cameraOnePosition, sf::Vector2f _cameraTwoPosition)
 {
-	float Cx = _P1.x;
-	float Cy = _P1.y;
-	//Basically, follow player until border is reached
-	if (_P1.x + WindowWidth / 4 >= MapXSize / 2)
-	{
-		Cx = MapXSize / 2 - WindowWidth / 4;
-	}
-	else if (_P1.x - WindowWidth / 4 < -MapXSize / 2)
-	{
-		Cx = -MapXSize / 2 + WindowWidth / 4;
-	}
-
-	if (_P1.y + WindowWidth / 2 >= MapYSize / 2)
-	{
-		Cy = MapYSize / 2 - WindowWidth / 2;
-	}
-	else if (_P1.y - WindowWidth / 2 < -MapYSize / 2)
-	{
-		Cy = -MapYSize / 2 + WindowWidth / 2;
-	}
-
-	m_P1View->setCenter(Cx,Cy);
-
-	Cx = _P2.x;
-	Cy = _P2.y;
-
-	if (_P2.x + WindowWidth / 4 >= MapXSize / 2)
-	{
-		Cx = MapXSize / 2 - WindowWidth / 4;
-	}
-	else if (_P2.x - WindowWidth / 4 < -MapXSize / 2)
-	{
-		Cx = -MapXSize / 2 + WindowWidth / 4;
-	}
-
-	if (_P2.y + WindowWidth / 2 >= MapYSize / 2)
-	{
-		Cy = MapYSize / 2 - WindowWidth / 2;
-	}
-	else if (_P2.y - WindowWidth / 2 < -MapYSize / 2)
-	{
-		Cy = -MapYSize / 2 + WindowWidth / 2;
-	}
-
-
-	m_P2View->setCenter(Cx,Cy);
-	UpdateCameraRelative(_P1, _P2);
+	//Smooting Should be applied here!
+	m_PlayerOneView->setCenter(RestrictCameraToBounds(_cameraOnePosition));
+	m_PlayerTwoView->setCenter(RestrictCameraToBounds(_cameraTwoPosition));
+	UpdateCameraRelative(_cameraOnePosition, _cameraTwoPosition);
 }
 
 bool cGameCameras::SetFullView()
 {
-	m_FullView->setCenter(m_P2View->getCenter() + Normalize(cameraGapVector) * (distance/2));
+	m_PlayerCombinedView->setCenter(m_PlayerTwoView->getCenter() + Normalize(m_PlayerCameraRelativeVector) * (m_fCameraJoinDistance/2));
 
-	if (distance < 300)
+	if (m_fCameraJoinDistance < 300)
 	{
-		m_Window->setView(*m_FullView);
+		m_WindowRef->setView(*m_PlayerCombinedView);
 		return true;
 	} else return false;
 }
 
 void cGameCameras::UpdateCameraRelative(sf::Vector2f P1, sf::Vector2f P2)
 {
-	cameraGapVector = (P1 - P2);
-	distance = VectorLength(cameraGapVector);
-	if (distance < 200)
-	{
-		
+	m_PlayerCameraRelativeVector = (P1 - P2);
+	m_fCameraJoinDistance = VectorLength(m_PlayerCameraRelativeVector);
+}
 
-		//Set centre to be halfway between the players
-		// Okay that was wrong
-		//m_P1View->setCenter(Normalize(cameraGapVector) * (VectorLength(cameraGapVector)/2));
+sf::Vector2f cGameCameras::RestrictCameraToBounds(sf::Vector2f _CameraPosition)
+{
+	float ResultX = _CameraPosition.x;
+	float ResultY = _CameraPosition.y;
+	if (_CameraPosition.x + iWindowWidth / 4 >= iMapXSize / 2)
+	{
+		ResultX = iMapXSize / 2 - iWindowWidth / 4;
+	}
+	else if (_CameraPosition.x - iWindowWidth / 4 < -iMapXSize / 2)
+	{
+		ResultX = -iMapXSize / 2 + iWindowWidth / 4;
 	}
 
+	if (_CameraPosition.y + iWindowWidth / 2 >= iMapYSize / 2)
+	{
+		ResultY = iMapYSize / 2 - iWindowWidth / 2;
+	}
+	else if (_CameraPosition.y - iWindowWidth / 2 < -iMapYSize / 2)
+	{
+		ResultY = -iMapYSize / 2 + iWindowWidth / 2;
+	}
 
+	return sf::Vector2f(ResultX,ResultY);
 }

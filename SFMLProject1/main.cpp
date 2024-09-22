@@ -13,7 +13,7 @@ int main()
 
     Player2->SetPosition(sf::Vector2f(500, 400));
 
-    cGameCameras m_Cameras(&window);
+    cGameCameras m_Cameras(&window, 3000,3000);
 
     //Temporary Map - Creates texture, loads temp file, changes positioning
     sf::Texture mapTex;
