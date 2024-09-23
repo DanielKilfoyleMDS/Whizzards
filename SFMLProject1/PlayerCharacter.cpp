@@ -80,6 +80,38 @@ void PlayerCharacter::convertRotation()
 	radiansRotation =  playerRotation * (PI / 180);
 }
 
+void PlayerCharacter::processInput()
+{
+	
+		// if (sf::Keyboard::isKeyPressed(forwardMoveKey))
+		// {
+		// 	movePlayer();
+		// }
+		// if (sf::Keyboard::isKeyPressed(leftRotateKey))
+		// {
+		// 	rotatePlayer(sf::Keyboard::A);
+		// }
+		// if (sf::Keyboard::isKeyPressed(rightRotateKey))
+		// {
+		// 	rotatePlayer(sf::Keyboard::D);
+		// }
+
+		if (sf::Keyboard::isKeyPressed(forwardMoveKey))
+		{
+			if (sf::Keyboard::isKeyPressed(leftRotateKey))
+			{
+				rotatePlayer(leftRotateKey);
+			}
+			else if (sf::Keyboard::isKeyPressed(rightRotateKey))
+			{
+				rotatePlayer(rightRotateKey);
+			}
+			movePlayer();
+		}
+	
+
+}
+
 void PlayerCharacter::setSprite(std::string _FilePath)
 {
 	playerTexture.loadFromFile(_FilePath);
