@@ -149,6 +149,7 @@
     <ClCompile Include="cCharacter.cpp" />
     <ClCompile Include="cEnemy.cpp" />
     <ClCompile Include="cEnemyBehaviour.cpp" />
+    <ClCompile Include="cEnemyDrift.cpp" />
     <ClCompile Include="cGameCameras.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="cCharacter.h" />
     <ClInclude Include="cEnemy.h" />
     <ClInclude Include="cEnemyBehaviour.h" />
+    <ClInclude Include="cEnemyDrift.h" />
     <ClInclude Include="PlayerCharacter.h" />
   </ItemGroup>
   <ItemGroup>

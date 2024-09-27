@@ -10,7 +10,7 @@ enum EnemyState
 };
 
 
-class cEnemy: public cCharacter
+class cEnemy : public cCharacter
 {
 public:
 	cEnemy(std::string _FilePath, std::string _CharacterName, sf::Vector2f _StartPosition);
@@ -23,21 +23,28 @@ public:
 	void SetAwake(bool _Awake);
 
 	//HandleLootPool
-	void ClearEnemy();
-	void SetupEnemy();
+	//void ClearEnemy();
+	//void SetupEnemy();
 
 	EnemyState GetState();
 	void SetState(EnemyState _State);
 
+	sf::Vector2f GetDrift();
+
 private:
-	
+
 	EnemyState m_State;
 
 	//EnemyState m_State;
 	cEnemyBehaviour* m_Behaviour;
 
 	bool m_bAwake;
-};
 
-//Option A: Subclasses of Enemy
-//Option B: references to behaviour classes - such as move style and attack styke
+	//Asteroid Behaviour
+	sf::Vector2f m_Direction = sf::Vector2f(0, 0);
+	float m_Speed = 0.0f;
+
+	//Follow Behaviour
+	sf::Vector2f Target = sf::Vector2f(0, 0);
+
+};

@@ -28,6 +28,16 @@ void cEnemy::SetAwake(bool _Awake)
 	m_bAwake = _Awake;
 }
 
+EnemyState cEnemy::GetState()
+{
+	return m_State;
+}
+
 void cEnemy::SetState(EnemyState _State)
 {
+}
+
+sf::Vector2f cEnemy::GetDrift()
+{
+	return m_Direction * m_Speed;
 }
