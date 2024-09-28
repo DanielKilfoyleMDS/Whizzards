@@ -2,6 +2,7 @@
 #include <iostream>
 #include "PlayerCharacter.h"
 #include "cGameCameras.h"
+#include "cEnemyPool.h"
 
 int main()
 {
@@ -14,6 +15,12 @@ int main()
     Player2->SetPosition(sf::Vector2f(500, 400));
 
     cGameCameras m_Cameras(&window, 3000,3000);
+
+    cEnemyPool Pool(200);
+    for (int i = 0; i < 11; i++)
+    {
+        Pool.LoadAsteroidEnemy(sf::Vector2f(i * 10,10),sf::Vector2f(1,1),0.1);
+    }
 
     //Temporary Map - Creates texture, loads temp file, changes positioning
     sf::Texture mapTex;
@@ -28,6 +35,15 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+            {
+                std::cout << "EnemyCount :" << Pool.GetInactiveEnemyCount() << std::endl;
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+            {
+                std::cout << "Current Enemy Count :" << Pool.GetActiveEnemyCount() << std::endl;
+            }
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
             {
                 Player1->movePlayer();
@@ -67,6 +83,12 @@ int main()
 
         m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
 
+        for (auto iter : Pool.GetActiveEnemies())
+        {
+            iter->Tick();
+        }
+
+
         window.clear();
 
         //Do all your drawing in here/////
@@ -78,6 +100,10 @@ int main()
             window.draw(map);
             window.draw(Player1->playerSprite);
             window.draw(Player2->playerSprite);
+            for (auto iter : Pool.GetActiveEnemies())
+            {
+                window.draw(iter->GetSprite());
+            }
         }
         else
         {
@@ -86,10 +112,19 @@ int main()
             window.draw(map);
             window.draw(Player1->playerSprite);
             window.draw(Player2->playerSprite);
+            for (auto iter : Pool.GetActiveEnemies())
+            {
+                window.draw(iter->GetSprite());
+            }
+
             m_Cameras.setView2();
             window.draw(map);
             window.draw(Player1->playerSprite);
             window.draw(Player2->playerSprite);
+            for (auto iter : Pool.GetActiveEnemies())
+            {
+                window.draw(iter->GetSprite());
+            }
         }
 
         //////////////////////////////////

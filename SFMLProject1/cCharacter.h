@@ -30,6 +30,8 @@ public:
 	void rotateCharacter(int _Direction);
 	void convertRotation();
 	void moveCharacter();
+
+	sf::Sprite GetSprite();
 protected:
 	
 	// Constant variables. These will not change. Therefore, have been made as const. 

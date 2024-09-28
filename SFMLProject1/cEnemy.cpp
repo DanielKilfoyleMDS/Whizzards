@@ -16,6 +16,10 @@ cEnemy::~cEnemy()
 
 void cEnemy::Tick()
 {
+	if (IsAwake())
+	{
+		m_Behaviour->TickEnemy(this);
+	}
 }
 
 bool cEnemy::IsAwake()
@@ -37,7 +41,18 @@ void cEnemy::SetState(EnemyState _State)
 {
 }
 
+void cEnemy::SetBehaviour(cEnemyBehaviour* _Behaviour)
+{
+	m_Behaviour = _Behaviour;
+}
+
 sf::Vector2f cEnemy::GetDrift()
 {
 	return m_Direction * m_Speed;
+}
+
+void cEnemy::SetDrift(sf::Vector2f _Dir, float Speed)
+{
+	m_Direction = _Dir;
+	m_Speed = Speed;
 }

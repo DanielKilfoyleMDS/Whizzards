@@ -78,3 +78,8 @@ void cCharacter::moveCharacter()
 	characterSprite.move(SPEED_SCALAR * sin(radiansRotation), SPEED_SCALAR * -cos(radiansRotation));
 	//SetPosition(sf::Vector2f(characterPosition + (SPEED_SCALAR * sin(radiansRotation), SPEED_SCALAR * -cos(radiansRotation))));
 }
+
+sf::Sprite cCharacter::GetSprite()
+{
+	return characterSprite;
+}

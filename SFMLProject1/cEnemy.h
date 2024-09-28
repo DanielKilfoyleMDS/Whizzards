@@ -28,8 +28,10 @@ public:
 
 	EnemyState GetState();
 	void SetState(EnemyState _State);
+	void SetBehaviour(cEnemyBehaviour* _Behaviour);
 
 	sf::Vector2f GetDrift();
+	void SetDrift(sf::Vector2f _Dir, float Speed);
 
 private:
 
