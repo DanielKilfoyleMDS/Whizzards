@@ -3,6 +3,7 @@
 
 class cEnemyDrift: public cEnemyBehaviour
 {
+public:
 	cEnemyDrift();
 	~cEnemyDrift();
 

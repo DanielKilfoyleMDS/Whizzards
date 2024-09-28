@@ -150,6 +150,7 @@
     <ClCompile Include="cEnemy.cpp" />
     <ClCompile Include="cEnemyBehaviour.cpp" />
     <ClCompile Include="cEnemyDrift.cpp" />
+    <ClCompile Include="cEnemyPool.cpp" />
     <ClCompile Include="cGameCameras.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
@@ -159,11 +160,12 @@
     <ClInclude Include="cEnemy.h" />
     <ClInclude Include="cEnemyBehaviour.h" />
     <ClInclude Include="cEnemyDrift.h" />
+    <ClInclude Include="cEnemyPool.h" />
+    <ClInclude Include="MathLibrary.h" />
     <ClInclude Include="PlayerCharacter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cGameCameras.h" />
-    <ClInclude Include="MathLibrary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
