@@ -30,6 +30,7 @@ public:
 	void SetState(EnemyState _State);
 	void SetBehaviour(cEnemyBehaviour* _Behaviour);
 
+	//TODO - Calcluate not Get
 	sf::Vector2f GetDrift();
 	void SetDrift(sf::Vector2f _Dir, float Speed);
 
@@ -42,11 +43,14 @@ private:
 
 	bool m_bAwake;
 
+	//TODO Combine Direction/speed,
 	//Asteroid Behaviour
 	sf::Vector2f m_Direction = sf::Vector2f(0, 0);
+	//TODO fix Variable types
 	float m_Speed = 0.0f;
 
 	//Follow Behaviour
+	//TODO fix Variable types
 	sf::Vector2f Target = sf::Vector2f(0, 0);
 
 };

@@ -11,6 +11,7 @@ cEnemyBehaviour::~cEnemyBehaviour()
 
 void cEnemyBehaviour::TickEnemy(cEnemy* _Parent)
 {
+	//TODO - Move to Behaviour subclasses
 	if (_Parent != nullptr)
 	{
 		if (_Parent->IsAwake())

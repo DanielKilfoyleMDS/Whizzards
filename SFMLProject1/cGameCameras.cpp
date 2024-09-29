@@ -56,13 +56,15 @@ bool cGameCameras::SetFullView()
 {
 	m_PlayerCombinedView->setCenter(m_PlayerTwoView->getCenter() + Normalize(m_PlayerCameraRelativeVector) * (m_fCameraJoinDistance/2));
 
-	if (m_fCameraJoinDistance < 300)
+	if (m_fCameraJoinDistance < 300) //TODO Make member variable
 	{
 		m_WindowRef->setView(*m_PlayerCombinedView);
 		return true;
-	} else return false;
+	} 
+	return false;
 }
 
+//TODO - Change P1 to _PlayerOne
 void cGameCameras::UpdateCameraRelative(sf::Vector2f P1, sf::Vector2f P2)
 {
 	m_PlayerCameraRelativeVector = (P1 - P2);
@@ -71,6 +73,8 @@ void cGameCameras::UpdateCameraRelative(sf::Vector2f P1, sf::Vector2f P2)
 
 sf::Vector2f cGameCameras::RestrictCameraToBounds(sf::Vector2f _CameraPosition)
 {
+	//TODO - Change Result to New Position
+	//TODO - Add fullview Restrictions
 	float ResultX = _CameraPosition.x;
 	float ResultY = _CameraPosition.y;
 	if (_CameraPosition.x + iWindowWidth / 4 >= iMapXSize / 2)

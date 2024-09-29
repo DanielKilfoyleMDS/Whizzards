@@ -1,6 +1,7 @@
 #include "cEnemyDrift.h"
 #include "cEnemy.h"
 
+//TODO - Set variables here
 cEnemyDrift::cEnemyDrift()
 {
 }
@@ -47,3 +48,8 @@ void cEnemyDrift::Move(cEnemy* _Parent)
 
 	//HANDLE SCREEN WRAP!!
 }
+
+
+//TODO - Death function
+
+//TODO - Variables for size
