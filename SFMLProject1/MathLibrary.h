@@ -50,3 +50,13 @@ inline float SignedAngleBetweenVectors(sf::Vector2f _Vector1, sf::Vector2f _Vect
 	return C * 180 / 3.14;
 
 }
+
+inline float DegreesToRadians(float _Degrees)
+{
+	return;
+}
+
+inline float RadiansToDegrees(float _Radians)
+{
+	return;
+}
