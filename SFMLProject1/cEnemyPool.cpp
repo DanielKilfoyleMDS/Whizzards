@@ -1,5 +1,5 @@
 #include "cEnemyPool.h"
-
+//TODO underscore
 cEnemyPool::cEnemyPool(int EnemyCount)
 {
 	for (int i = 0; i < EnemyCount; i++)
@@ -14,6 +14,7 @@ cEnemyPool::~cEnemyPool()
 {
 }
 
+// TODO - Remove Functions
 int cEnemyPool::GetInactiveEnemyCount()
 {
 	return Enemies_Inactive.size();
@@ -24,6 +25,8 @@ int cEnemyPool::GetActiveEnemyCount()
 	return Enemies_Active.size();
 }
 
+//TODO - return bool
+//TODO - Debug mode printout active/inactive
 void cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _Position, sf::Vector2f Direction, float Speed)
 {
 	if (Enemies_Inactive.size() > 0)
@@ -35,7 +38,7 @@ void cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _Position, sf::Vector2f Directio
 		Asteroid->SetPosition(_Position);
 		//Asteroid->setSprite();
 		Asteroid->SetDrift(Direction,Speed);
-		Asteroid->setHealth(10);
+		Asteroid->setHealth(10); //TODO get variables from gamemanager not hardcoded
 		Asteroid->SetState(Idle);
 		Asteroid->SetAwake(true);
 		Asteroid->SetBehaviour(&m_DriftBehaviour);

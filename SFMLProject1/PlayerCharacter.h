@@ -1,7 +1,10 @@
+// TODO - Redo 
+
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
+
 
 const double PI = 3.1415926535;
 

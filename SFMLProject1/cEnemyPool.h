@@ -16,6 +16,7 @@ public:
 
 
 private:
+	//TODO - Rename Variables m_ remove underscore
 	std::vector<cEnemy*> Enemies_Inactive;
 	std::vector<cEnemy*> Enemies_Active;
 

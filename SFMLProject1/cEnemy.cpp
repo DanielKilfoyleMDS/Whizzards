@@ -16,12 +16,14 @@ cEnemy::~cEnemy()
 
 void cEnemy::Tick()
 {
+	//TODO Add nullptr check
 	if (IsAwake())
 	{
 		m_Behaviour->TickEnemy(this);
 	}
 }
 
+//TODO Get Awake
 bool cEnemy::IsAwake()
 {
 	return m_bAwake;
@@ -37,6 +39,7 @@ EnemyState cEnemy::GetState()
 	return m_State;
 }
 
+//TODO - Set State
 void cEnemy::SetState(EnemyState _State)
 {
 }
