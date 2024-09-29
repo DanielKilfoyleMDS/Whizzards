@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="cEnemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="cEnemyPool.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="cCharacter.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameCameras.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCharacter.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="cEnemyBehaviour.cpp">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="cEnemyDrift.cpp">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cEnemyPool.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="cEnemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="cCharacter.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameCameras.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCharacter.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MathLibrary.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="cEnemyBehaviour.h">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="cEnemyDrift.h">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{808a9892-5433-4c5d-b919-92fabd1a7c62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character">
+      <UniqueIdentifier>{b9045fda-8cac-4f92-9dfd-e71f353e2a37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{9888e685-afc1-4b12-a274-a78b603a8ceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{1b34f0b6-b0ec-4c8b-8150-9153c838ff97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{186d4fb7-4d50-4477-897e-aa1927acecae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\Behaviour">
+      <UniqueIdentifier>{3351c318-6545-4f8d-96c4-1390e5251a17}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
