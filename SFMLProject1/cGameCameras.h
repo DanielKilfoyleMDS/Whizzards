@@ -13,7 +13,9 @@ public:
 
 	void UpdatePositions(sf::Vector2f _cameraOnePosition, sf::Vector2f _cameraTwoPosition);
 
-	bool SetViewBothPlayers();
+	bool UseCombinedView();
+
+	void SetViewBothPlayers();
 
 	//TODO Add Line for Clarity
 
@@ -35,7 +37,7 @@ private:
 	float m_fcameraJoinDistance = 300;
 
 	void UpdateCameraRelative(sf::Vector2f _position1, sf::Vector2f _position2);
-	sf::Vector2f RestrictCameraToBounds(sf::Vector2f _cameraPosition);
+	sf::Vector2f RestrictCameraToBounds(sf::Vector2f _cameraPosition, bool _bSplit);
 	
 };
 

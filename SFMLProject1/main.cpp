@@ -85,9 +85,18 @@ int main()
 
         //Do all your drawing in here/////
 
-        if (m_Cameras.SetViewBothPlayers())
+        //window.draw(map);
+        //window.draw(Player1->playerSprite);
+        //window.draw(Player2->playerSprite);
+        //for (auto iter : Pool.GetActiveEnemies())
+        //{
+        //    window.draw(iter->GetSprite());
+        //}
+
+        if (m_Cameras.UseCombinedView())
         {
             //Render everything once
+            m_Cameras.SetViewBothPlayers();
             window.draw(map);
             window.draw(Player1->playerSprite);
             window.draw(Player2->playerSprite);
