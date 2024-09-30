@@ -70,6 +70,7 @@ void cGameCameras::UpdateCameraRelative(sf::Vector2f _playerOnePosition, sf::Vec
 {
 	m_playerCameraRelativeVector = (_playerOnePosition - _playerTwoPosition);
 	m_fcameraCurrentDistance = VectorLength(m_playerCameraRelativeVector);
+	m_playerCombinedView->setCenter(RestrictCameraToBounds(m_playerCombinedView->getCenter(), false));
 }
 
 sf::Vector2f cGameCameras::RestrictCameraToBounds(sf::Vector2f _cameraPosition, bool _bSplit)
