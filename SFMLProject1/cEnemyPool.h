@@ -1,25 +1,22 @@
 #pragma once
 #include "cEnemy.h"
-#include "cEnemyDrift.h"
+#include "cAsteroidBehaviour.h"
 class cEnemyPool
 {
 public:
-	cEnemyPool(int EnemyCount);
+	cEnemyPool(int _enemyCount);
 	~cEnemyPool();
 
-	int GetInactiveEnemyCount();
-	int GetActiveEnemyCount();
-
-	void LoadAsteroidEnemy(sf::Vector2f _Position, sf::Vector2f Direction, float Speed);
+	void LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed);
 
 	std::vector<cEnemy*> GetActiveEnemies();
+	std::vector<cEnemy*> GetInactiveEnemies();
 
 
 private:
-	//TODO - Rename Variables m_ remove underscore
-	std::vector<cEnemy*> Enemies_Inactive;
-	std::vector<cEnemy*> Enemies_Active;
+	std::vector<cEnemy*> m_enemiesInactive;
+	std::vector<cEnemy*> m_enemiesActive;
 
-	cEnemyDrift m_DriftBehaviour;
+	cAsteroidBehaviour m_AsteroidBehaviour;
 };
 

@@ -35,14 +35,6 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
-            {
-                std::cout << "EnemyCount :" << Pool.GetInactiveEnemyCount() << std::endl;
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
-            {
-                std::cout << "Current Enemy Count :" << Pool.GetActiveEnemyCount() << std::endl;
-            }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
             {
@@ -85,7 +77,7 @@ int main()
 
         for (auto iter : Pool.GetActiveEnemies())
         {
-            iter->Tick();
+            iter->tick();
         }
 
 
@@ -93,8 +85,7 @@ int main()
 
         //Do all your drawing in here/////
 
-        //Player1->Draw();
-        if (m_Cameras.SetFullView())
+        if (m_Cameras.SetViewBothPlayers())
         {
             //Render everything once
             window.draw(map);
@@ -108,7 +99,7 @@ int main()
         else
         {
             //Render everything twice
-            m_Cameras.setView1();
+            m_Cameras.setViewFirstPlayer();
             window.draw(map);
             window.draw(Player1->playerSprite);
             window.draw(Player2->playerSprite);
@@ -117,7 +108,7 @@ int main()
                 window.draw(iter->GetSprite());
             }
 
-            m_Cameras.setView2();
+            m_Cameras.setViewSecondPlayer();
             window.draw(map);
             window.draw(Player1->playerSprite);
             window.draw(Player2->playerSprite);

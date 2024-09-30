@@ -1,8 +1,8 @@
 #include "cEnemy.h"
 
 
-cEnemy::cEnemy(std::string _FilePath, std::string _CharacterName, sf::Vector2f _StartPosition)
-	: cCharacter(_FilePath, _CharacterName, _StartPosition)
+cEnemy::cEnemy(std::string _filePath, std::string _characterName, sf::Vector2f _startPosition)
+	: cCharacter(_filePath, _characterName, _startPosition)
 {
 	//Runs original constructor and then additional logic below
 	m_bAwake = false;
@@ -14,48 +14,46 @@ cEnemy::~cEnemy()
 {
 }
 
-void cEnemy::Tick()
+void cEnemy::tick()
 {
-	//TODO Add nullptr check
-	if (IsAwake())
+	if(m_Behaviour != nullptr && getAwake())
 	{
 		m_Behaviour->TickEnemy(this);
 	}
+	//EXPAND - Unspawn if failing
 }
 
-//TODO Get Awake
-bool cEnemy::IsAwake()
+bool cEnemy::getAwake()
 {
 	return m_bAwake;
 }
 
-void cEnemy::SetAwake(bool _Awake)
+void cEnemy::setAwake(bool _bAwake)
 {
-	m_bAwake = _Awake;
+	m_bAwake = _bAwake;
 }
 
-EnemyState cEnemy::GetState()
+EnemyState cEnemy::getState()
 {
 	return m_State;
 }
 
-//TODO - Set State
-void cEnemy::SetState(EnemyState _State)
+void cEnemy::setState(EnemyState _state)
 {
+	m_State = _state;
 }
 
-void cEnemy::SetBehaviour(cEnemyBehaviour* _Behaviour)
+void cEnemy::setBehaviour(cEnemyBehaviour* _behaviour)
 {
-	m_Behaviour = _Behaviour;
+	m_Behaviour = _behaviour;
 }
 
-sf::Vector2f cEnemy::GetDrift()
+sf::Vector2f cEnemy::getMovement()
 {
-	return m_Direction * m_Speed;
+	return m_movement;
 }
 
-void cEnemy::SetDrift(sf::Vector2f _Dir, float Speed)
+void cEnemy::setMovement(sf::Vector2f _movement)
 {
-	m_Direction = _Dir;
-	m_Speed = Speed;
+	m_movement = _movement;
 }

@@ -2,98 +2,96 @@
 #include <iostream>
 #include "MathLibrary.h"
 
-cGameCameras::cGameCameras(sf::RenderWindow* Window, int _LevelXSize, int _LevelYSize)
+cGameCameras::cGameCameras(sf::RenderWindow* _window, int _levelXSize, int _levelYSize)
 {
-	m_PlayerOneView = new sf::View(sf::Vector2f(iWindowWidth/2, iWindowHeight), sf::Vector2f(iWindowWidth/4, iWindowHeight/2));
-	m_PlayerTwoView = new sf::View(sf::Vector2f(iWindowWidth/2, iWindowHeight), sf::Vector2f(iWindowWidth/4, iWindowHeight/2));
-	m_PlayerCombinedView = new sf::View(sf::Vector2f(iWindowWidth, iWindowHeight), sf::Vector2f(iWindowWidth / 2, iWindowHeight / 2));
-	m_WindowRef = Window;
-	m_PlayerOneView->setViewport(sf::FloatRect(0.0f, 0.0f, 0.5f, 1.0f)); //Looks wonky due to scaling
-    m_PlayerTwoView->setViewport(sf::FloatRect(0.5f, 0.0f, 0.5f, 1.0f));
-	m_PlayerCameraRelativeVector = sf::Vector2f(0, 0);
+	m_firstPlayerView = new sf::View(sf::Vector2f(m_iWindowWidth/2, m_iWindowHeight), sf::Vector2f(m_iWindowWidth/4, m_iWindowHeight/2));
+	m_secondPlayerView = new sf::View(sf::Vector2f(m_iWindowWidth/2, m_iWindowHeight), sf::Vector2f(m_iWindowWidth/4, m_iWindowHeight/2));
+	m_playerCombinedView = new sf::View(sf::Vector2f(m_iWindowWidth, m_iWindowHeight), sf::Vector2f(m_iWindowWidth / 2, m_iWindowHeight / 2));
+	m_windowRef = _window;
+	m_firstPlayerView->setViewport(sf::FloatRect(0.0f, 0.0f, 0.5f, 1.0f)); //Looks wonky due to scaling
+    m_secondPlayerView->setViewport(sf::FloatRect(0.5f, 0.0f, 0.5f, 1.0f));
+	m_playerCameraRelativeVector = sf::Vector2f(0, 0);
 
-	iWindowHeight = Window->getSize().y;
-	iWindowWidth = Window->getSize().x;
+	m_iWindowHeight = (int)_window->getSize().y;
+	m_iWindowWidth =  (int)_window->getSize().x;
 
-	iMapXSize = _LevelXSize;
-	iMapYSize = _LevelYSize;
+	m_iMapXSize = _levelXSize;
+	m_iMapYSize = _levelYSize;
 
 }
 
 cGameCameras::~cGameCameras()
 {
-	delete m_PlayerOneView;
-	m_PlayerOneView = nullptr;
-	delete m_PlayerTwoView;
-	m_PlayerTwoView = nullptr;
-	delete m_PlayerCombinedView;
-	m_PlayerCombinedView = nullptr;
-	m_WindowRef = nullptr; //Window is not owned by Camera so is not Deleted;
+	delete m_firstPlayerView;
+	m_firstPlayerView = nullptr;
+	delete m_secondPlayerView;
+	m_secondPlayerView = nullptr;
+	delete m_playerCombinedView;
+	m_playerCombinedView = nullptr;
+	m_windowRef = nullptr; //Window is not owned by Camera so is not Deleted;
 
 }
 
-void cGameCameras::setView1()
+void cGameCameras::setViewFirstPlayer()
 {
-	m_WindowRef->setView(*m_PlayerOneView);
+	m_windowRef->setView(*m_firstPlayerView);
 }
 
-void cGameCameras::setView2()
+void cGameCameras::setViewSecondPlayer()
 {
-	m_WindowRef->setView(*m_PlayerTwoView);
+	m_windowRef->setView(*m_secondPlayerView);
 }
 
 
 
 void cGameCameras::UpdatePositions(sf::Vector2f _cameraOnePosition, sf::Vector2f _cameraTwoPosition)
 {
-	//Smooting Should be applied here!
-	m_PlayerOneView->setCenter(RestrictCameraToBounds(_cameraOnePosition));
-	m_PlayerTwoView->setCenter(RestrictCameraToBounds(_cameraTwoPosition));
+	//Smoothing Should be applied here!
+	m_firstPlayerView->setCenter(RestrictCameraToBounds(_cameraOnePosition));
+	m_secondPlayerView->setCenter(RestrictCameraToBounds(_cameraTwoPosition));
 	UpdateCameraRelative(_cameraOnePosition, _cameraTwoPosition);
 }
 
-bool cGameCameras::SetFullView()
+bool cGameCameras::SetViewBothPlayers()
 {
-	m_PlayerCombinedView->setCenter(m_PlayerTwoView->getCenter() + Normalize(m_PlayerCameraRelativeVector) * (m_fCameraJoinDistance/2));
+	m_playerCombinedView->setCenter(m_secondPlayerView->getCenter() + Normalize(m_playerCameraRelativeVector) * (m_fcameraCurrentDistance/2));
 
-	if (m_fCameraJoinDistance < 300) //TODO Make member variable
+	if (m_fcameraCurrentDistance < m_fcameraJoinDistance)
 	{
-		m_WindowRef->setView(*m_PlayerCombinedView);
+		m_windowRef->setView(*m_playerCombinedView);
 		return true;
 	} 
 	return false;
 }
 
-//TODO - Change P1 to _PlayerOne
-void cGameCameras::UpdateCameraRelative(sf::Vector2f P1, sf::Vector2f P2)
+void cGameCameras::UpdateCameraRelative(sf::Vector2f _playerOnePosition, sf::Vector2f _playerTwoPosition)
 {
-	m_PlayerCameraRelativeVector = (P1 - P2);
-	m_fCameraJoinDistance = VectorLength(m_PlayerCameraRelativeVector);
+	m_playerCameraRelativeVector = (_playerOnePosition - _playerTwoPosition);
+	m_fcameraCurrentDistance = VectorLength(m_playerCameraRelativeVector);
 }
 
-sf::Vector2f cGameCameras::RestrictCameraToBounds(sf::Vector2f _CameraPosition)
+sf::Vector2f cGameCameras::RestrictCameraToBounds(sf::Vector2f _cameraPosition)
 {
-	//TODO - Change Result to New Position
 	//TODO - Add fullview Restrictions
-	float ResultX = _CameraPosition.x;
-	float ResultY = _CameraPosition.y;
-	if (_CameraPosition.x + iWindowWidth / 4 >= iMapXSize / 2)
+	int NewPositionX = _cameraPosition.x;
+	int NewPositionY = _cameraPosition.y;
+	if (_cameraPosition.x + m_iWindowWidth / 4 >= m_iMapXSize / 2)
 	{
-		ResultX = iMapXSize / 2 - iWindowWidth / 4;
+		NewPositionX = m_iMapXSize / 2 - m_iWindowWidth / 4;
 	}
-	else if (_CameraPosition.x - iWindowWidth / 4 < -iMapXSize / 2)
+	else if (_cameraPosition.x - m_iWindowWidth / 4 < -m_iMapXSize / 2)
 	{
-		ResultX = -iMapXSize / 2 + iWindowWidth / 4;
-	}
-
-	if (_CameraPosition.y + iWindowWidth / 2 >= iMapYSize / 2)
-	{
-		ResultY = iMapYSize / 2 - iWindowWidth / 2;
-	}
-	else if (_CameraPosition.y - iWindowWidth / 2 < -iMapYSize / 2)
-	{
-		ResultY = -iMapYSize / 2 + iWindowWidth / 2;
+		NewPositionX = -m_iMapXSize / 2 + m_iWindowWidth / 4;
 	}
 
-	return sf::Vector2f(ResultX,ResultY);
+	if (_cameraPosition.y + m_iWindowWidth / 2 >= m_iMapYSize / 2)
+	{
+		NewPositionY = m_iMapYSize / 2 - m_iWindowWidth / 2;
+	}
+	else if (_cameraPosition.y - m_iWindowWidth / 2 < -m_iMapYSize / 2)
+	{
+		NewPositionY = -m_iMapYSize / 2 + m_iWindowWidth / 2;
+	}
+
+	return sf::Vector2f(NewPositionX,NewPositionY);
 }
