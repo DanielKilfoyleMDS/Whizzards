@@ -18,9 +18,16 @@ void cEnemy::tick()
 {
 	if(m_Behaviour != nullptr && getAwake())
 	{
-		m_Behaviour->TickEnemy(this);
+		if (m_Behaviour->TickEnemy(this));
+		{
+			//Tick Successful
+		}
 	}
-	//EXPAND - Unspawn if failing
+	else
+	{
+		//Unspawn Enemy
+	}
+	
 }
 
 bool cEnemy::getAwake()
@@ -31,6 +38,12 @@ bool cEnemy::getAwake()
 void cEnemy::setAwake(bool _bAwake)
 {
 	m_bAwake = _bAwake;
+}
+
+void cEnemy::ClearEnemy()
+{
+	m_Behaviour = nullptr;
+	m_bAwake = false;
 }
 
 EnemyState cEnemy::getState()

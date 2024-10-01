@@ -21,7 +21,7 @@ public:
 	bool getAwake();
 	void setAwake(bool _bAwake);
 
-	//void ClearEnemy();
+	void ClearEnemy();
 	//void SetupEnemy();
 
 	EnemyState getState();

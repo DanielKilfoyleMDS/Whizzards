@@ -9,6 +9,8 @@ public:
 
 	void LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed);
 
+	void tickEnemies();
+
 	std::vector<cEnemy*> GetActiveEnemies();
 	std::vector<cEnemy*> GetInactiveEnemies();
 

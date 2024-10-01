@@ -8,6 +8,7 @@ int main()
 {
     //Create the window with a set resolution:
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
+    window.setFramerateLimit(60);
     
     PlayerCharacter* Player1 = new PlayerCharacter("Resources/Textures/Sprites/Blue Player.png", "Player 1");
     PlayerCharacter* Player2 = new PlayerCharacter("Resources/Textures/Sprites/Red Player.png", "Player 2");
@@ -75,23 +76,10 @@ int main()
 
         m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
 
-        for (auto iter : Pool.GetActiveEnemies())
-        {
-            iter->tick();
-        }
+        Pool.tickEnemies();
 
 
         window.clear();
-
-        //Do all your drawing in here/////
-
-        //window.draw(map);
-        //window.draw(Player1->playerSprite);
-        //window.draw(Player2->playerSprite);
-        //for (auto iter : Pool.GetActiveEnemies())
-        //{
-        //    window.draw(iter->GetSprite());
-        //}
 
         if (m_Cameras.UseCombinedView())
         {

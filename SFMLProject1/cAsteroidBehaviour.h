@@ -8,7 +8,9 @@ public:
 	cAsteroidBehaviour();
 	~cAsteroidBehaviour();
 
-	void TickEnemy(cEnemy* _Parent) override;
+	bool TickEnemy(cEnemy* _Parent) override;
+
+	bool CheckDeath(cEnemy* _parent) override;
 
 	bool CanAttack(cEnemy* _Parent) override;
 	void Attack(cEnemy* _Parent) override;

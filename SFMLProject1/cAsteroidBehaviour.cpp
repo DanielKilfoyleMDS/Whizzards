@@ -10,43 +10,59 @@ cAsteroidBehaviour::~cAsteroidBehaviour()
 {
 }
 
-void cAsteroidBehaviour::TickEnemy(cEnemy* _Parent)
+bool cAsteroidBehaviour::TickEnemy(cEnemy* _parent)
 {
-	if (_Parent != nullptr)
+	if (_parent != nullptr)
 	{
-		if (_Parent->getAwake())
+		if (_parent->getAwake())
 		{
 			//Logic - Asteroid can only drift.
-			switch (_Parent->getState())
+			switch (_parent->getState())
 			{
 			case Idle:
-				Move(_Parent);
+				Move(_parent);
 				break;
 			default:
-				_Parent->setState(Idle);
+				_parent->setState(Idle);
 				break;
 			}
 		}
 	}
+
+	if (CheckDeath(_parent))
+	{
+		return false;
+	}
+	return true;
+
 }
 
-bool cAsteroidBehaviour::CanAttack(cEnemy* _Parent)
+bool cAsteroidBehaviour::CheckDeath(cEnemy* _parent)
+{
+	if (_parent->getHealth() < 1)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool cAsteroidBehaviour::CanAttack(cEnemy* _parent)
 {
 	//Disabled for now
 	return false;
 }
 
-void cAsteroidBehaviour::Attack(cEnemy* _Parent)
+void cAsteroidBehaviour::Attack(cEnemy* _parent)
 {
 	return;
 }
 
-void cAsteroidBehaviour::Move(cEnemy* _Parent)
+void cAsteroidBehaviour::Move(cEnemy* _parent)
 {
-	sf::Vector2f NewPosition = _Parent->getPosition() + _Parent->getMovement();
-	_Parent->SetPosition(NewPosition);
+	sf::Vector2f NewPosition = _parent->getPosition() + _parent->getMovement();
+	_parent->SetPosition(NewPosition);
 
-	//HANDLE SCREEN WRAP!!
+	//TODO - ScreenWrap
 }
 
 

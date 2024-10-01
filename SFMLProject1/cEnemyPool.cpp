@@ -35,6 +35,25 @@ void cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movemen
 	}
 }
 
+void cEnemyPool::tickEnemies()
+{
+	for (int EnemyCount = 0; EnemyCount < m_enemiesActive.size(); EnemyCount++)
+	{
+		cEnemy* Enemy = m_enemiesActive[EnemyCount];
+		Enemy->tick();
+
+		if (Enemy->getAwake() != true)
+		{
+			//If the current enemy has been set to be asleep, it is "Dead"
+			//So we unload it
+			m_enemiesActive.erase(m_enemiesInactive.begin() + EnemyCount - 1);
+			m_enemiesInactive.push_back(Enemy);
+			
+		}
+	}
+}
+
+
 std::vector<cEnemy*> cEnemyPool::GetActiveEnemies()
 {
 	return m_enemiesActive;
