@@ -51,3 +51,8 @@ inline float SignedAngleBetweenVectors(sf::Vector2f _Vector1, sf::Vector2f _Vect
 
 }
 
+
+inline float randRange(float _min, float _max)
+{
+	return _min + static_cast <float>(rand() / (RAND_MAX / (_max - _min)));
+}

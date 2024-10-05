@@ -1,6 +1,7 @@
 #include "cRandomBehaviour.h"
 #include "cEnemy.h"
 #include <iostream>
+#include "MathLibrary.h"
 
 cRandomBehaviour::cRandomBehaviour()
 {
@@ -57,9 +58,11 @@ void cRandomBehaviour::Move(cEnemy* _parent)
 void cRandomBehaviour::PickDirection(cEnemy* _parent)
 {
 	//CONCEPT WORKS, REDO RAND
-	float RandXDirection = fmod(rand(), 2) - 1;
-	float RandYDirection = fmod(rand(), 2) - 1;
-	_parent->setMoveTime(10);
+	float RandXDirection = randRange(-1,1);
+	float RandYDirection = randRange(-1, 1);
+
+	float Movetime = 5 * randRange(0,20);
+	_parent->setMoveTime(Movetime);
 	_parent->setMovement(sf::Vector2f(RandXDirection, RandYDirection));
 
 

@@ -3,9 +3,15 @@
 #include "PlayerCharacter.h"
 #include "cGameCameras.h"
 #include "cEnemyPool.h"
+#include <cstdlib>
+#include <ctime>
+
+
 
 int main()
 {
+    srand(static_cast <unsigned> (time(0)));
+
     //Create the window with a set resolution:
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
     window.setFramerateLimit(60);
