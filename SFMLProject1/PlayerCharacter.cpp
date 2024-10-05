@@ -8,6 +8,9 @@ PlayerCharacter::PlayerCharacter(std::string _FilePath, std::string _PlayerName)
 	playerSprite.setPosition(playerPosition);
 	playerName = _PlayerName;
 
+	//Default wand
+	currentWand = WandType::Basic;
+
 	if (playerName == "Player 1")
 	{
 		forwardMoveKey = sf::Keyboard::W;
@@ -116,4 +119,52 @@ void PlayerCharacter::setSprite(std::string _FilePath)
 {
 	playerTexture.loadFromFile(_FilePath);
 	playerSprite.setTexture(playerTexture);
+}
+
+//wands
+
+void PlayerCharacter::setCurrentWand(WandType wand) {
+	// Comment out actual setting logic
+	// currentWand = wand;
+
+	// Replace with debug output
+	std::cout << "Current wand set to: " << static_cast<int>(wand) << std::endl;
+}
+
+void PlayerCharacter::shoot() {
+	// Comment out actual shooting logic
+	/*
+	switch (currentWand) {
+		case WandType::Basic:
+			shootSingle();
+			break;
+		case WandType::Spread:
+			shootSpread();
+			break;
+		case WandType::Multi:
+			shootMulti();
+			break;
+	}
+	*/
+
+	// Replace with debug output
+	std::cout << "Shooting with wand type: " << static_cast<int>(currentWand) << std::endl;
+}
+
+void PlayerCharacter::shootSingle() {
+	// Logic for single shot
+	std::cout << "Single Shot Fired!" << std::endl;
+}
+
+void PlayerCharacter::shootSpread() {
+	// Fire three projectiles at 45 degree angle differences
+	std::cout << "Spread Shot Fired!" << std::endl;
+	// Fire three projectiles at angles of -22.5, 0, and +22.5 degrees
+	// Create three projectiles and rotate them by those angles
+}
+
+void PlayerCharacter::shootMulti() {
+	// Fire three projectiles in quick succession
+	std::cout << "Multi Shot Fired!" << std::endl;
+	// Logic for rapid fire (add a timer or delay between shots)
 }
