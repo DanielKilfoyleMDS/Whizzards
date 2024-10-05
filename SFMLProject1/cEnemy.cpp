@@ -18,9 +18,13 @@ void cEnemy::tick()
 {
 	if(m_Behaviour != nullptr && getAwake())
 	{
+
 		if (m_Behaviour->TickEnemy(this));
 		{
-			//Tick Successful
+			if (m_fMoveTime > 0)
+			{
+				m_fMoveTime--;
+			}
 		}
 	}
 	else
@@ -69,4 +73,14 @@ sf::Vector2f cEnemy::getMovement()
 void cEnemy::setMovement(sf::Vector2f _movement)
 {
 	m_movement = _movement;
+}
+
+void cEnemy::setMoveTime(float _moveTime)
+{
+	m_fMoveTime = _moveTime;
+}
+
+float cEnemy::getMoveTime()
+{
+	return m_fMoveTime;
 }

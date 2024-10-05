@@ -21,6 +21,7 @@ int main()
     for (int i = 0; i < 11; i++)
     {
         Pool.LoadAsteroidEnemy(sf::Vector2f(i * 10,10),sf::Vector2f(1,1),0.1);
+        Pool.LoadRandomEnemy(sf::Vector2f(20, i * 20));
     }
 
     //Temporary Map - Creates texture, loads temp file, changes positioning

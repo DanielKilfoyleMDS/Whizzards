@@ -1,13 +1,15 @@
 #pragma once
 #include "cEnemy.h"
 #include "cAsteroidBehaviour.h"
+#include "cRandomBehaviour.h"
 class cEnemyPool
 {
 public:
 	cEnemyPool(int _enemyCount);
 	~cEnemyPool();
 
-	void LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed);
+	bool LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed);
+	bool LoadRandomEnemy(sf::Vector2f _position);
 
 	void tickEnemies();
 
@@ -20,5 +22,6 @@ private:
 	std::vector<cEnemy*> m_enemiesActive;
 
 	cAsteroidBehaviour m_AsteroidBehaviour;
+	cRandomBehaviour m_RandomBehaviour;
 };
 

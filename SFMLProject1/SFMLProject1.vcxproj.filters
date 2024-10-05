@@ -23,6 +23,9 @@
     <ClCompile Include="cAsteroidBehaviour.cpp">
       <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
+    <ClCompile Include="cRandomBehaviour.cpp">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -47,6 +50,9 @@
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
     <ClInclude Include="cAsteroidBehaviour.h">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="cRandomBehaviour.h">
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
   </ItemGroup>

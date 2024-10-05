@@ -30,6 +30,8 @@ public:
 
 	sf::Vector2f getMovement();
 	void setMovement(sf::Vector2f _movement);
+	void setMoveTime(float _moveTime);
+	float getMoveTime();
 
 private:
 
@@ -42,6 +44,10 @@ private:
 
 	//Asteroid Behaviour
 	sf::Vector2f m_movement = sf::Vector2f(0, 0);
+	float m_fMoveTime = 0;
+
+	//RandomBehaviour
+
 
 	//Follow Behaviour
 	sf::Vector2f m_targetPosition = sf::Vector2f(0, 0);

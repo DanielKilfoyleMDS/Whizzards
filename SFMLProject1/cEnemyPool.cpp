@@ -16,7 +16,7 @@ cEnemyPool::~cEnemyPool()
 
 //TODO - return bool
 //TODO - Debug mode printout active/inactive
-void cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed)
+bool cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed)
 {
 	if (m_enemiesInactive.size() > 0)
 	{
@@ -31,8 +31,29 @@ void cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movemen
 		Asteroid->setState(Idle);
 		Asteroid->setAwake(true);
 		Asteroid->setBehaviour(&m_AsteroidBehaviour);
+		return true;
+	} 
+	return false;
+}
 
+bool cEnemyPool::LoadRandomEnemy(sf::Vector2f _position)
+{
+	if (m_enemiesInactive.size() > 0)
+	{
+		cEnemy* Asteroid = m_enemiesInactive[0];
+		m_enemiesActive.push_back(Asteroid);
+		m_enemiesInactive.erase(m_enemiesInactive.begin());
+
+		Asteroid->SetPosition(_position);
+		Asteroid->setHealth(10);
+
+		Asteroid->setState(Idle);
+		Asteroid->setAwake(true);
+		Asteroid->setBehaviour(&m_RandomBehaviour);
+		return true;
 	}
+
+	return false;
 }
 
 void cEnemyPool::tickEnemies()

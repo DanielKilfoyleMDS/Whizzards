@@ -1,12 +1,11 @@
 #pragma once
 #include "cEnemyBehaviour.h"
-#include "SFML/Graphics.hpp"
 
-class cAsteroidBehaviour : public cEnemyBehaviour
+class cRandomBehaviour : public cEnemyBehaviour
 {
 public:
-	cAsteroidBehaviour();
-	~cAsteroidBehaviour();
+	cRandomBehaviour();
+	~cRandomBehaviour();
 
 	bool TickEnemy(cEnemy* _parent) override;
 
@@ -17,5 +16,5 @@ public:
 
 	void Move(cEnemy* _parent) override;
 
+	void PickDirection(cEnemy* _parent);
 };
-

@@ -4,6 +4,7 @@
 
 cAsteroidBehaviour::cAsteroidBehaviour()
 {
+
 }
 
 cAsteroidBehaviour::~cAsteroidBehaviour()
