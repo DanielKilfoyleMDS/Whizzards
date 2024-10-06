@@ -14,7 +14,7 @@ cEnemyPool::~cEnemyPool()
 {
 }
 
-//TODO - return bool
+
 //TODO - Debug mode printout active/inactive
 bool cEnemyPool::loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed)
 {
@@ -31,6 +31,7 @@ bool cEnemyPool::loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movemen
 		Asteroid->setState(Idle);
 		Asteroid->setAwake(true);
 		Asteroid->setBehaviour(&m_AsteroidBehaviour);
+		Asteroid->SetDamageStrength(1);
 		return true;
 	} 
 	return false;
@@ -50,6 +51,7 @@ bool cEnemyPool::loadRandomEnemy(sf::Vector2f _position)
 		Asteroid->setState(Idle);
 		Asteroid->setAwake(true);
 		Asteroid->setBehaviour(&m_RandomBehaviour);
+		Asteroid->SetDamageStrength(2);
 		return true;
 	}
 

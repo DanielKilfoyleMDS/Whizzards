@@ -33,6 +33,9 @@ public:
 	void setMoveTime(float _moveTime);
 	float getMoveTime();
 
+	void OtherCollide(cCharacter* _Character);
+	void SetDamageStrength(float _Damage);
+
 private:
 
 	EnemyState m_State;
@@ -46,7 +49,8 @@ private:
 	sf::Vector2f m_movement = sf::Vector2f(0, 0);
 	float m_fMoveTime = 0;
 
-	//RandomBehaviour
+	//Damage values
+	float m_fdamage = 0;
 
 
 	//Follow Behaviour
