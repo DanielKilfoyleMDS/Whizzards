@@ -3,6 +3,7 @@
 #include "PlayerCharacter.h"
 #include "cGameCameras.h"
 #include "cEnemyPool.h"
+#include "cEnemySpawner.h"
 #include "cLevelLoader.h"
 
 #include <cstdlib>
@@ -24,11 +25,7 @@ int main()
     cGameCameras m_Cameras(&window, 3000,3000);
 
     cEnemyPool Pool(200);
-    for (int i = 0; i < 11; i++)
-    {
-        Pool.LoadAsteroidEnemy(sf::Vector2f(i * 10,10),sf::Vector2f(1,1),0.1);
-        Pool.LoadRandomEnemy(sf::Vector2f(20, i * 20));
-    }
+    cEnemySpawner Spawner(20,5,&Pool);
 
     //Temporary Map - Creates texture, loads temp file, changes positioning
     sf::Texture mapTex;
@@ -39,6 +36,8 @@ int main()
 
     while (window.isOpen())
     {
+
+
         //Receive and deal with events here (mouse clicks, key events, window buttons etc).
         sf::Event event;
         while (window.pollEvent(event))
@@ -82,6 +81,8 @@ int main()
 
 
         m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
+
+        Spawner.WaveManager();
 
         for (auto iter : Pool.GetActiveEnemies())
         {

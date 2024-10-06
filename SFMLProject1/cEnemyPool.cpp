@@ -16,7 +16,7 @@ cEnemyPool::~cEnemyPool()
 
 //TODO - return bool
 //TODO - Debug mode printout active/inactive
-bool cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed)
+bool cEnemyPool::loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed)
 {
 	if (m_enemiesInactive.size() > 0)
 	{
@@ -36,7 +36,7 @@ bool cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movemen
 	return false;
 }
 
-bool cEnemyPool::LoadRandomEnemy(sf::Vector2f _position)
+bool cEnemyPool::loadRandomEnemy(sf::Vector2f _position)
 {
 	if (m_enemiesInactive.size() > 0)
 	{

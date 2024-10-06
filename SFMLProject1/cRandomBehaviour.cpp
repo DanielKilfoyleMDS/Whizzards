@@ -58,10 +58,10 @@ void cRandomBehaviour::Move(cEnemy* _parent)
 void cRandomBehaviour::PickDirection(cEnemy* _parent)
 {
 	//CONCEPT WORKS, REDO RAND
-	float RandXDirection = randRange(-1,1);
-	float RandYDirection = randRange(-1, 1);
+	float RandXDirection = randRangeFloat(-1,1);
+	float RandYDirection = randRangeFloat(-1, 1);
 
-	float Movetime = 5 * randRange(0,20);
+	float Movetime = 5 * randRangeFloat(0,20);
 	_parent->setMoveTime(Movetime);
 	_parent->setMovement(sf::Vector2f(RandXDirection, RandYDirection));
 

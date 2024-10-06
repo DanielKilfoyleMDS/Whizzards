@@ -8,8 +8,8 @@ public:
 	cEnemyPool(int _enemyCount);
 	~cEnemyPool();
 
-	bool LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed);
-	bool LoadRandomEnemy(sf::Vector2f _position);
+	bool loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed);
+	bool loadRandomEnemy(sf::Vector2f _position);
 
 	void tickEnemies();
 
