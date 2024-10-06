@@ -5,7 +5,7 @@
 class cPlayer : public cCharacter
 {
 public:
-	cPlayer(std::string _filePath, std::string _PlayerName, sf::Vector2f _Position, sf::Sprite* _Sprite);
+	cPlayer(sf::Sprite _Sprite, std::string _PlayerName, sf::Vector2f _Position);
 	
 	
 	void rotateCharacter(sf::Keyboard::Key _key, int _scalar);
@@ -13,10 +13,13 @@ public:
 	void movePlayer();
 	void draw();
 
+	void castSpell();
+
 	sf::Keyboard::Key leftRotateKey;
 	sf::Keyboard::Key rightRotateKey;
 	sf::Keyboard::Key forwardMovementKey;
 	sf::Keyboard::Key castSpellKey;
+
 
 
 private:
@@ -24,7 +27,7 @@ private:
 	// character name, used for setting different controls for player 1 and player 2
 	std::string m_playerName;
 
-	sf::Sprite* m_playerSprite;
+	
 
 
 

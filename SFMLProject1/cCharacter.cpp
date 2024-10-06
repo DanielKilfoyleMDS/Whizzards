@@ -1,13 +1,12 @@
 #include "cCharacter.h"
 
-cCharacter::cCharacter(std::string _FilePath, std::string _CharacterName, sf::Vector2f _StartPosition)
+cCharacter::cCharacter(sf::Sprite _sprite, sf::Vector2f _StartPosition)
 {
-	// TODO - set from pointer in game manager class
-	setSprite(_FilePath);
 
-	m_characterSprite->setOrigin(m_characterTexture.getSize().x / 2, m_characterTexture.getSize().y / 2);
+	m_characterSprite = _sprite;
+	m_characterSprite.setOrigin(m_characterSprite.getTexture()->getSize().x / 2, m_characterSprite.getTexture()->getSize().y / 2);
 	m_characterPosition = _StartPosition;
-	m_characterSprite->setPosition(m_characterPosition);
+	m_characterSprite.setPosition(m_characterPosition);
 
 
 
@@ -18,6 +17,11 @@ void cCharacter::setHealth(float _Health)
 	
 	m_fcurrentHealth = _Health;
 	healthCheck();
+}
+
+float cCharacter::getHealth()
+{
+	return m_fcurrentHealth;
 }
 
 void cCharacter::updateHealth(float _Change)
@@ -54,20 +58,14 @@ void cCharacter::setSprite(std::string _FilePath)
 	m_characterSprite.setTexture(m_characterTexture);
 }
 
-void cCharacter::setPosition(sf::Vector2f _pos)
-{
-	m_characterSprite.setPosition(_pos);
-	m_characterPosition = _pos;
-}
-
-sf::Vector2f cCharacter::getPosition()
-{
-	return m_characterPosition;
-}
-
 void cCharacter::setRotation(float _Rotation)
 {
 	m_fcharacterRotation = _Rotation;
+}
+
+float cCharacter::getRotation()
+{
+	return m_fcharacterRotation;
 }
 
 
@@ -78,7 +76,7 @@ void cCharacter::moveCharacter()
 
 
 // DONE - return pointer to sprite
-sf::Sprite* cCharacter::getSprite()
+sf::Sprite cCharacter::getSprite()
 {
-	return p_Sprite;
+	return m_characterSprite;
 }

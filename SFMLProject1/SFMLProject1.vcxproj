@@ -152,7 +152,10 @@
     <ClCompile Include="cAsteroidBehaviour.cpp" />
     <ClCompile Include="cEnemyPool.cpp" />
     <ClCompile Include="cGameCameras.cpp" />
+    <ClCompile Include="cGameManager.cpp" />
     <ClCompile Include="cLevelLoader.cpp" />
+    <ClCompile Include="cPlayer.cpp" />
+    <ClCompile Include="cProjectile.cpp" />
     <ClCompile Include="cRandomBehaviour.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
@@ -166,7 +169,10 @@
     <ClInclude Include="cEnemyBehaviour.h" />
     <ClInclude Include="cAsteroidBehaviour.h" />
     <ClInclude Include="cEnemyPool.h" />
+    <ClInclude Include="cGameManager.h" />
     <ClInclude Include="cLevelLoader.h" />
+    <ClInclude Include="cPlayer.h" />
+    <ClInclude Include="cProjectile.h" />
     <ClInclude Include="cRandomBehaviour.h" />
     <ClInclude Include="MathLibrary.h" />
     <ClInclude Include="PlayerCharacter.h" />

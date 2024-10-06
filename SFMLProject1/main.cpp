@@ -4,22 +4,54 @@
 #include "cGameCameras.h"
 #include "cEnemyPool.h"
 #include "cLevelLoader.h"
-
+#include "cPlayer.h"
+#include "vector"
 #include <cstdlib>
 #include <ctime>
+#include "cProjectile.h"
+#include <SFML/System/Clock.hpp>
+#include "cGameManager.h"
+
+
+cProjectile* CreateProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rotation)
+{
+    cProjectile* proj = new cProjectile(_sprite, _pos, _rotation);
+    return proj;
+}
+
+sf::Clock castTimer;
 
 int main()
 {
     srand(static_cast <unsigned> (time(0)));
-
+    cGameManager Manager;
     //Create the window with a set resolution:
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
     window.setFramerateLimit(60);
 
-    PlayerCharacter* Player1 = new PlayerCharacter("Resources/Textures/Sprites/Blue Player.png", "Player 1");
-    PlayerCharacter* Player2 = new PlayerCharacter("Resources/Textures/Sprites/Red Player.png", "Player 2");
+    // Test sprites for players.
+    sf::Texture firstPlayerTexture;
+    firstPlayerTexture.loadFromFile("Resources/Textures/Sprites/Blue Player.png");
+    sf::Sprite* firstPlayerSprite = nullptr;   
+    //firstPlayerSprite->setTexture(firstPlayerTexture);
 
-    Player2->SetPosition(sf::Vector2f(500, 400));
+    sf::Texture secondPlayerTexture;
+    secondPlayerTexture.loadFromFile("Resources/Textures/Sprites/Red Player.png");
+    sf::Sprite* secondPlayerSprite = nullptr;
+    //secondPlayerSprite->setTexture(secondPlayerTexture);
+
+    cPlayer* Player1 = new cPlayer(Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(400, 300));
+    cPlayer* Player2 = new cPlayer(Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(500, 300));
+
+    sf::Texture blueProjectileTexture;
+    blueProjectileTexture.loadFromFile("Resources/Textures/Sprites/Projectile Blue.png");
+    sf::Sprite blueProjectileSprite;
+    blueProjectileSprite.setTexture(blueProjectileTexture);
+    
+
+
+
+    std::vector<cProjectile* > activeProjectiles;
 
     cGameCameras m_Cameras(&window, 3000,3000);
 
@@ -39,37 +71,13 @@ int main()
 
     while (window.isOpen())
     {
+
         //Receive and deal with events here (mouse clicks, key events, window buttons etc).
         sf::Event event;
         while (window.pollEvent(event))
         {
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-            {
-                Player1->movePlayer();
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            {
-                Player1->rotatePlayer(sf::Keyboard::A);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            {
-                Player1->rotatePlayer(sf::Keyboard::D);
-            }
 
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-            {
-                Player2->rotatePlayer(sf::Keyboard::Left);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-            {
-                Player2->rotatePlayer(sf::Keyboard::Right);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-            {
-                Player2->movePlayer();
-            }
 
             switch (event.type)
             {
@@ -78,8 +86,42 @@ int main()
                 break;
                 
             }
+ 
         }
 
+        Player1->processInput();
+        Player2->processInput();
+        bool bfired = false;
+
+        //castTimer.restart();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        {
+            
+
+            if ((castTimer.getElapsedTime().asMilliseconds() >= 500.0f) && !bfired)
+            {
+                if (!bfired)
+                {
+                    
+                    activeProjectiles.push_back(CreateProjectile(blueProjectileSprite, Player1->getPosition(), Player1->getRotation()));
+                    std::cout << "castTimer duration: " << castTimer.getElapsedTime().asMilliseconds() << std::endl;
+                    //std::cout << "ProjectileSpawned: Number of active projectiles: " << activeProjectiles.size() << std::endl;
+                    castTimer.restart();
+                    bfired = true;
+                }
+                else if (castTimer.getElapsedTime().asMilliseconds() >= 500.0f && bfired)
+                {
+                    bfired = false;
+                }
+
+            }
+
+        }
+
+        for (auto projectile : activeProjectiles)
+        {
+            projectile->tick();
+        }
 
         m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
 
@@ -106,11 +148,15 @@ int main()
             //Render everything once
             m_Cameras.SetViewBothPlayers();
             window.draw(map);
-            window.draw(Player1->playerSprite);
-            window.draw(Player2->playerSprite);
+            window.draw(Player1->getSprite());
+            window.draw(Player2->getSprite());
             for (auto iter : Pool.GetActiveEnemies())
             {
-                window.draw(iter->GetSprite());
+                window.draw(iter->getSprite());
+            }
+            for (auto iter : activeProjectiles)
+            {
+                window.draw(iter->m_Sprite);
             }
         }
         else
@@ -118,20 +164,28 @@ int main()
             //Render everything twice
             m_Cameras.setViewFirstPlayer();
             window.draw(map);
-            window.draw(Player1->playerSprite);
-            window.draw(Player2->playerSprite);
+            window.draw(Player1->getSprite());
+            window.draw(Player2->getSprite());
             for (auto iter : Pool.GetActiveEnemies())
             {
-                window.draw(iter->GetSprite());
+                window.draw(iter->getSprite());
+            }
+            for (auto iter : activeProjectiles)
+            {
+                window.draw(iter->m_Sprite);
             }
 
             m_Cameras.setViewSecondPlayer();
             window.draw(map);
-            window.draw(Player1->playerSprite);
-            window.draw(Player2->playerSprite);
+            window.draw(Player1->getSprite());
+            window.draw(Player2->getSprite());
             for (auto iter : Pool.GetActiveEnemies())
             {
-                window.draw(iter->GetSprite());
+                window.draw(iter->getSprite());
+            }
+            for (auto iter : activeProjectiles)
+            {
+                window.draw(iter->m_Sprite);
             }
         }
 

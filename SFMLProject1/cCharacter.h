@@ -10,10 +10,11 @@ class cCharacter
 public:
 	// TODO pass in sprite instead of load on character creation -  In game manager
 	// TODO - Move character name to player if needed.
-	cCharacter(std::string _FilePath, std::string _CharacterName, sf::Vector2f _StartPosition);
+	cCharacter(sf::Sprite _sprite, sf::Vector2f _StartPosition);
 
 	// setHealth function used for setting health to specific numbers, instead of applying healing or damage as in update health. 
 	void setHealth(float _Health);
+	float getHealth();
 
 	// Update health function, which works for positive and negative values. To be used for healing and damaging.
 	void updateHealth(float _Change);
@@ -33,17 +34,14 @@ public:
 
 
 
-	// DONE - Remove as convert is in the math library
-	// DONE - Add set rotation
-	//void convertRotation();
+
 	void setRotation(float _Rotation);
+	float getRotation();
 
 	// DONE - Make virtual or move into child classes as needed
 	virtual void moveCharacter();
 
-	// DONE - Lower upper. 
-	// DONE - return pointer instead of value
-	sf::Sprite* getSprite();
+	sf::Sprite getSprite();
 
 protected:
 
@@ -54,7 +52,7 @@ protected:
 
 	// Constant variables. These will not change. Therefore, have been made as const. 
 	const float MAX_SPEED = 50.0f;
-	const float SPEED_SCALAR = 10.0f;
+	const float SPEED_SCALAR = 5.0f;
 		
 
 	sf::RenderWindow* p_windowRef;

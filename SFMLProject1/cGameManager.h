@@ -6,13 +6,24 @@ class cGameManager
 public:
 	cGameManager();
 
-private:
+	sf::Sprite getAsteroidSprite();
+	sf::Sprite getEnemyDefaultSprite();
+
+
+	sf::Sprite getFirstPlayerSprite();
+	sf::Sprite getSecondPlayerSprite();
+	sf::Sprite getFirstPlayerProjectile();
+	sf::Sprite getSecondPlayerProjectile();
+
 	// Player Sprites
-	sf::Sprite* m_firstPlayerSprite;
-	sf::Sprite* m_secondPlayerSprite;
+	sf::Sprite m_firstPlayerSprite;
+	sf::Sprite m_secondPlayerSprite;
 
 	// Enemy Sprites
-	sf::Sprite* m_asteroidEnemySprite;
-	//sf::Sprite* 
+	sf::Sprite m_asteroidEnemySprite;
+	sf::Sprite m_defaultEnemySprite;
+
+	sf::Sprite m_blueProjectileSprite;
+	sf::Sprite m_redProjectileSprite;
 };
 

@@ -32,6 +32,13 @@
     <ClCompile Include="cRandomBehaviour.cpp">
       <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
+    <ClCompile Include="cPlayer.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameManager.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="cProjectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -67,6 +74,13 @@
     <ClInclude Include="cRandomBehaviour.h">
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
+    <ClInclude Include="cPlayer.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameManager.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="cProjectile.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">
