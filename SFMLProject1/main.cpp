@@ -1,20 +1,17 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp> 
 #include <iostream>
 #include "PlayerCharacter.h"
 #include "cGameCameras.h"
 #include "cEnemyPool.h"
-#include <cstdlib>
-#include <ctime>
-
-
+#include "PowerupManager.h"
 
 int main()
 {
-    srand(static_cast <unsigned> (time(0)));
-
     //Create the window with a set resolution:
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
-    window.setFramerateLimit(60);
+
+    PowerupManager powerupManager;
     
     PlayerCharacter* Player1 = new PlayerCharacter("Resources/Textures/Sprites/Blue Player.png", "Player 1");
     PlayerCharacter* Player2 = new PlayerCharacter("Resources/Textures/Sprites/Red Player.png", "Player 2");
@@ -27,7 +24,6 @@ int main()
     for (int i = 0; i < 11; i++)
     {
         Pool.LoadAsteroidEnemy(sf::Vector2f(i * 10,10),sf::Vector2f(1,1),0.1);
-        Pool.LoadRandomEnemy(sf::Vector2f(20, i * 20));
     }
 
     //Temporary Map - Creates texture, loads temp file, changes positioning
@@ -83,10 +79,35 @@ int main()
 
         m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
 
-        Pool.tickEnemies();
+        for (auto iter : Pool.GetActiveEnemies())
+        {
+            iter->tick();
+        }
+
+        //wand stuff
+        sf::Clock clock;  // SFML Clock to measure time
+        // Update powerups' positions (add this before rendering)
+        float deltaTime = clock.restart().asSeconds();  // You should have a clock to calculate deltaTime
+        powerupManager.update(deltaTime);  // Update powerups' positions
 
 
         window.clear();
+
+        //Do all your drawing in here/////
+
+
+        // Debugging powerups
+        powerupManager.update(deltaTime);
+        powerupManager.draw(window);
+
+
+        //window.draw(map);
+        //window.draw(Player1->playerSprite);
+        //window.draw(Player2->playerSprite);
+        //for (auto iter : Pool.GetActiveEnemies())
+        //{
+        //    window.draw(iter->GetSprite());
+        //}
 
         if (m_Cameras.UseCombinedView())
         {
