@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
-
+#include "Wand.h"
 
 const double PI = 3.1415926535;
 
@@ -48,11 +48,23 @@ public:
 	void SetPosition(sf::Vector2f _Pos) { playerSprite.setPosition(_Pos); playerPosition = _Pos; }
 	sf::Vector2f getPosition() { return playerSprite.getPosition(); };
 
+	sf::FloatRect getBounds() {
+		return playerSprite.getGlobalBounds();  
+	}
+
 
 	void convertRotation();
 
 	void processInput();
 	
+	//wands
+	void setCurrentWand(WandType wand); 
+	void shoot();
 
+private:
+	WandType currentWand;	// Current wand type
+	void shootSingle();		// Single shot
+	void shootSpread();		// Spread shot
+	void shootMulti();		// Multi shot
 	
 };
