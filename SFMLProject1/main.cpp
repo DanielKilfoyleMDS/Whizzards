@@ -1,17 +1,14 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp> 
 #include <iostream>
 #include "PlayerCharacter.h"
 #include "cGameCameras.h"
 #include "cEnemyPool.h"
-#include "PowerupManager.h"
+#include "cLevelLoader.h"
 
 int main()
 {
     //Create the window with a set resolution:
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
-
-    PowerupManager powerupManager;
     
     PlayerCharacter* Player1 = new PlayerCharacter("Resources/Textures/Sprites/Blue Player.png", "Player 1");
     PlayerCharacter* Player2 = new PlayerCharacter("Resources/Textures/Sprites/Red Player.png", "Player 2");
@@ -84,22 +81,10 @@ int main()
             iter->tick();
         }
 
-        //wand stuff
-        sf::Clock clock;  // SFML Clock to measure time
-        // Update powerups' positions (add this before rendering)
-        float deltaTime = clock.restart().asSeconds();  // You should have a clock to calculate deltaTime
-        powerupManager.update(deltaTime);  // Update powerups' positions
-
 
         window.clear();
 
         //Do all your drawing in here/////
-
-
-        // Debugging powerups
-        powerupManager.update(deltaTime);
-        powerupManager.draw(window);
-
 
         //window.draw(map);
         //window.draw(Player1->playerSprite);
