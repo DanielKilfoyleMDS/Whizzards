@@ -25,14 +25,13 @@ int main()
     cGameCameras m_Cameras(&window, 3000,3000);
 
     cEnemyPool Pool(200);
-    cEnemySpawner Spawner(20,5,&Pool);
+    cEnemySpawner Spawner(10,5,&Pool,5, 10);
 
     //Temporary Map - Creates texture, loads temp file, changes positioning
     sf::Texture mapTex;
     mapTex.loadFromFile("Resources/map.jpg");
     sf::Sprite map(mapTex);
     map.setPosition(-sf::Vector2f(map.getLocalBounds().width / 2.f, map.getLocalBounds().height / 2.f));
-
 
     while (window.isOpen())
     {
@@ -83,6 +82,7 @@ int main()
         m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
 
         Spawner.WaveManager();
+
 
         for (auto iter : Pool.GetActiveEnemies())
         {

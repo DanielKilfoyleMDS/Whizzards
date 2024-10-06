@@ -5,7 +5,6 @@
 
 cRandomBehaviour::cRandomBehaviour()
 {
-	std::cout << "RandomBehaviourCreated" << std::endl;
 }
 
 cRandomBehaviour::~cRandomBehaviour()
