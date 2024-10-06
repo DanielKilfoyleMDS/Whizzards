@@ -20,7 +20,7 @@
     <ClCompile Include="cEnemyBehaviour.cpp">
       <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
-    <ClCompile Include="cEnemyDrift.cpp">
+    <ClCompile Include="cAsteroidBehaviour.cpp">
       <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
   </ItemGroup>
@@ -46,7 +46,7 @@
     <ClInclude Include="cEnemyBehaviour.h">
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
-    <ClInclude Include="cEnemyDrift.h">
+    <ClInclude Include="cAsteroidBehaviour.h">
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
   </ItemGroup>

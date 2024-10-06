@@ -13,26 +13,23 @@ enum EnemyState
 class cEnemy : public cCharacter
 {
 public:
-	cEnemy(std::string _FilePath, std::string _CharacterName, sf::Vector2f _StartPosition);
+	cEnemy(std::string _filePath, std::string _characterName, sf::Vector2f _startPosition);
 	~cEnemy();
 
-	//Handle Logic
-	void Tick();
+	void tick();
 
-	bool IsAwake();
-	void SetAwake(bool _Awake);
+	bool getAwake();
+	void setAwake(bool _bAwake);
 
-	//HandleLootPool
 	//void ClearEnemy();
 	//void SetupEnemy();
 
-	EnemyState GetState();
-	void SetState(EnemyState _State);
-	void SetBehaviour(cEnemyBehaviour* _Behaviour);
+	EnemyState getState();
+	void setState(EnemyState _state);
+	void setBehaviour(cEnemyBehaviour* _behaviour);
 
-	//TODO - Calcluate not Get
-	sf::Vector2f GetDrift();
-	void SetDrift(sf::Vector2f _Dir, float Speed);
+	sf::Vector2f getMovement();
+	void setMovement(sf::Vector2f _movement);
 
 private:
 
@@ -43,14 +40,10 @@ private:
 
 	bool m_bAwake;
 
-	//TODO Combine Direction/speed,
 	//Asteroid Behaviour
-	sf::Vector2f m_Direction = sf::Vector2f(0, 0);
-	//TODO fix Variable types
-	float m_Speed = 0.0f;
+	sf::Vector2f m_movement = sf::Vector2f(0, 0);
 
 	//Follow Behaviour
-	//TODO fix Variable types
-	sf::Vector2f Target = sf::Vector2f(0, 0);
+	sf::Vector2f m_targetPosition = sf::Vector2f(0, 0);
 
 };

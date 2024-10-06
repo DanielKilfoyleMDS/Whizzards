@@ -1,12 +1,12 @@
 #include "cEnemyPool.h"
-//TODO underscore
-cEnemyPool::cEnemyPool(int EnemyCount)
+
+cEnemyPool::cEnemyPool(int _enemyCount)
 {
-	for (int i = 0; i < EnemyCount; i++)
+	for (int i = 0; i < _enemyCount; i++)
 	{
 		//Position should be set to out of map location, 0 0 for now
 		cEnemy* Enemy = new cEnemy("Resources/Textures/Sprites/EnemyDefault.png", "Enemy", sf::Vector2f(0, 0));
-		Enemies_Inactive.push_back(Enemy);
+		m_enemiesInactive.push_back(Enemy);
 	}
 }
 
@@ -14,39 +14,33 @@ cEnemyPool::~cEnemyPool()
 {
 }
 
-// TODO - Remove Functions
-int cEnemyPool::GetInactiveEnemyCount()
-{
-	return Enemies_Inactive.size();
-}
-
-int cEnemyPool::GetActiveEnemyCount()
-{
-	return Enemies_Active.size();
-}
-
 //TODO - return bool
 //TODO - Debug mode printout active/inactive
-void cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _Position, sf::Vector2f Direction, float Speed)
+void cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed)
 {
-	if (Enemies_Inactive.size() > 0)
+	if (m_enemiesInactive.size() > 0)
 	{
-		cEnemy* Asteroid = Enemies_Inactive[0];
-		Enemies_Active.push_back(Asteroid);
-		Enemies_Inactive.erase(Enemies_Inactive.begin());
+		cEnemy* Asteroid = m_enemiesInactive[0];
+		m_enemiesActive.push_back(Asteroid);
+		m_enemiesInactive.erase(m_enemiesInactive.begin());
 
-		Asteroid->SetPosition(_Position);
+		Asteroid->SetPosition(_position);
 		//Asteroid->setSprite();
-		Asteroid->SetDrift(Direction,Speed);
+		Asteroid->setMovement(_movement);
 		Asteroid->setHealth(10); //TODO get variables from gamemanager not hardcoded
-		Asteroid->SetState(Idle);
-		Asteroid->SetAwake(true);
-		Asteroid->SetBehaviour(&m_DriftBehaviour);
+		Asteroid->setState(Idle);
+		Asteroid->setAwake(true);
+		Asteroid->setBehaviour(&m_AsteroidBehaviour);
 
 	}
 }
 
 std::vector<cEnemy*> cEnemyPool::GetActiveEnemies()
 {
-	return Enemies_Active;
+	return m_enemiesActive;
+}
+
+std::vector<cEnemy*> cEnemyPool::GetInactiveEnemies()
+{
+	return m_enemiesInactive;
 }

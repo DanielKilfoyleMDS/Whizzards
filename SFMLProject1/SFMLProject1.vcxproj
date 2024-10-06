@@ -149,7 +149,7 @@
     <ClCompile Include="cCharacter.cpp" />
     <ClCompile Include="cEnemy.cpp" />
     <ClCompile Include="cEnemyBehaviour.cpp" />
-    <ClCompile Include="cEnemyDrift.cpp" />
+    <ClCompile Include="cAsteroidBehaviour.cpp" />
     <ClCompile Include="cEnemyPool.cpp" />
     <ClCompile Include="cGameCameras.cpp" />
     <ClCompile Include="main.cpp" />
@@ -159,7 +159,7 @@
     <ClInclude Include="cCharacter.h" />
     <ClInclude Include="cEnemy.h" />
     <ClInclude Include="cEnemyBehaviour.h" />
-    <ClInclude Include="cEnemyDrift.h" />
+    <ClInclude Include="cAsteroidBehaviour.h" />
     <ClInclude Include="cEnemyPool.h" />
     <ClInclude Include="MathLibrary.h" />
     <ClInclude Include="PlayerCharacter.h" />

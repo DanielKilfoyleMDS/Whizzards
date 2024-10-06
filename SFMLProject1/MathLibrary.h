@@ -2,7 +2,7 @@
 
 #include "SFML/Graphics.hpp"
 
-static float M_PI = 3.141592653589793; //15 places because idk why not
+static float M_PI = 3.141592653f; 
 
 inline float VectorLength(sf::Vector2f _Vector)
 {
@@ -47,7 +47,9 @@ inline float SignedAngleBetweenVectors(sf::Vector2f _Vector1, sf::Vector2f _Vect
 	std::cout << C << std::endl;
 
 
-	return C * 180 / 3.14;
+	return C * 180.0f / 3.14f;
+
+}
 
 }
 
