@@ -1,5 +1,6 @@
 #include "Wand.h"
 #include <iostream>  // For debug output
+#include "PlayerCharacter.h" 
 
 Wand::Wand(WandType type, sf::Vector2f pos) : wandType(type), position(pos) {
     // Commenting out the texture loading logic

@@ -13,6 +13,14 @@ cGameCameras::cGameCameras(sf::RenderWindow* _window, int _levelXSize, int _leve
 	m_firstPlayerView = new sf::View(sf::Vector2f(m_iWindowWidth/2, m_iWindowHeight), sf::Vector2f(m_iWindowWidth/4, m_iWindowHeight/2));
 	m_secondPlayerView = new sf::View(sf::Vector2f(m_iWindowWidth/2, m_iWindowHeight), sf::Vector2f(m_iWindowWidth/4, m_iWindowHeight/2));
 	m_playerCombinedView = new sf::View(sf::Vector2f(m_iWindowWidth, m_iWindowHeight), sf::Vector2f(m_iWindowWidth / 2, m_iWindowHeight / 2));
+	
+	
+	//Double The size
+	m_firstPlayerView->setSize(m_iWindowWidth,m_iWindowHeight * 2);
+	m_secondPlayerView->setSize(m_iWindowWidth,m_iWindowHeight * 2);
+	m_playerCombinedView->setSize(m_iWindowWidth * 2,m_iWindowHeight * 2);
+	m_fcameraJoinDistance = 600;
+
 	m_windowRef = _window;
 	m_firstPlayerView->setViewport(sf::FloatRect(0.0f, 0.0f, 0.5f, 1.0f)); //Looks wonky due to scaling
     m_secondPlayerView->setViewport(sf::FloatRect(0.5f, 0.0f, 0.5f, 1.0f));

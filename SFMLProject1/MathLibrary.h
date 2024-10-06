@@ -51,14 +51,17 @@ inline float SignedAngleBetweenVectors(sf::Vector2f _Vector1, sf::Vector2f _Vect
 
 }
 
-}
-
 inline float DegreesToRadians(float _Degrees)
 {
-	return;
+	return _Degrees * (M_PI /180);
 }
 
 inline float RadiansToDegrees(float _Radians)
 {
-	return;
+	return _Radians * (180/ M_PI);
+}
+
+inline float randRange(float _min, float _max)
+{
+	return _min + static_cast <float>(rand() / (RAND_MAX / (_max - _min)));
 }

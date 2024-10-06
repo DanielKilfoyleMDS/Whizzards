@@ -9,8 +9,18 @@ cEnemyBehaviour::~cEnemyBehaviour()
 {
 }
 
-void cEnemyBehaviour::TickEnemy(cEnemy* _parent)
+bool cEnemyBehaviour::TickEnemy(cEnemy* _parent)
 {
+	return false;
+}
+
+bool cEnemyBehaviour::CheckDeath(cEnemy* _parent)
+{
+	if (_parent->getHealth() < 1)
+	{
+		return true;
+	}
+	return false;
 }
 
 bool cEnemyBehaviour::CanAttack(cEnemy* _parent)

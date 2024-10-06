@@ -8,7 +8,9 @@ public:
 	
 
 	//Handles Logic
-	virtual void TickEnemy(class cEnemy* _parent);
+	virtual bool TickEnemy(class cEnemy* _parent);
+
+	virtual bool CheckDeath(cEnemy* _parent);
 
 	//Checks if Enemy can Attack
 	virtual bool CanAttack(class cEnemy* _parent);

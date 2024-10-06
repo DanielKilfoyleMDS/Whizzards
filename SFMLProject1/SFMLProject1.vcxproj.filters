@@ -23,14 +23,14 @@
     <ClCompile Include="cAsteroidBehaviour.cpp">
       <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
-    <ClCompile Include="Wand.cpp">
-      <Filter>Wands</Filter>
+    <ClCompile Include="cLevelLoader.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Powerup.cpp">
-      <Filter>Wands</Filter>
-    </ClCompile>
-    <ClCompile Include="PowerupManager.cpp">
-      <Filter>Wands</Filter>
+    <ClCompile Include="Powerup.cpp" />
+    <ClCompile Include="PowerupManager.cpp" />
+    <ClCompile Include="Wand.cpp" />
+    <ClCompile Include="cRandomBehaviour.cpp">
+      <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,14 +58,14 @@
     <ClInclude Include="cAsteroidBehaviour.h">
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
-    <ClInclude Include="Wand.h">
-      <Filter>Wands</Filter>
+    <ClInclude Include="cLevelLoader.h">
+      <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="Powerup.h">
-      <Filter>Wands</Filter>
-    </ClInclude>
-    <ClInclude Include="PowerupManager.h">
-      <Filter>Wands</Filter>
+    <ClInclude Include="Powerup.h" />
+    <ClInclude Include="PowerupManager.h" />
+    <ClInclude Include="Wand.h" />
+    <ClInclude Include="cRandomBehaviour.h">
+      <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -87,8 +87,8 @@
     <Filter Include="Enemy\Behaviour">
       <UniqueIdentifier>{3351c318-6545-4f8d-96c4-1390e5251a17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Wands">
-      <UniqueIdentifier>{f87156c0-42e5-4172-9ff7-647dca5c2e46}</UniqueIdentifier>
+    <Filter Include="Level">
+      <UniqueIdentifier>{9e08edea-ffa9-4e19-b2e3-404dc8e09053}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
