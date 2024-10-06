@@ -35,6 +35,7 @@
     <ClCompile Include="cEnemySpawner.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="cFollowBehaviour.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -73,6 +74,7 @@
     <ClInclude Include="cEnemySpawner.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="cFollowBehaviour.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">
