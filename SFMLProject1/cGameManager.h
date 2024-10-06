@@ -4,14 +4,15 @@
 class cGameManager
 {
 public:
+	cGameManager();
 
 private:
 	// Player Sprites
-	sf::Sprite* firstPlayerSprite;
-	sf::Sprite* secondPlayerSprite;
+	sf::Sprite* m_firstPlayerSprite;
+	sf::Sprite* m_secondPlayerSprite;
 
 	// Enemy Sprites
-	sf::Sprite* asteroidEnemySprite;
+	sf::Sprite* m_asteroidEnemySprite;
 	//sf::Sprite* 
 };
 

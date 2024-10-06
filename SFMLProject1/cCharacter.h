@@ -5,9 +5,6 @@
 #include <string>
 #include "MathLibrary.h"
 
-// TO DO - REMOVE. Unnecessary
-enum CharacterType {Player, Enemy};
-
 class cCharacter
 {
 public:
@@ -15,67 +12,63 @@ public:
 	// TODO - Move character name to player if needed.
 	cCharacter(std::string _FilePath, std::string _CharacterName, sf::Vector2f _StartPosition);
 
-
+	// setHealth function used for setting health to specific numbers, instead of applying healing or damage as in update health. 
 	void setHealth(float _Health);
-	float getHealth() { return currentHealth; };
 
-	// TODO - combine into "updateHealth" takes in negative or possitive for healing / damage
-	void takeDamage(float _Damage);
-	void restoreHealth(float _Healing);
+	// Update health function, which works for positive and negative values. To be used for healing and damaging.
+	void updateHealth(float _Change);
 
-	// TODO - Make virtual for enemies and players to 
-	void healthCheck();
+	// Virtual health check for enemies and players to use and redefine as necessary.
+	// will check the character's health against its max and min, and runs necessary functions depending on the health value
+	virtual void healthCheck();
 
-	void setSprite(std::string _FilePath);
-	void setWindowRef(sf::RenderWindow* _window) { windowRef = _window; };
+	// Changed setSprite to virtual as it will be used only for the enemies
+	virtual void setSprite(std::string _FilePath);
 
-	// TODO - lower upper 
-	void SetPosition(sf::Vector2f _Pos) { characterSprite.setPosition(_Pos); characterPosition = _Pos; }
-	sf::Vector2f getPosition() { return characterSprite.getPosition(); };
+	void setWindowRef(sf::RenderWindow* _window) { p_windowRef = _window; };
 
-	// TODO - Move to player
-	std::string characterName;
+	// DONE - lower upper 
+	void setPosition(sf::Vector2f _Pos) { m_characterSprite.setPosition(_Pos); m_characterPosition = _Pos; }
+	sf::Vector2f getPosition() { return m_characterSprite.getPosition(); };
 
-	// TODO - Move to player and fix properly. 
-	void rotateCharacter(int _Direction);
 
-	// TODO - Remove as convert is in the math library
-	// TODO - Add set rotation
-	void convertRotation();
-	
-	// TODO - Make virtual or move into child classes as needed
-	void moveCharacter();
 
-	// TODO - Lower upper. 
-	// TODO - return pointer instead of value
-	sf::Sprite GetSprite();
+	// DONE - Remove as convert is in the math library
+	// DONE - Add set rotation
+	//void convertRotation();
+	void setRotation(float _Rotation);
+
+	// DONE - Make virtual or move into child classes as needed
+	virtual void moveCharacter();
+
+	// DONE - Lower upper. 
+	// DONE - return pointer instead of value
+	sf::Sprite* getSprite();
 
 protected:
-	
-	// Constant variables. These will not change. Therefore, have been made as const. 
 
-	// TODO - Not const max health. make member variable of child classes
-	// TODO - change name as no longer const 
-	const float MAX_HEALTH = 100.0f;
+	// maxHealth and currentHealth  of characters, will be overriden by child classes, so was not set to const. 
+	float m_fmaxHealth;
+	float m_fcurrentHealth;
+
+
+	// Constant variables. These will not change. Therefore, have been made as const. 
 	const float MAX_SPEED = 50.0f;
 	const float SPEED_SCALAR = 10.0f;
+		
 
+	sf::RenderWindow* p_windowRef;
 
-	// TODO - Add m_ for member variables
-	// TODO - Add variable types to names to f.. i... etc
-	// TODO - Add p for pointer variable names
-	float currentHealth;
+	sf::Sprite m_characterSprite;
+	sf::Sprite* p_Sprite;
+	sf::Texture m_characterTexture;
 
-	sf::RenderWindow* windowRef;
-
-	sf::Sprite characterSprite;
-	sf::Texture characterTexture;
-
-	sf::Vector2f characterPosition;
+	sf::Vector2f m_characterPosition;
 	
-	float characterRotation;
-	float radiansRotation;
-
+	// rotation values used for rotating the sprite
+	float m_fcharacterRotation;
+	// radians rotations to be used for moving, as c++ trigonometry functions use radians instead of degrees
+	float m_fradiansRotation;
 	
 };
 

@@ -5,33 +5,24 @@ cCharacter::cCharacter(std::string _FilePath, std::string _CharacterName, sf::Ve
 	// TODO - set from pointer in game manager class
 	setSprite(_FilePath);
 
-	characterSprite.setOrigin(characterTexture.getSize().x / 2, characterTexture.getSize().y / 2);
-	characterPosition = _StartPosition;
-	characterSprite.setPosition(characterPosition);
+	m_characterSprite->setOrigin(m_characterTexture.getSize().x / 2, m_characterTexture.getSize().y / 2);
+	m_characterPosition = _StartPosition;
+	m_characterSprite->setPosition(m_characterPosition);
 
-	// TODO - remove as characte name is not necessary
-	characterName = _CharacterName;
+
 
 }
 
 void cCharacter::setHealth(float _Health)
 {
-	// TODO - Variable names
-	currentHealth = _Health;
+	
+	m_fcurrentHealth = _Health;
 	healthCheck();
 }
 
-void cCharacter::takeDamage(float _Damage)
+void cCharacter::updateHealth(float _Change)
 {
-	// TODO - Variable names
-	currentHealth -= _Damage;
-	healthCheck();
-}
-
-void cCharacter::restoreHealth(float _Healing)
-{
-	// TODO - Variable names
-	currentHealth += _Healing; 
+	m_fcurrentHealth += _Change;
 	healthCheck();
 }
 
@@ -40,13 +31,13 @@ void cCharacter::healthCheck()
 	// TODO - Will be changed when update health is modified
 
 	// Check if the character health has gone above its maximum, and set the value to the maximum instead.
-	if (currentHealth > MAX_HEALTH)
+	if (m_fcurrentHealth > m_fmaxHealth)
 	{
-		currentHealth = MAX_HEALTH;
+		m_fcurrentHealth = m_fmaxHealth;
 	}
 
 	// Check if health has reached or gone below 0, then call appropriate death function for the 
-	else if (currentHealth <= 0)
+	else if (m_fcurrentHealth <= 0)
 	{
 		// run death functions
 	}
@@ -59,41 +50,35 @@ void cCharacter::healthCheck()
 // TODO - pass in reference to sprite not file path
 void cCharacter::setSprite(std::string _FilePath)
 {
-	characterTexture.loadFromFile(_FilePath);
-	characterSprite.setTexture(characterTexture);
+	m_characterTexture.loadFromFile(_FilePath);
+	m_characterSprite.setTexture(m_characterTexture);
 }
 
-
-// TODO - being moved to player
-void cCharacter::rotateCharacter(int _Direction)
+void cCharacter::setPosition(sf::Vector2f _pos)
 {
-	// Left rotation if the direction was given as negative, right rotation if the direction was positive
-	int rotationDirection = 0;
-	if (_Direction < 0) { rotationDirection = -1;}
-	else if (_Direction > 0){ rotationDirection = 1;}
-
-	characterRotation += rotationDirection * 5.0f;
-	characterSprite.setRotation(characterRotation);
-	convertRotation();
-
-
+	m_characterSprite.setPosition(_pos);
+	m_characterPosition = _pos;
 }
 
-// TODO - Remove. Will be in math library
-void cCharacter::convertRotation()
+sf::Vector2f cCharacter::getPosition()
 {
-	//radiansRotation = characterRotation * (M_PI / 180);
+	return m_characterPosition;
 }
 
-// TODO - Can probably remove or make virtual, as child classes will have their own 
+void cCharacter::setRotation(float _Rotation)
+{
+	m_fcharacterRotation = _Rotation;
+}
+
+
 void cCharacter::moveCharacter()
 {
-	characterSprite.move(SPEED_SCALAR * sin(radiansRotation), SPEED_SCALAR * -cos(radiansRotation));
-	//SetPosition(sf::Vector2f(characterPosition + (SPEED_SCALAR * sin(radiansRotation), SPEED_SCALAR * -cos(radiansRotation))));
+	m_characterSprite.move(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
 }
 
-// TODO - return pointer to sprite
-sf::Sprite cCharacter::GetSprite()
+
+// DONE - return pointer to sprite
+sf::Sprite* cCharacter::getSprite()
 {
-	return characterSprite;
+	return p_Sprite;
 }
