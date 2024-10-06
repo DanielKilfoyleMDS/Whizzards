@@ -27,9 +27,11 @@ void cEnemy::tick()
 			}
 		}
 	}
-	else
+	
+	if (currentHealth <= 0)
 	{
-		//Unspawn Enemy
+		//UNLOAD
+		m_bAwake = false;
 	}
 	
 }

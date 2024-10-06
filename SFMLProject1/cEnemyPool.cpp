@@ -67,9 +67,9 @@ void cEnemyPool::tickEnemies()
 		{
 			//If the current enemy has been set to be asleep, it is "Dead"
 			//So we unload it
-			m_enemiesActive.erase(m_enemiesInactive.begin() + EnemyCount - 1);
+			m_enemiesActive.erase(m_enemiesActive.begin() + EnemyCount);
+
 			m_enemiesInactive.push_back(Enemy);
-			
 		}
 	}
 }

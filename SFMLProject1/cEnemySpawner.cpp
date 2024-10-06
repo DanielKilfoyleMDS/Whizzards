@@ -32,6 +32,8 @@ cEnemySpawner::~cEnemySpawner()
 
 void cEnemySpawner::WaveManager()
 {
+	m_EnemyPoolRef->tickEnemies();
+
 	//Check if there are no enemies left on screen
 	if (m_EnemyPoolRef->GetActiveEnemies().size() == 0)
 	{
@@ -42,7 +44,7 @@ void cEnemySpawner::WaveManager()
 	//Check if there are still points to spawn and room for another enemy
 	if (m_icurrentPoints > 0 && m_EnemyPoolRef->GetActiveEnemies().size() < m_imaxEnemiesAtOnce) 
 	{
-		SpawnEnemy();
+		//Spawning additional enemies per wave can go here - BETA SPRINT GOAL
 	}
 
 }

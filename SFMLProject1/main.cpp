@@ -36,7 +36,6 @@ int main()
     while (window.isOpen())
     {
 
-
         //Receive and deal with events here (mouse clicks, key events, window buttons etc).
         sf::Event event;
         while (window.pollEvent(event))
@@ -69,6 +68,16 @@ int main()
                 Player2->movePlayer();
             }
 
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+            {
+                std::cout<< "Enemies: " << Pool.GetActiveEnemies().size() << std::endl;
+                std::cout << "Inactive: " << Pool.GetInactiveEnemies().size() << std::endl;
+                for (auto iter : Pool.GetActiveEnemies())
+                {
+                    std::cout << "Enemy Health :" << iter->getHealth() << " Enemy Awake :" << iter->getAwake() << std::endl;
+                }
+            }
+
             switch (event.type)
             {
             case sf::Event::Closed:
@@ -92,15 +101,6 @@ int main()
 
         window.clear();
 
-        //Do all your drawing in here/////
-
-        //window.draw(map);
-        //window.draw(Player1->playerSprite);
-        //window.draw(Player2->playerSprite);
-        //for (auto iter : Pool.GetActiveEnemies())
-        //{
-        //    window.draw(iter->GetSprite());
-        //}
 
         if (m_Cameras.UseCombinedView())
         {
