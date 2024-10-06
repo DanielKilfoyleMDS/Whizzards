@@ -1,4 +1,5 @@
 #include "Powerup.h"
+#include <iostream>
 
 Powerup::Powerup(WandType wandType, sf::Vector2f pos) : wand(wandType, pos), velocity(sf::Vector2f(0.f, 20.f)) {
     std::cout << "Powerup created at: " << pos.x << ", " << pos.y << " with WandType: " << static_cast<int>(wandType) << std::endl;

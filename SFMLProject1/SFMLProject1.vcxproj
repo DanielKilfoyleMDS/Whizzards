@@ -153,8 +153,12 @@
     <ClCompile Include="cEnemyPool.cpp" />
     <ClCompile Include="cGameCameras.cpp" />
     <ClCompile Include="cLevelLoader.cpp" />
+    <ClCompile Include="cRandomBehaviour.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
+    <ClCompile Include="Powerup.cpp" />
+    <ClCompile Include="PowerupManager.cpp" />
+    <ClCompile Include="Wand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cCharacter.h" />
@@ -163,8 +167,12 @@
     <ClInclude Include="cAsteroidBehaviour.h" />
     <ClInclude Include="cEnemyPool.h" />
     <ClInclude Include="cLevelLoader.h" />
+    <ClInclude Include="cRandomBehaviour.h" />
     <ClInclude Include="MathLibrary.h" />
     <ClInclude Include="PlayerCharacter.h" />
+    <ClInclude Include="Powerup.h" />
+    <ClInclude Include="PowerupManager.h" />
+    <ClInclude Include="Wand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cGameCameras.h" />

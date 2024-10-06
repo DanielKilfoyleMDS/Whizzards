@@ -26,6 +26,12 @@
     <ClCompile Include="cLevelLoader.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="Powerup.cpp" />
+    <ClCompile Include="PowerupManager.cpp" />
+    <ClCompile Include="Wand.cpp" />
+    <ClCompile Include="cRandomBehaviour.cpp">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -54,6 +60,12 @@
     </ClInclude>
     <ClInclude Include="cLevelLoader.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Powerup.h" />
+    <ClInclude Include="PowerupManager.h" />
+    <ClInclude Include="Wand.h" />
+    <ClInclude Include="cRandomBehaviour.h">
+      <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

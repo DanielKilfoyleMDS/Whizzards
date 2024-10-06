@@ -5,11 +5,17 @@
 #include "cEnemyPool.h"
 #include "cLevelLoader.h"
 
+#include <cstdlib>
+#include <ctime>
+
 int main()
 {
+    srand(static_cast <unsigned> (time(0)));
+
     //Create the window with a set resolution:
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
-    
+    window.setFramerateLimit(60);
+
     PlayerCharacter* Player1 = new PlayerCharacter("Resources/Textures/Sprites/Blue Player.png", "Player 1");
     PlayerCharacter* Player2 = new PlayerCharacter("Resources/Textures/Sprites/Red Player.png", "Player 2");
 
@@ -21,6 +27,7 @@ int main()
     for (int i = 0; i < 11; i++)
     {
         Pool.LoadAsteroidEnemy(sf::Vector2f(i * 10,10),sf::Vector2f(1,1),0.1);
+        Pool.LoadRandomEnemy(sf::Vector2f(20, i * 20));
     }
 
     //Temporary Map - Creates texture, loads temp file, changes positioning

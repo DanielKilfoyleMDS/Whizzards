@@ -1,4 +1,5 @@
 #include "PowerupManager.h"
+#include "PlayerCharacter.h"
 
 PowerupManager::PowerupManager() {
     // Initialize the manager (e.g., initial powerups if needed)
