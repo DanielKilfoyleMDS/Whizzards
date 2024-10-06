@@ -23,6 +23,9 @@
     <ClCompile Include="cAsteroidBehaviour.cpp">
       <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
+    <ClCompile Include="cLevelLoader.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -49,6 +52,9 @@
     <ClInclude Include="cAsteroidBehaviour.h">
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
+    <ClInclude Include="cLevelLoader.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">
@@ -68,6 +74,9 @@
     </Filter>
     <Filter Include="Enemy\Behaviour">
       <UniqueIdentifier>{3351c318-6545-4f8d-96c4-1390e5251a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{9e08edea-ffa9-4e19-b2e3-404dc8e09053}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
