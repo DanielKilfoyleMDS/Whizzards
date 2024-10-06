@@ -14,9 +14,9 @@ cEnemyPool::~cEnemyPool()
 {
 }
 
-//TODO - return bool
+
 //TODO - Debug mode printout active/inactive
-bool cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed)
+bool cEnemyPool::loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed)
 {
 	if (m_enemiesInactive.size() > 0)
 	{
@@ -31,12 +31,13 @@ bool cEnemyPool::LoadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movemen
 		Asteroid->setState(Idle);
 		Asteroid->setAwake(true);
 		Asteroid->setBehaviour(&m_AsteroidBehaviour);
+		Asteroid->SetDamageStrength(1);
 		return true;
 	} 
 	return false;
 }
 
-bool cEnemyPool::LoadRandomEnemy(sf::Vector2f _position)
+bool cEnemyPool::loadRandomEnemy(sf::Vector2f _position)
 {
 	if (m_enemiesInactive.size() > 0)
 	{
@@ -50,6 +51,7 @@ bool cEnemyPool::LoadRandomEnemy(sf::Vector2f _position)
 		Asteroid->setState(Idle);
 		Asteroid->setAwake(true);
 		Asteroid->setBehaviour(&m_RandomBehaviour);
+		Asteroid->SetDamageStrength(2);
 		return true;
 	}
 
@@ -67,9 +69,9 @@ void cEnemyPool::tickEnemies()
 		{
 			//If the current enemy has been set to be asleep, it is "Dead"
 			//So we unload it
-			m_enemiesActive.erase(m_enemiesInactive.begin() + EnemyCount - 1);
+			m_enemiesActive.erase(m_enemiesActive.begin() + EnemyCount);
+
 			m_enemiesInactive.push_back(Enemy);
-			
 		}
 	}
 }

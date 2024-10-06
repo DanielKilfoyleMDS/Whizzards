@@ -61,7 +61,12 @@ inline float RadiansToDegrees(float _Radians)
 	return _Radians * (180/ M_PI);
 }
 
-inline float randRange(float _min, float _max)
+inline float randRangeFloat(float _min, float _max)
 {
 	return _min + static_cast <float>(rand() / (RAND_MAX / (_max - _min)));
+}
+
+inline float randRangeInt(int _min, int _max)
+{
+	return _min + fmod(rand(), (_max + 1) - _min);
 }

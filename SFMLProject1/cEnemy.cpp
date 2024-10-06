@@ -27,9 +27,11 @@ void cEnemy::tick()
 			}
 		}
 	}
-	else
+	
+	if (currentHealth <= 0)
 	{
-		//Unspawn Enemy
+		//UNLOAD
+		m_bAwake = false;
 	}
 	
 }
@@ -83,4 +85,15 @@ void cEnemy::setMoveTime(float _moveTime)
 float cEnemy::getMoveTime()
 {
 	return m_fMoveTime;
+}
+
+void cEnemy::OtherCollide(cCharacter* _Character)
+{
+	//THIS IS ALWAYS A PLAYER!!!
+	_Character->setHealth(_Character->getHealth() - m_fdamage);
+}
+
+void cEnemy::SetDamageStrength(float _Damage)
+{
+	m_fdamage = _Damage;
 }
