@@ -1,10 +1,10 @@
 #include "cPlayer.h"
+#include "SFML/Graphics.hpp"
 
-cPlayer::cPlayer(sf::Sprite _sprite, std::string _playerName, sf::Vector2f _position)
+cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _position)
 	: cCharacter(_sprite, _position)
 {
 	m_playerName = _playerName;
-	m_characterPosition = _position;
 
 	if (m_playerName == "Player 1")
 	{
@@ -41,7 +41,7 @@ void cPlayer::rotateCharacter(sf::Keyboard::Key _key, int _scalar)
 		return;
 
 	m_fcharacterRotation += irotationDirection * _scalar * 1.0f;
-	m_characterSprite.setRotation(m_fcharacterRotation);
+	m_characterSprite->setRotation(m_fcharacterRotation);
 	m_fradiansRotation = DegreesToRadians(m_fcharacterRotation);
 
 }
@@ -80,8 +80,10 @@ void cPlayer::processInput()
 
 void cPlayer::movePlayer()
 {
-	std::cout << m_playerName << " position: " << m_characterSprite.getPosition().x << " , " << m_characterSprite.getPosition().y << std::endl;
-	m_characterSprite.move(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
+	std::cout << m_playerName << " position: " << m_characterSprite->getPosition().x << " , " << m_characterSprite->getPosition().y << std::endl;
+	//m_characterSprite->move
+	sf::Vector2f NewPos(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
+	setPosition(getPosition() + NewPos);
 	//m_playerSprite.setPosition()
 	
 }
@@ -89,9 +91,9 @@ void cPlayer::movePlayer()
 void cPlayer::draw()
 {
 	
-	m_characterSprite.setOrigin(m_characterSprite.getTexture()->getSize().x / 2, m_characterSprite.getTexture()->getSize().y / 2);
+	m_characterSprite->setOrigin(m_characterSprite->getTexture()->getSize().x / 2, m_characterSprite->getTexture()->getSize().y / 2);
 
-	p_windowRef->draw(m_characterSprite);
+	//p_windowRef->draw(m_characterSprite);
 }
 
 void cPlayer::castSpell()

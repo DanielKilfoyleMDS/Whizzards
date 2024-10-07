@@ -13,7 +13,7 @@ enum EnemyState
 class cEnemy : public cCharacter
 {
 public:
-	cEnemy(std::string _filePath, std::string _characterName, sf::Vector2f _startPosition);
+	cEnemy(sf::Sprite* _sprite, sf::Vector2f _startPosition);
 	~cEnemy();
 
 	void tick();

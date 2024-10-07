@@ -17,6 +17,9 @@ public:
 
 	void SetViewBothPlayers();
 
+	void Render(class cCharacter* _Character, sf::RenderWindow* _window);
+	void Render(sf::Sprite* _Sprite, sf::RenderWindow* _window);
+
 	//TODO Add Line for Clarity
 
 private:

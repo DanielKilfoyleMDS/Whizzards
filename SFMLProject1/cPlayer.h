@@ -5,7 +5,7 @@
 class cPlayer : public cCharacter
 {
 public:
-	cPlayer(sf::Sprite _Sprite, std::string _PlayerName, sf::Vector2f _Position);
+	cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position);
 	
 	
 	void rotateCharacter(sf::Keyboard::Key _key, int _scalar);

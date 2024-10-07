@@ -10,7 +10,6 @@ cGameManager::cGameManager()
 	m_AsteroidTexture.loadFromFile("Resources/Textures/Sprites/EnemyDefault.png");
 	m_asteroidEnemySprite.setTexture(m_AsteroidTexture);
 
-	sf::Texture m_DefaultEnemyTexture;
 	m_DefaultEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyDefault.png");
 	m_defaultEnemySprite.setTexture(m_DefaultEnemyTexture);
 

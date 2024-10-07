@@ -25,5 +25,8 @@ public:
 
 	sf::Sprite m_blueProjectileSprite;
 	sf::Sprite m_redProjectileSprite;
+
+	//Textures
+	sf::Texture m_DefaultEnemyTexture;
 };
 

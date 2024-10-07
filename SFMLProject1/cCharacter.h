@@ -10,7 +10,7 @@ class cCharacter
 public:
 	// TODO pass in sprite instead of load on character creation -  In game manager
 	// TODO - Move character name to player if needed.
-	cCharacter(sf::Sprite _sprite, sf::Vector2f _StartPosition);
+	cCharacter(sf::Sprite* _sprite, sf::Vector2f _StartPosition);
 
 	// setHealth function used for setting health to specific numbers, instead of applying healing or damage as in update health. 
 	void setHealth(float _Health);
@@ -29,8 +29,8 @@ public:
 	void setWindowRef(sf::RenderWindow* _window) { p_windowRef = _window; };
 
 	// DONE - lower upper 
-	void setPosition(sf::Vector2f _Pos) { m_characterSprite.setPosition(_Pos); m_characterPosition = _Pos; }
-	sf::Vector2f getPosition() { return m_characterSprite.getPosition(); };
+	virtual void setPosition(sf::Vector2f _Pos) { m_characterPosition = _Pos;}
+	virtual sf::Vector2f getPosition() { return m_characterPosition; };
 
 
 
@@ -41,7 +41,7 @@ public:
 	// DONE - Make virtual or move into child classes as needed
 	virtual void moveCharacter();
 
-	sf::Sprite getSprite();
+	sf::Sprite* getSprite();
 
 protected:
 
@@ -57,7 +57,7 @@ protected:
 
 	sf::RenderWindow* p_windowRef;
 
-	sf::Sprite m_characterSprite;
+	sf::Sprite* m_characterSprite;
 	sf::Sprite* p_Sprite;
 	sf::Texture m_characterTexture;
 

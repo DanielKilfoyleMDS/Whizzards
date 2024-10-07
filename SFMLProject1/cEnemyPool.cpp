@@ -1,11 +1,13 @@
 #include "cEnemyPool.h"
 
-cEnemyPool::cEnemyPool(int _enemyCount)
+cEnemyPool::cEnemyPool(int _enemyCount, sf::Sprite* _defaultSprite)
 {
+	m_DefaultSprite = _defaultSprite;
 	for (int i = 0; i < _enemyCount; i++)
 	{
 		//Position should be set to out of map location, 0 0 for now
-		cEnemy* Enemy = new cEnemy("Resources/Textures/Sprites/EnemyDefault.png", "Enemy", sf::Vector2f(0, 0));
+
+		cEnemy* Enemy = new cEnemy(_defaultSprite, sf::Vector2f(0, 0));
 		m_enemiesInactive.push_back(Enemy);
 	}
 }
@@ -24,7 +26,7 @@ bool cEnemyPool::loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movemen
 		m_enemiesActive.push_back(Asteroid);
 		m_enemiesInactive.erase(m_enemiesInactive.begin());
 
-		Asteroid->SetPosition(_position);
+		Asteroid->setPosition(_position);
 		//Asteroid->setSprite();
 		Asteroid->setMovement(_movement);
 		Asteroid->setHealth(10); //TODO get variables from gamemanager not hardcoded
@@ -45,7 +47,7 @@ bool cEnemyPool::loadRandomEnemy(sf::Vector2f _position)
 		m_enemiesActive.push_back(Asteroid);
 		m_enemiesInactive.erase(m_enemiesInactive.begin());
 
-		Asteroid->SetPosition(_position);
+		Asteroid->setPosition(_position);
 		Asteroid->setHealth(10);
 
 		Asteroid->setState(Idle);

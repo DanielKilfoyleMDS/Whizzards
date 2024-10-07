@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 #include "SFML/Graphics.hpp"
 
 static float M_PI = 3.141592653f; 

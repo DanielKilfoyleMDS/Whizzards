@@ -1,8 +1,8 @@
 #include "cEnemy.h"
 
 
-cEnemy::cEnemy(std::string _filePath, std::string _characterName, sf::Vector2f _startPosition)
-	: cCharacter(_filePath, _characterName, _startPosition)
+cEnemy::cEnemy(sf::Sprite* _sprite, sf::Vector2f _startPosition)
+	: cCharacter(_sprite, _startPosition)
 {
 	//Runs original constructor and then additional logic below
 	m_bAwake = false;
@@ -28,7 +28,7 @@ void cEnemy::tick()
 		}
 	}
 	
-	if (currentHealth <= 0)
+	if (m_fcurrentHealth <= 0)
 	{
 		//UNLOAD
 		m_bAwake = false;

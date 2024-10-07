@@ -1,12 +1,14 @@
 #include "cCharacter.h"
 
-cCharacter::cCharacter(sf::Sprite _sprite, sf::Vector2f _StartPosition)
+cCharacter::cCharacter(sf::Sprite* _sprite, sf::Vector2f _StartPosition)
 {
 
 	m_characterSprite = _sprite;
-	m_characterSprite.setOrigin(m_characterSprite.getTexture()->getSize().x / 2, m_characterSprite.getTexture()->getSize().y / 2);
+	m_characterSprite->setOrigin(m_characterSprite->getTexture()->getSize().x / 2, m_characterSprite->getTexture()->getSize().y / 2);
 	m_characterPosition = _StartPosition;
-	m_characterSprite.setPosition(m_characterPosition);
+	m_characterSprite->setPosition(m_characterPosition);
+	
+	m_fmaxHealth = 100;
 
 
 
@@ -55,7 +57,7 @@ void cCharacter::healthCheck()
 void cCharacter::setSprite(std::string _FilePath)
 {
 	m_characterTexture.loadFromFile(_FilePath);
-	m_characterSprite.setTexture(m_characterTexture);
+	m_characterSprite->setTexture(m_characterTexture);
 }
 
 void cCharacter::setRotation(float _Rotation)
@@ -71,12 +73,12 @@ float cCharacter::getRotation()
 
 void cCharacter::moveCharacter()
 {
-	m_characterSprite.move(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
+	m_characterSprite->move(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
 }
 
 
 // DONE - return pointer to sprite
-sf::Sprite cCharacter::getSprite()
+sf::Sprite* cCharacter::getSprite()
 {
 	return m_characterSprite;
 }

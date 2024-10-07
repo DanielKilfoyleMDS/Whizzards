@@ -1,5 +1,6 @@
 #include "cGameCameras.h"
 #include <iostream>
+#include "cCharacter.h"
 #include "MathLibrary.h"
 
 cGameCameras::cGameCameras(sf::RenderWindow* _window, int _levelXSize, int _levelYSize)
@@ -72,6 +73,19 @@ void cGameCameras::SetViewBothPlayers()
 	m_playerCombinedView->setCenter(m_secondPlayerView->getCenter() + Normalize(m_playerCameraRelativeVector) * (m_fcameraCurrentDistance/2));
 
 	m_windowRef->setView(*m_playerCombinedView);
+}
+
+void cGameCameras::Render(cCharacter* _Character, sf::RenderWindow* _window)
+{
+	sf::Sprite* RenderSprite = _Character->getSprite();
+	RenderSprite->setPosition(_Character->getPosition());
+	//RenderSprite->setRotation(_Character->getRotation());
+	_window->draw(*RenderSprite);
+}
+
+void cGameCameras::Render(sf::Sprite* _Sprite, sf::RenderWindow* _window)
+{
+	_window->draw(*_Sprite);
 }
 
 void cGameCameras::UpdateCameraRelative(sf::Vector2f _playerOnePosition, sf::Vector2f _playerTwoPosition)

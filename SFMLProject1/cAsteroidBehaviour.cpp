@@ -61,7 +61,7 @@ void cAsteroidBehaviour::Attack(cEnemy* _parent)
 void cAsteroidBehaviour::Move(cEnemy* _parent)
 {
 	sf::Vector2f NewPosition = _parent->getPosition() + _parent->getMovement();
-	_parent->SetPosition(NewPosition);
+	_parent->setPosition(NewPosition);
 
 	//TODO - ScreenWrap
 }

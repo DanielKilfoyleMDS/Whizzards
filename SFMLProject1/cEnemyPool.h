@@ -5,7 +5,7 @@
 class cEnemyPool
 {
 public:
-	cEnemyPool(int _enemyCount);
+	cEnemyPool(int _enemyCount, sf::Sprite* _defaultSprite);
 	~cEnemyPool();
 
 	bool loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed);
@@ -23,5 +23,8 @@ private:
 
 	cAsteroidBehaviour m_AsteroidBehaviour;
 	cRandomBehaviour m_RandomBehaviour;
+
+	sf::Sprite* m_AsteroidSprite = nullptr;
+	sf::Sprite* m_DefaultSprite = nullptr;
 };
 

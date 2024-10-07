@@ -38,6 +38,7 @@ void cEnemySpawner::WaveManager()
 	if (m_EnemyPoolRef->GetActiveEnemies().size() == 0)
 	{
 		m_icurrentWave++;
+		std::cout << "StartingWave" << std::endl;
 		StartWave();
 	}
 	

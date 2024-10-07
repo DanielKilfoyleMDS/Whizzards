@@ -1,8 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "PlayerCharacter.h"
 #include "cGameCameras.h"
-#include "cEnemyPool.h"
 #include "cLevelLoader.h"
 #include "cPlayer.h"
 #include "vector"
@@ -11,6 +9,7 @@
 #include "cProjectile.h"
 #include <SFML/System/Clock.hpp>
 #include "cGameManager.h"
+#include "cEnemySpawner.h"
 
 
 cProjectile* CreateProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rotation)
@@ -40,8 +39,8 @@ int main()
     sf::Sprite* secondPlayerSprite = nullptr;
     //secondPlayerSprite->setTexture(secondPlayerTexture);
 
-    cPlayer* Player1 = new cPlayer(Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(400, 300));
-    cPlayer* Player2 = new cPlayer(Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(500, 300));
+    cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(400, 300));
+    cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(500, 300));
 
     sf::Texture blueProjectileTexture;
     blueProjectileTexture.loadFromFile("Resources/Textures/Sprites/Projectile Blue.png");
@@ -49,18 +48,11 @@ int main()
     blueProjectileSprite.setTexture(blueProjectileTexture);
     
 
-
-
     std::vector<cProjectile* > activeProjectiles;
 
-    cGameCameras m_Cameras(&window, 3000,3000);
-
-    cEnemyPool Pool(200);
-    for (int i = 0; i < 11; i++)
-    {
-        Pool.LoadAsteroidEnemy(sf::Vector2f(i * 10,10),sf::Vector2f(1,1),0.1);
-        Pool.LoadRandomEnemy(sf::Vector2f(20, i * 20));
-    }
+    cGameCameras m_Cameras(&window, 3000, 3000);
+    cEnemyPool Pool(200, &Manager.m_defaultEnemySprite);
+    cEnemySpawner Spawner(10, 5, &Pool);
 
     //Temporary Map - Creates texture, loads temp file, changes positioning
     sf::Texture mapTex;
@@ -76,8 +68,6 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-
-
 
             switch (event.type)
             {
@@ -118,41 +108,30 @@ int main()
 
         }
 
+
+
+
         for (auto projectile : activeProjectiles)
         {
             projectile->tick();
         }
 
         m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
-
-        for (auto iter : Pool.GetActiveEnemies())
-        {
-            iter->tick();
-        }
-
+        Spawner.WaveManager();
 
         window.clear();
-
-        //Do all your drawing in here/////
-
-        //window.draw(map);
-        //window.draw(Player1->playerSprite);
-        //window.draw(Player2->playerSprite);
-        //for (auto iter : Pool.GetActiveEnemies())
-        //{
-        //    window.draw(iter->GetSprite());
-        //}
 
         if (m_Cameras.UseCombinedView())
         {
             //Render everything once
             m_Cameras.SetViewBothPlayers();
-            window.draw(map);
-            window.draw(Player1->getSprite());
-            window.draw(Player2->getSprite());
+            m_Cameras.Render(&map, &window);
+            m_Cameras.Render(Player1, &window);
+            m_Cameras.Render(Player2, &window);
+
             for (auto iter : Pool.GetActiveEnemies())
             {
-                window.draw(iter->getSprite());
+                m_Cameras.Render(iter, &window);
             }
             for (auto iter : activeProjectiles)
             {
@@ -162,13 +141,13 @@ int main()
         else
         {
             //Render everything twice
-            m_Cameras.setViewFirstPlayer();
-            window.draw(map);
-            window.draw(Player1->getSprite());
-            window.draw(Player2->getSprite());
+            m_Cameras.Render(&map, &window);
+            m_Cameras.Render(Player1, &window);
+            m_Cameras.Render(Player2, &window);
             for (auto iter : Pool.GetActiveEnemies())
             {
-                window.draw(iter->getSprite());
+
+                m_Cameras.Render(iter, &window);
             }
             for (auto iter : activeProjectiles)
             {
@@ -176,12 +155,12 @@ int main()
             }
 
             m_Cameras.setViewSecondPlayer();
-            window.draw(map);
-            window.draw(Player1->getSprite());
-            window.draw(Player2->getSprite());
+            m_Cameras.Render(&map, &window);
+            m_Cameras.Render(Player1, &window);
+            m_Cameras.Render(Player2, &window);
             for (auto iter : Pool.GetActiveEnemies())
             {
-                window.draw(iter->getSprite());
+                m_Cameras.Render(iter, &window);
             }
             for (auto iter : activeProjectiles)
             {

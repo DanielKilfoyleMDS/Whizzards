@@ -45,8 +45,7 @@ void cRandomBehaviour::Move(cEnemy* _parent)
 	if (_parent->getMoveTime() > 0)
 	{
 		sf::Vector2f NewPosition = _parent->getPosition() + _parent->getMovement();
-		_parent->SetPosition(NewPosition);
-		//I guess we decrease movetime in enemy tick to put in deltatime
+		_parent->setPosition(NewPosition);
 	}
 	else
 	{
