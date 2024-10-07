@@ -1,6 +1,7 @@
 #include "cGameCameras.h"
 #include <iostream>
 #include "cCharacter.h"
+#include "cProjectile.h"
 #include "MathLibrary.h"
 
 cGameCameras::cGameCameras(sf::RenderWindow* _window, int _levelXSize, int _levelYSize)
@@ -79,9 +80,19 @@ void cGameCameras::Render(cCharacter* _Character, sf::RenderWindow* _window)
 {
 	sf::Sprite* RenderSprite = _Character->getSprite();
 	RenderSprite->setPosition(_Character->getPosition());
-	//RenderSprite->setRotation(_Character->getRotation());
+	RenderSprite->setRotation(_Character->getRotation());
 	_window->draw(*RenderSprite);
 }
+
+void cGameCameras::Render(cProjectile* _Projectile, sf::RenderWindow* _window)
+{
+	sf::Sprite* RenderSprite = &_Projectile->m_Sprite; //TODO - Getter
+	RenderSprite->setPosition(_Projectile->m_Position);
+	RenderSprite->setRotation(_Projectile->m_fRotation);
+	_window->draw(*RenderSprite);
+}
+
+
 
 void cGameCameras::Render(sf::Sprite* _Sprite, sf::RenderWindow* _window)
 {
