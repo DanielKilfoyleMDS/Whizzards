@@ -141,6 +141,7 @@ int main()
         else
         {
             //Render everything twice
+            m_Cameras.setViewFirstPlayer();
             m_Cameras.Render(&map, &window);
             m_Cameras.Render(Player1, &window);
             m_Cameras.Render(Player2, &window);
@@ -153,8 +154,8 @@ int main()
             {
                 window.draw(iter->m_Sprite);
             }
-
             m_Cameras.setViewSecondPlayer();
+
             m_Cameras.Render(&map, &window);
             m_Cameras.Render(Player1, &window);
             m_Cameras.Render(Player2, &window);

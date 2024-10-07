@@ -6,7 +6,7 @@ enum class WandType { Basic, Spread, Multi };
 class Wand {
 public:
     Wand(WandType type, sf::Vector2f position);
-    void applyEffect(class PlayerCharacter& player);
+    void applyEffect(class cPlayer& player);
     void draw(sf::RenderWindow& window);
     sf::FloatRect getBounds();
     void setPosition(sf::Vector2f position);

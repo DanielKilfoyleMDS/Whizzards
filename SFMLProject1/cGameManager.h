@@ -28,5 +28,12 @@ public:
 
 	//Textures
 	sf::Texture m_DefaultEnemyTexture;
+	sf::Texture m_AsteroidTexture;
+
+	sf::Texture m_firstPlayerTexture;
+	sf::Texture m_secondPlayerTexture;
+
+	sf::Texture m_blueProjectileTexture;
+	sf::Texture m_redProjectileTexture;
 };
 

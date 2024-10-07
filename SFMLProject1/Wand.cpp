@@ -1,6 +1,6 @@
 #include "Wand.h"
 #include <iostream>  // For debug output
-#include "PlayerCharacter.h" 
+#include "cPlayer.h" 
 
 Wand::Wand(WandType type, sf::Vector2f pos) : wandType(type), position(pos) {
     // Commenting out the texture loading logic
@@ -23,7 +23,7 @@ Wand::Wand(WandType type, sf::Vector2f pos) : wandType(type), position(pos) {
     wandSprite.setPosition(position);
 }
 
-void Wand::applyEffect(PlayerCharacter& player) {
+void Wand::applyEffect(cPlayer& player) {
     // Comment out actual logic
     // player.setCurrentWand(wandType);
 

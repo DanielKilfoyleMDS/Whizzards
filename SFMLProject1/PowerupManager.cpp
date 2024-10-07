@@ -1,5 +1,5 @@
 #include "PowerupManager.h"
-#include "PlayerCharacter.h"
+#include "cPlayer.h"
 
 PowerupManager::PowerupManager() {
     // Initialize the manager (e.g., initial powerups if needed)
@@ -21,7 +21,7 @@ void PowerupManager::spawnPowerup(WandType wandType, sf::Vector2f position) {
     powerups.push_back(Powerup(wandType, position));  // Add new powerup to the list
 }
 
-bool PowerupManager::checkCollision(PlayerCharacter& player) {
+bool PowerupManager::checkCollision(cPlayer& player) {
     for (auto it = powerups.begin(); it != powerups.end();) {
         if (player.getBounds().intersects(it->getBounds())) {
             it->getWand().applyEffect(player);  // Apply the wand's effect to the player

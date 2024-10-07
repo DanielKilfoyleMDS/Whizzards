@@ -20,6 +20,9 @@ public:
 	sf::Keyboard::Key forwardMovementKey;
 	sf::Keyboard::Key castSpellKey;
 
+	sf::FloatRect getBounds() {
+		return m_characterSprite->getGlobalBounds();
+	}
 
 
 private:
