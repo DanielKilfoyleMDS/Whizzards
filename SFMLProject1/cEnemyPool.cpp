@@ -1,14 +1,16 @@
 #include "cEnemyPool.h"
 
-cEnemyPool::cEnemyPool(int _enemyCount, sf::Sprite* _defaultSprite)
+cEnemyPool::cEnemyPool(int _enemyCount, sf::Sprite* _defaultSprite, std::vector<cCharacter*>* _collisionVector)
 {
 	m_DefaultSprite = _defaultSprite;
+
 	for (int i = 0; i < _enemyCount; i++)
 	{
 		//Position should be set to out of map location, 0 0 for now
 
 		cEnemy* Enemy = new cEnemy(_defaultSprite, sf::Vector2f(0, 0));
 		m_enemiesInactive.push_back(Enemy);
+		_collisionVector->push_back(Enemy);
 	}
 }
 

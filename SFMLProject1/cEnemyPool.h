@@ -5,7 +5,7 @@
 class cEnemyPool
 {
 public:
-	cEnemyPool(int _enemyCount, sf::Sprite* _defaultSprite);
+	cEnemyPool(int _enemyCount, sf::Sprite* _defaultSprite, std::vector<cCharacter*>* _collisionVector);
 	~cEnemyPool();
 
 	bool loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed);
