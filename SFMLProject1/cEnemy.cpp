@@ -90,6 +90,7 @@ float cEnemy::getMoveTime()
 void cEnemy::OtherCollide(cCharacter* _Character)
 {
 	//THIS IS ALWAYS A PLAYER!!!
+	if(m_bAwake != true) return;
 	_Character->setHealth(_Character->getHealth() - m_fdamage);
 }
 
