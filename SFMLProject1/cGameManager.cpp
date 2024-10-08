@@ -20,7 +20,7 @@ cGameManager::cGameManager()
 	m_firstPlayerSprite.setTexture(m_firstPlayerTexture);
 
 	m_secondPlayerTexture;
-	m_secondPlayerTexture.loadFromFile("Resources/Textures/Sprites/Blue Player.png");
+	m_secondPlayerTexture.loadFromFile("Resources/Textures/Sprites/Red Player.png");
 	m_secondPlayerSprite.setTexture(m_secondPlayerTexture);
 
 	m_blueProjectileTexture;

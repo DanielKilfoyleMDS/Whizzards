@@ -14,9 +14,6 @@
     <ClCompile Include="cGameCameras.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerCharacter.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
     <ClCompile Include="cEnemyBehaviour.cpp">
       <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
@@ -36,6 +33,10 @@
       <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="cFollowBehaviour.cpp" />
+    <ClCompile Include="cGameManager.cpp" />
+    <ClCompile Include="cPlayer.cpp" />
+    <ClCompile Include="cProjectile.cpp" />
+    <ClCompile Include="cCollisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -49,9 +50,6 @@
     </ClInclude>
     <ClInclude Include="cGameCameras.h">
       <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerCharacter.h">
-      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="MathLibrary.h">
       <Filter>Library</Filter>
@@ -75,6 +73,10 @@
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="cFollowBehaviour.h" />
+    <ClInclude Include="cGameManager.h" />
+    <ClInclude Include="cPlayer.h" />
+    <ClInclude Include="cProjectile.h" />
+    <ClInclude Include="cCollisionManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

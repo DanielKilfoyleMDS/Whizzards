@@ -5,6 +5,12 @@
 #include <string>
 #include "MathLibrary.h"
 
+enum CharacterType
+{
+	Player,
+	Enemy
+};
+
 class cCharacter
 {
 public:
@@ -26,14 +32,15 @@ public:
 	// Changed setSprite to virtual as it will be used only for the enemies
 	virtual void setSprite(std::string _FilePath);
 
-	void setWindowRef(sf::RenderWindow* _window) { p_windowRef = _window; };
 
 	// DONE - lower upper 
 	virtual void setPosition(sf::Vector2f _Pos) { m_characterPosition = _Pos;}
 	virtual sf::Vector2f getPosition() { return m_characterPosition; };
 
 
-
+	// Set and get for the character's type
+	void setCharacterType(CharacterType _type);
+	CharacterType getCharacterType();
 
 	void setRotation(float _Rotation);
 	float getRotation();
@@ -54,11 +61,10 @@ protected:
 	const float MAX_SPEED = 50.0f;
 	const float SPEED_SCALAR = 5.0f;
 		
+	CharacterType m_characterType;
 
-	sf::RenderWindow* p_windowRef;
 
 	sf::Sprite* m_characterSprite;
-	sf::Sprite* p_Sprite;
 	sf::Texture m_characterTexture;
 
 	sf::Vector2f m_characterPosition;

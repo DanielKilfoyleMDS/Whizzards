@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cCharacter.cpp" />
+    <ClCompile Include="cCollisionManager.cpp" />
     <ClCompile Include="cEnemy.cpp" />
     <ClCompile Include="cEnemyBehaviour.cpp" />
     <ClCompile Include="cAsteroidBehaviour.cpp" />
@@ -166,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cCharacter.h" />
+    <ClInclude Include="cCollisionManager.h" />
     <ClInclude Include="cEnemy.h" />
     <ClInclude Include="cEnemyBehaviour.h" />
     <ClInclude Include="cAsteroidBehaviour.h" />

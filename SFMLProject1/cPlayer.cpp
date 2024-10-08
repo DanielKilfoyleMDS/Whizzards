@@ -1,7 +1,7 @@
 #include "cPlayer.h"
 #include "SFML/Graphics.hpp"
 
-cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _position)
+cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _position, std::vector <cCharacter*> &_activeCharacters)
 	: cCharacter(_sprite, _position)
 {
 	m_playerName = _playerName;
@@ -23,6 +23,10 @@ cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _pos
 
 	// Setting the current health of a player to max, as they have yet to take damage
 	m_fcurrentHealth = m_fmaxHealth;
+
+	setCharacterType(Player);
+
+	_activeCharacters.push_back(this);
 }
 
 void cPlayer::rotateCharacter(sf::Keyboard::Key _key, int _scalar)
@@ -80,7 +84,7 @@ void cPlayer::processInput()
 
 void cPlayer::movePlayer()
 {
-	std::cout << m_playerName << " position: " << m_characterSprite->getPosition().x << " , " << m_characterSprite->getPosition().y << std::endl;
+	//std::cout << m_playerName << " position: " << m_characterSprite->getPosition().x << " , " << m_characterSprite->getPosition().y << std::endl;
 	//m_characterSprite->move
 	sf::Vector2f NewPos(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
 	setPosition(getPosition() + NewPos);
