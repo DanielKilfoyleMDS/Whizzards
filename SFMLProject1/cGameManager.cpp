@@ -9,12 +9,15 @@ cGameManager::cGameManager()
 
 
 	// Enemy Sprites
-	m_AsteroidTexture;
-	m_AsteroidTexture.loadFromFile("Resources/Textures/Sprites/EnemyDefault.png");
-	m_asteroidEnemySprite.setTexture(m_AsteroidTexture);
+	m_asteroidTexture.loadFromFile("Resources/Textures/Sprites/EnemyAsteroid.png");
+	m_asteroidEnemySprite.setTexture(m_asteroidTexture);
 
-	m_DefaultEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyDefault.png");
-	m_defaultEnemySprite.setTexture(m_DefaultEnemyTexture);
+	m_randomEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyRandom.png");
+	m_randomEnemySprite.setTexture(m_randomEnemyTexture);
+
+
+	m_defaultEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyDefault.png");
+	m_defaultEnemySprite.setTexture(m_defaultEnemyTexture);
 
 
 	// Player Sprites
@@ -37,9 +40,19 @@ cGameManager::cGameManager()
 
 }
 
-sf::Sprite cGameManager::getAsteroidSprite()
+sf::Sprite* cGameManager::getAsteroidSprite()
 {
-	return m_asteroidEnemySprite;
+	return &m_asteroidEnemySprite;
+}
+
+sf::Sprite* cGameManager::getRandomEnemySprite()
+{
+	return &m_randomEnemySprite;
+}
+
+sf::Sprite* cGameManager::getEnemyDefaultSprite()
+{
+	return &m_defaultEnemySprite;
 }
 
 void cGameManager::AddToCollisionList(cCharacter* _Character)
@@ -52,7 +65,7 @@ cCharacter* cGameManager::GetFromCollisionList(int _ListPosition)
 	return m_CollisionList->at(_ListPosition);
 }
 
-std::vector<cCharacter*>* cGameManager::GetCollisionList()
+std::vector<cCharacter*>* cGameManager::getCollisionList()
 {
 	return m_CollisionList;
 }

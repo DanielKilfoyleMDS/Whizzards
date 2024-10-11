@@ -10,6 +10,7 @@ Author : Jayden Burns
 Mail : JaydenBurns@mds.ac.nz
 **************************************************************************/
 #pragma once
+#include "SFML/Graphics.hpp"
 
 class cEnemyBehaviour
 {
@@ -62,6 +63,14 @@ public:
 	Author : Jayden Burns
 	**************************************************************************/
 	virtual void enemyMove(class cEnemy* _parent) = 0;
+
+
+	void setBehaviourSprite(sf::Sprite* _reference);
+
+	void setEnemySprite(class cEnemy* _parent);
+
+
+	sf::Sprite* m_behaviourSprite = nullptr;
 
 };
 

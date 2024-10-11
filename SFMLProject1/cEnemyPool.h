@@ -27,6 +27,8 @@ public:
 	std::vector<cEnemy*> getActiveEnemies();
 	std::vector<cEnemy*> getInactiveEnemies();
 
+	void setBehaviourSprites(sf::Sprite* m_AsteroidSprite, sf::Sprite* m_RandomSprite);
+
 
 private:
 	std::vector<cEnemy*> m_enemiesInactive;

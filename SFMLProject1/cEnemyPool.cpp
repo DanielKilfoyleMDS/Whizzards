@@ -78,6 +78,7 @@ bool cEnemyPool::loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movemen
 		Asteroid->setAwake(true);
 		Asteroid->setBehaviour(&m_AsteroidBehaviour);
 		m_AsteroidBehaviour.pickDirection(Asteroid);
+		m_AsteroidBehaviour.setEnemySprite(Asteroid);
 		Asteroid->setDamageStrength(1);
 		return true;
 	} 
@@ -107,6 +108,7 @@ bool cEnemyPool::loadRandomEnemy(sf::Vector2f _position)
 		Random->setAwake(true);
 		Random->setBehaviour(&m_RandomBehaviour);
 		Random->setDamageStrength(2);
+		m_RandomBehaviour.setEnemySprite(Random);
 		return true;
 	}
 
@@ -160,4 +162,17 @@ Author : Jayden Burns
 std::vector<cEnemy*> cEnemyPool::getInactiveEnemies()
 {
 	return m_enemiesInactive;
+}
+
+/************************************************************************
+Name: setBehaviourSprites
+Description : Sets Sprites used by Enemy Behaviours
+Parameters: sf::Sprite* m_AsteroidSprite, sf::Sprite* m_RandomSprite
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cEnemyPool::setBehaviourSprites(sf::Sprite* m_AsteroidSprite, sf::Sprite* m_RandomSprite)
+{
+	m_AsteroidBehaviour.setBehaviourSprite(m_AsteroidSprite);
+	m_RandomBehaviour.setBehaviourSprite(m_RandomSprite);
 }

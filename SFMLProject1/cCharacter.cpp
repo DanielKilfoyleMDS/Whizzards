@@ -66,6 +66,11 @@ void cCharacter::setSprite(std::string _FilePath)
 	m_characterSprite->setTexture(m_characterTexture);
 }
 
+void cCharacter::setSprite(sf::Sprite* _Sprite)
+{
+	m_characterSprite = _Sprite;
+}
+
 
 
 void cCharacter::setCharacterType(CharacterType _type)

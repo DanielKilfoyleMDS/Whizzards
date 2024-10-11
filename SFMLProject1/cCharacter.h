@@ -31,6 +31,7 @@ public:
 
 	// Changed setSprite to virtual as it will be used only for the enemies
 	virtual void setSprite(std::string _FilePath);
+	virtual void setSprite(sf::Sprite* _Sprite);
 
 
 	// DONE - lower upper 
