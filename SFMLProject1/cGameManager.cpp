@@ -2,6 +2,9 @@
 
 cGameManager::cGameManager()
 {
+	//Prepare List
+	m_CollisionList = new std::vector<cCharacter*>;
+
 	// Loading all relevant sprites
 
 
@@ -37,4 +40,19 @@ cGameManager::cGameManager()
 sf::Sprite cGameManager::getAsteroidSprite()
 {
 	return m_asteroidEnemySprite;
+}
+
+void cGameManager::AddToCollisionList(cCharacter* _Character)
+{
+	m_CollisionList->push_back(_Character);
+}
+
+cCharacter* cGameManager::GetFromCollisionList(int _ListPosition)
+{
+	return m_CollisionList->at(_ListPosition);
+}
+
+std::vector<cCharacter*>* cGameManager::GetCollisionList()
+{
+	return m_CollisionList;
 }

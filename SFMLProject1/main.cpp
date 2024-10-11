@@ -39,8 +39,10 @@ int main()
     sf::Sprite* secondPlayerSprite = nullptr;
     //secondPlayerSprite->setTexture(secondPlayerTexture);
 
-    cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(400, 300));
-    cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(500, 300));
+    
+
+    cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(400, 300), Manager.GetCollisionList());
+    cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(500, 300), Manager.GetCollisionList());
 
     sf::Texture blueProjectileTexture;
     blueProjectileTexture.loadFromFile("Resources/Textures/Sprites/Projectile Blue.png");
@@ -51,7 +53,7 @@ int main()
     std::vector<cProjectile* > activeProjectiles;
 
     cGameCameras m_Cameras(&window, 3000, 3000);
-    cEnemyPool Pool(200, &Manager.m_defaultEnemySprite);
+    cEnemyPool Pool(200, &Manager.m_defaultEnemySprite, Manager.GetCollisionList());
     cEnemySpawner Spawner(10, 5, &Pool);
 
     //Temporary Map - Creates texture, loads temp file, changes positioning

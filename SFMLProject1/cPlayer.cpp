@@ -1,7 +1,7 @@
 #include "cPlayer.h"
 #include "SFML/Graphics.hpp"
 
-cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _position, std::vector <cCharacter*> &_activeCharacters)
+cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _position, std::vector<cCharacter*>* _activeCharacters)
 	: cCharacter(_sprite, _position)
 {
 	m_playerName = _playerName;
@@ -26,7 +26,7 @@ cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _pos
 
 	setCharacterType(Player);
 
-	_activeCharacters.push_back(this);
+	_activeCharacters->push_back(this);
 }
 
 void cPlayer::rotateCharacter(sf::Keyboard::Key _key, int _scalar)

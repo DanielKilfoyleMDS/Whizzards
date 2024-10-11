@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "cCharacter.h"
 
 class cGameManager
 {
@@ -14,6 +15,9 @@ public:
 	sf::Sprite getSecondPlayerSprite();
 	sf::Sprite getFirstPlayerProjectile();
 	sf::Sprite getSecondPlayerProjectile();
+
+
+
 
 	// Player Sprites
 	sf::Sprite m_firstPlayerSprite;
@@ -35,5 +39,13 @@ public:
 
 	sf::Texture m_blueProjectileTexture;
 	sf::Texture m_redProjectileTexture;
+
+	void AddToCollisionList(cCharacter* _Character);
+	cCharacter* GetFromCollisionList(int _ListPosition);
+	std::vector<cCharacter*>* GetCollisionList();
+
+private:
+	//Collision
+	std::vector<cCharacter*>* m_CollisionList;
 };
 
