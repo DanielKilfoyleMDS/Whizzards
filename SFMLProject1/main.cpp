@@ -54,7 +54,7 @@ int main()
 
     cGameCameras m_Cameras(&window, 3000, 3000);
     cEnemyPool Pool(200, &Manager.m_defaultEnemySprite, Manager.GetCollisionList());
-    cEnemySpawner Spawner(10, 5, &Pool);
+    cEnemySpawner Spawner(10, 5, &Pool, 20, 30);
 
     //Temporary Map - Creates texture, loads temp file, changes positioning
     sf::Texture mapTex;
@@ -131,7 +131,7 @@ int main()
             m_Cameras.Render(Player1, &window);
             m_Cameras.Render(Player2, &window);
 
-            for (auto iter : Pool.GetActiveEnemies())
+            for (auto iter : Pool.getActiveEnemies())
             {
                 m_Cameras.Render(iter, &window);
             }
@@ -147,7 +147,7 @@ int main()
             m_Cameras.Render(&map, &window);
             m_Cameras.Render(Player1, &window);
             m_Cameras.Render(Player2, &window);
-            for (auto iter : Pool.GetActiveEnemies())
+            for (auto iter : Pool.getActiveEnemies())
             {
 
                 m_Cameras.Render(iter, &window);
@@ -161,7 +161,7 @@ int main()
             m_Cameras.Render(&map, &window);
             m_Cameras.Render(Player1, &window);
             m_Cameras.Render(Player2, &window);
-            for (auto iter : Pool.GetActiveEnemies())
+            for (auto iter : Pool.getActiveEnemies())
             {
                 m_Cameras.Render(iter, &window);
             }

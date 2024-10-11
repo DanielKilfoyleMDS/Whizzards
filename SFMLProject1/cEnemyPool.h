@@ -1,3 +1,14 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cEnemyPool.h
+Description : Enemy Pool for Whizzards Game
+Author : Jayden Burns
+Mail : JaydenBurns@mds.ac.nz
+**************************************************************************/
 #pragma once
 #include "cEnemy.h"
 #include "cAsteroidBehaviour.h"
@@ -13,8 +24,8 @@ public:
 
 	void tickEnemies();
 
-	std::vector<cEnemy*> GetActiveEnemies();
-	std::vector<cEnemy*> GetInactiveEnemies();
+	std::vector<cEnemy*> getActiveEnemies();
+	std::vector<cEnemy*> getInactiveEnemies();
 
 
 private:

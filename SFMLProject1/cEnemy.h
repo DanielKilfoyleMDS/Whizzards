@@ -1,7 +1,24 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cEnemy.h
+Description : Base Enemy for Whizzards Game
+Author : Jayden Burns
+Mail : JaydenBurns@mds.ac.nz
+**************************************************************************/
 #pragma once
 #include "cCharacter.h"
 #include "cEnemyBehaviour.h"
 
+/************************************************************************
+Name: EnemyState
+Description : Struct that determines which behaviour multi-behaviour enemies use
+Values: Idle, Wander, Seek
+Author : Jayden Burns
+**************************************************************************/
 enum EnemyState
 {
 	Idle,
@@ -21,8 +38,7 @@ public:
 	bool getAwake();
 	void setAwake(bool _bAwake);
 
-	void ClearEnemy();
-	//void SetupEnemy();
+	void clearEnemy();
 
 	EnemyState getState();
 	void setState(EnemyState _state);
@@ -33,12 +49,12 @@ public:
 	void setMoveTime(float _moveTime);
 	float getMoveTime();
 
-	void OtherCollide(cCharacter* _Character);
-	void SetDamageStrength(float _Damage);
+	void otherCollide(cCharacter* _Character);
+	void setDamageStrength(float _Damage);
 
 private:
 
-	EnemyState m_State;
+	EnemyState m_enemyState;
 
 	//EnemyState m_State;
 	cEnemyBehaviour* m_Behaviour;
@@ -47,7 +63,7 @@ private:
 
 	//Asteroid Behaviour
 	sf::Vector2f m_movement = sf::Vector2f(0, 0);
-	float m_fMoveTime = 0;
+	float m_fmoveTime = 0;
 
 	//Damage values
 	float m_fdamage = 0;

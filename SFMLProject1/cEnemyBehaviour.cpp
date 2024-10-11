@@ -1,37 +1,24 @@
 #include "cEnemyBehaviour.h"
 #include "cEnemy.h"
 
+/************************************************************************
+Name: cEnemyBehaviour
+Description : Constructs EnemyBehaviour. Overwritten by Subclasses.
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 cEnemyBehaviour::cEnemyBehaviour()
 {
 }
 
+/************************************************************************
+Name: ~cEnemyBehaviour
+Description : Deconstructs EnemyBehaviour. Overwritten by Subclasses.
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 cEnemyBehaviour::~cEnemyBehaviour()
-{
-}
-
-bool cEnemyBehaviour::TickEnemy(cEnemy* _parent)
-{
-	return false;
-}
-
-bool cEnemyBehaviour::CheckDeath(cEnemy* _parent)
-{
-	if (_parent->getHealth() < 1)
-	{
-		return true;
-	}
-	return false;
-}
-
-bool cEnemyBehaviour::CanAttack(cEnemy* _parent)
-{
-	return false;
-}
-
-void cEnemyBehaviour::Attack(cEnemy* _parent)
-{
-}
-
-void cEnemyBehaviour::Move(cEnemy* _parent)
 {
 }
