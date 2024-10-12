@@ -30,10 +30,11 @@ enum EnemyState
 class cEnemy : public cCharacter
 {
 public:
-	cEnemy(sf::Sprite* _sprite, sf::Vector2f _startPosition);
+	cEnemy(sf::Sprite* sprite, sf::Vector2f position);
 	~cEnemy();
 
 	void tick();
+
 
 	bool getAwake();
 	void setAwake(bool _bAwake);
@@ -55,6 +56,9 @@ public:
 private:
 
 	EnemyState m_enemyState;
+
+	std::vector<cEnemy*> m_ActiveEnemies;   // Active enemies
+	std::vector<cEnemy*> m_InactiveEnemies; // Inactive enemies (not used)
 
 	//EnemyState m_State;
 	cEnemyBehaviour* m_Behaviour;

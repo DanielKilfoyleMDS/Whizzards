@@ -92,6 +92,7 @@ void cPlayer::movePlayer()
 	
 }
 
+
 void cPlayer::draw()
 {
 	

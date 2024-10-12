@@ -64,6 +64,18 @@ cEnemySpawner::~cEnemySpawner()
 }
 
 /************************************************************************
+Name: setSpawnPoints
+Description : sets SpawnPoints used by spawner
+Parameters: std::vector<sf::Vector2f>* _spawnpoints
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cEnemySpawner::setSpawnPoints(std::vector<sf::Vector2f>* _spawnpoints)
+{
+	m_spawnPoints = _spawnpoints;
+}
+
+/************************************************************************
 Name: WaveManager
 Description : Checks to see if wave is complete, starts new wave.
 Parameters: None
@@ -139,18 +151,32 @@ Author : Jayden Burns
 **************************************************************************/
 bool cEnemySpawner::spawnEnemy()
 {
-	int EnemyChoice = 0;
-	EnemyChoice = randRangeInt(0, 3);
-	if (EnemyChoice == 0 && m_icurrentPoints >= 1)
+	int iEnemyChoice = randRangeInt(0, 3);
+	sf::Vector2f SpawnPosition = sf::Vector2f(0,0);
+	if (m_spawnPoints != nullptr && m_spawnPoints->size() > 0)
 	{
-		return spawnAsteroidEnemy();
-	} else if (EnemyChoice == 1 && m_icurrentPoints >= 2)
-	{
-		return spawnRandomEnemy();
+		if (m_spawnPoints->size() > 1)
+		{
+			int ispawnPointChoice = randRangeInt(0, m_spawnPoints->size() - 1);
+			SpawnPosition = (*m_spawnPoints)[ispawnPointChoice];
+		}
+		else if (m_spawnPoints->size() == 1)
+		{
+			SpawnPosition = (*m_spawnPoints)[0];
+		}
 	}
-	else if (EnemyChoice == 2 && m_icurrentPoints >= 2)
+
+	
+	if (iEnemyChoice == 0 && m_icurrentPoints >= 1)
 	{
-		return spawnChaseEnemy();
+		return spawnAsteroidEnemy(SpawnPosition);
+	} else if (iEnemyChoice == 1 && m_icurrentPoints >= 2)
+	{
+		return spawnRandomEnemy(SpawnPosition);
+	}
+	else if (iEnemyChoice == 2 && m_icurrentPoints >= 2)
+	{
+		return spawnChaseEnemy(SpawnPosition);
 	}
 	else if (m_icurrentPoints <= 0)
 	{
@@ -169,9 +195,9 @@ Parameters: None
 Returns: bool - false if unsuccessful
 Author : Jayden Burns
 **************************************************************************/
-bool cEnemySpawner::spawnRandomEnemy()
+bool cEnemySpawner::spawnRandomEnemy(sf::Vector2f _position)
 {
-	return m_EnemyPoolRef->loadRandomEnemy(sf::Vector2f(0, 0));
+	return m_EnemyPoolRef->loadRandomEnemy(_position);
 }
 
 /************************************************************************
@@ -181,9 +207,9 @@ Parameters: None
 Returns: bool - false if unsuccessful
 Author : Jayden Burns
 **************************************************************************/
-bool cEnemySpawner::spawnAsteroidEnemy()
+bool cEnemySpawner::spawnAsteroidEnemy(sf::Vector2f _position)
 {
-	return m_EnemyPoolRef->loadAsteroidEnemy(sf::Vector2f((float)randRangeInt(-20, 20), 0), sf::Vector2f(1, 1), 1);
+	return m_EnemyPoolRef->loadAsteroidEnemy(_position, sf::Vector2f(1, 1), 1);
 }
 
 /************************************************************************
@@ -193,7 +219,7 @@ Parameters: None
 Returns: bool - false if unsuccessful
 Author : Jayden Burns
 **************************************************************************/
-bool cEnemySpawner::spawnChaseEnemy()
+bool cEnemySpawner::spawnChaseEnemy(sf::Vector2f _position)
 {
-	return m_EnemyPoolRef->loadChaseEnemy(sf::Vector2f(1, 1));
+	return m_EnemyPoolRef->loadChaseEnemy(_position);
 }

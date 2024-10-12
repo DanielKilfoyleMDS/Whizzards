@@ -19,6 +19,8 @@ public:
 	cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool, int _enemiesOnScreen, int _enemiesTotal);
 	~cEnemySpawner();
 
+	void setSpawnPoints(std::vector<sf::Vector2f>* _spawnpoints);
+
 	void WaveManager();
 
 private:
@@ -32,13 +34,15 @@ private:
 	int m_imaxEnemiesAtOnce;
 	int m_imaxEnemiesInWave;
 
+	std::vector<sf::Vector2f>* m_spawnPoints = nullptr;
+
 	int calculateWavePoints();
 	void startWave();
 	bool spawnEnemy();
 
-	bool spawnRandomEnemy();
-	bool spawnAsteroidEnemy();
-	bool spawnChaseEnemy();
+	bool spawnRandomEnemy(sf::Vector2f _position);
+	bool spawnAsteroidEnemy(sf::Vector2f _position);
+	bool spawnChaseEnemy(sf::Vector2f _position);
 	
 
 };

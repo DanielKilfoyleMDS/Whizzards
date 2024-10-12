@@ -3,9 +3,21 @@
 #include <sstream>
 #include <iostream>
 
-cLevelLoader::cLevelLoader() {}
+cLevelLoader::cLevelLoader()
+{
+    // Load the textures
+    if (!grassTex.loadFromFile("Resources/Textures/Grass.png"))
+    {
+        std::cerr << "Failed to load grass texture!" << std::endl;
+    }
 
-bool cLevelLoader::LoadLevel(const std::string& filename, sf::Sprite& map, sf::Vector2f& player1Pos, sf::Vector2f& player2Pos, std::vector<sf::Vector2f>& enemyPositions)
+    if (!sandTex.loadFromFile("Resources/Textures/Sand.png"))
+    {
+        std::cerr << "Failed to load sand texture!" << std::endl;
+    }
+}
+
+bool cLevelLoader::LoadLevel(const std::string& filename, sf::Sprite& map, sf::Vector2f& player1Pos, sf::Vector2f& player2Pos)
 {
     std::string fullPath = "Resources/Levels/" + filename;
     std::ifstream file(fullPath);
@@ -16,6 +28,7 @@ bool cLevelLoader::LoadLevel(const std::string& filename, sf::Sprite& map, sf::V
     }
 
     std::string line;
+    int y = 0; // Track the row number for positioning tiles
     while (std::getline(file, line))
     {
         auto tokens = SplitString(line, ' ');
@@ -23,23 +36,7 @@ bool cLevelLoader::LoadLevel(const std::string& filename, sf::Sprite& map, sf::V
         if (tokens.empty())
             continue;  // Skip empty lines
 
-        if (tokens[0] == "MAP")
-        {
-            if (tokens.size() < 2)
-            {
-                std::cerr << "Invalid MAP line format" << std::endl;
-                return false;
-            }
-
-            // Use the class member mapTex
-            if (!mapTex.loadFromFile(tokens[1]))
-            {
-                std::cerr << "Failed to load map texture: " << tokens[1] << std::endl;
-                return false;
-            }
-            map.setTexture(mapTex);
-        }
-        else if (tokens[0] == "PLAYER1")
+        if (tokens[0] == "PLAYER1")
         {
             if (tokens.size() < 3)
             {
@@ -59,15 +56,33 @@ bool cLevelLoader::LoadLevel(const std::string& filename, sf::Sprite& map, sf::V
 
             player2Pos = sf::Vector2f(std::stof(tokens[1]), std::stof(tokens[2]));
         }
-        else if (tokens[0] == "ENEMY")
+        else
         {
-            if (tokens.size() < 3)
+            // Process tiles for the current row
+            for (int x = 0; x < tokens.size(); ++x)
             {
-                std::cerr << "Invalid ENEMY line format" << std::endl;
-                return false;
-            }
+                sf::Sprite tile;
+                if (tokens[x] == "1") // Grass tile
+                {
+                    tile.setTexture(grassTex);
+                }
+                else if (tokens[x] == "2") // Sand tile
+                {
+                    tile.setTexture(sandTex);
+                }
+                else
+                {
+                    std::cerr << "Invalid tile type in level file: " << tokens[x] << std::endl;
+                    continue;
+                }
 
-            enemyPositions.push_back(sf::Vector2f(std::stof(tokens[1]), std::stof(tokens[2])));
+                // Set tile position based on grid coordinates
+                tile.setPosition(x * 64, y * 64); // Assuming each tile is 64x64 pixels
+
+                // Render the tile to the map (or you can store these tiles in a vector to render later)
+                map = tile; // Replace this with adding tiles to your game world
+            }
+            y++; // Move to the next row
         }
     }
 
