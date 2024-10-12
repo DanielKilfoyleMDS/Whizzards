@@ -15,6 +15,8 @@ cGameManager::cGameManager()
 	m_randomEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyRandom.png");
 	m_randomEnemySprite.setTexture(m_randomEnemyTexture);
 
+	m_chaseEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyChase.png");
+	m_chaseEnemySprite.setTexture(m_chaseEnemyTexture);
 
 	m_defaultEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyDefault.png");
 	m_defaultEnemySprite.setTexture(m_defaultEnemyTexture);
@@ -40,12 +42,12 @@ cGameManager::cGameManager()
 
 }
 
-sf::Sprite* cGameManager::getAsteroidSprite()
+sf::Sprite* cGameManager::getEnemyAsteroidSprite()
 {
 	return &m_asteroidEnemySprite;
 }
 
-sf::Sprite* cGameManager::getRandomEnemySprite()
+sf::Sprite* cGameManager::getEnemyRandomSprite()
 {
 	return &m_randomEnemySprite;
 }

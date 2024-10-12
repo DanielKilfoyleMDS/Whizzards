@@ -32,7 +32,7 @@ public:
 	std::vector<cEnemy*> getActiveEnemies();
 	std::vector<cEnemy*> getInactiveEnemies();
 
-	void setBehaviourSprites(sf::Sprite* m_AsteroidSprite, sf::Sprite* m_RandomSprite);
+	void setBehaviourSprites(sf::Sprite* _asteroidSprite, sf::Sprite* _randomSprite, sf::Sprite* _chaseSprite);
 
 
 private:

@@ -7,9 +7,10 @@ class cGameManager
 public:
 	cGameManager();
 
-	sf::Sprite* getAsteroidSprite();
-	sf::Sprite* getRandomEnemySprite();
+	sf::Sprite* getEnemyAsteroidSprite();
+	sf::Sprite* getEnemyRandomSprite();
 	sf::Sprite* getEnemyDefaultSprite();
+	sf::Sprite* getEnemyChaseSprite();
 
 
 	sf::Sprite getFirstPlayerSprite();
@@ -51,10 +52,12 @@ private:
 	sf::Texture m_defaultEnemyTexture;
 	sf::Texture m_asteroidTexture;
 	sf::Texture m_randomEnemyTexture;
+	sf::Texture m_chaseEnemyTexture;
 
 	// Enemy Sprites
 	sf::Sprite m_asteroidEnemySprite;
 	sf::Sprite m_defaultEnemySprite;
 	sf::Sprite m_randomEnemySprite;
+	sf::Sprite m_chaseEnemySprite;
 };
 

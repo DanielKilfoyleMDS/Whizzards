@@ -54,7 +54,7 @@ int main()
 
     cGameCameras m_Cameras(&window, 3000, 3000);
     cEnemyPool Pool(200, Manager.getEnemyDefaultSprite(), Manager.getCollisionList());
-    Pool.setBehaviourSprites(Manager.getAsteroidSprite(), Manager.getRandomEnemySprite());
+    Pool.setBehaviourSprites(Manager.getEnemyAsteroidSprite(), Manager.getEnemyRandomSprite(), Manager.getEnemyChaseSprite());
     Pool.setPlayers(Player1,Player2);
     cEnemySpawner Spawner(10, 5, &Pool, 20, 30);
 

@@ -135,7 +135,7 @@ bool cEnemyPool::loadChaseEnemy(sf::Vector2f _position)
 		Chase->setAwake(true);
 		Chase->setBehaviour(&m_ChaseBehaviour);
 		Chase->setDamageStrength(2);
-		//TO DO - Chase Sprite
+		m_ChaseBehaviour.setEnemySprite(Chase);
 		return true;
 	}
 	return false;
@@ -212,12 +212,14 @@ std::vector<cEnemy*> cEnemyPool::getInactiveEnemies()
 /************************************************************************
 Name: setBehaviourSprites
 Description : Sets Sprites used by Enemy Behaviours
-Parameters: sf::Sprite* m_AsteroidSprite, sf::Sprite* m_RandomSprite
+Parameters: sf::Sprite* _AsteroidSprite, sf::Sprite* _RandomSprite,  sf::Sprite* _chaseSprite
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cEnemyPool::setBehaviourSprites(sf::Sprite* m_AsteroidSprite, sf::Sprite* m_RandomSprite)
+void cEnemyPool::setBehaviourSprites(sf::Sprite* _asteroidSprite, sf::Sprite* _randomSprite, sf::Sprite* _chaseSprite)
 {
-	m_AsteroidBehaviour.setBehaviourSprite(m_AsteroidSprite);
-	m_RandomBehaviour.setBehaviourSprite(m_RandomSprite);
+	m_AsteroidBehaviour.setBehaviourSprite(_asteroidSprite);
+	m_RandomBehaviour.setBehaviourSprite(_randomSprite);
+	m_ChaseBehaviour.setBehaviourSprite(_chaseSprite);
 }
+
