@@ -69,7 +69,7 @@ public:
 
 	void setEnemySprite(class cEnemy* _parent);
 
-
+protected:
 	sf::Sprite* m_behaviourSprite = nullptr;
 
 };

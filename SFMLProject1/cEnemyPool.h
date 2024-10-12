@@ -13,6 +13,8 @@ Mail : JaydenBurns@mds.ac.nz
 #include "cEnemy.h"
 #include "cAsteroidBehaviour.h"
 #include "cRandomBehaviour.h"
+#include "cChaseBehaviour.h"
+
 class cEnemyPool
 {
 public:
@@ -21,6 +23,9 @@ public:
 
 	bool loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed);
 	bool loadRandomEnemy(sf::Vector2f _position);
+	bool loadChaseEnemy(sf::Vector2f _position);
+
+	void setPlayers(cCharacter* _player1, cCharacter* _player2);
 
 	void tickEnemies();
 
@@ -36,6 +41,7 @@ private:
 
 	cAsteroidBehaviour m_AsteroidBehaviour;
 	cRandomBehaviour m_RandomBehaviour;
+	cChaseBehaviour m_ChaseBehaviour;
 
 	sf::Sprite* m_AsteroidSprite = nullptr;
 	sf::Sprite* m_DefaultSprite = nullptr;

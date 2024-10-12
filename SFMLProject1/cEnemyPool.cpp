@@ -62,7 +62,6 @@ Author : Jayden Burns
 bool cEnemyPool::loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed)
 {
 	//TODO - Debug mode printout active/inactive
-	//TODO - Add Sprite code
 
 	if (m_enemiesInactive.size() > 0)
 	{
@@ -94,7 +93,6 @@ Author : Jayden Burns
 **************************************************************************/
 bool cEnemyPool::loadRandomEnemy(sf::Vector2f _position)
 {
-	//TODO - Add Sprite code
 	if (m_enemiesInactive.size() > 0)
 	{
 		cEnemy* Random = m_enemiesInactive[0];
@@ -113,6 +111,53 @@ bool cEnemyPool::loadRandomEnemy(sf::Vector2f _position)
 	}
 
 	return false;
+}
+
+/************************************************************************
+Name: loadChaseEnemy
+Description : Loads first available enemy as a Chase Type Enemy
+Parameters: sf::Vector2f _position
+Returns: bool - false if unsuccessful
+Author : Jayden Burns
+**************************************************************************/
+bool cEnemyPool::loadChaseEnemy(sf::Vector2f _position)
+{
+	if (m_enemiesInactive.size() > 0)
+	{
+		cEnemy* Chase = m_enemiesInactive[0];
+		m_enemiesActive.push_back(Chase);
+		m_enemiesInactive.erase(m_enemiesInactive.begin());
+
+		Chase->setPosition(_position);
+		Chase->setHealth(10);
+
+		Chase->setState(Idle);
+		Chase->setAwake(true);
+		Chase->setBehaviour(&m_ChaseBehaviour);
+		Chase->setDamageStrength(2);
+		//TO DO - Chase Sprite
+		return true;
+	}
+	return false;
+}
+
+/************************************************************************
+Name: setPlayers
+Description : Passes Players into all behaviours that require player references
+Parameters: cCharacter* _player1, cCharacter* _player2
+Returns: none
+Author : Jayden Burns
+**************************************************************************/
+void cEnemyPool::setPlayers(cCharacter* _player1, cCharacter* _player2)
+{
+	if (_player2 == nullptr)
+	{
+		m_ChaseBehaviour.setPlayers(_player1);
+	}
+	else
+	{
+		m_ChaseBehaviour.setPlayers(_player1, _player2);
+	}
 }
 
 /************************************************************************

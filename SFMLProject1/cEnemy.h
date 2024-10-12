@@ -64,6 +64,7 @@ private:
 	//Asteroid Behaviour
 	sf::Vector2f m_movement = sf::Vector2f(0, 0);
 	float m_fmoveTime = 0;
+	float m_fmovespeed = 1;
 
 	//Damage values
 	float m_fdamage = 0;

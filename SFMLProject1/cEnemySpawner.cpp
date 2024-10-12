@@ -24,7 +24,7 @@ cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _P
 	m_icurrentWave = 0;
 	m_iwavePointGain = _wavePointGain;
 	m_ibasePoints = _basePoints;
-	m_icurrentPoints = CalculateWavePoints();
+	m_icurrentPoints = calculateWavePoints();
 
 	m_EnemyPoolRef = _Pool;
 	m_imaxEnemiesAtOnce = m_EnemyPoolRef->getInactiveEnemies().size();
@@ -44,7 +44,7 @@ cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _P
 	m_icurrentWave = 0;
 	m_iwavePointGain = _wavePointGain;
 	m_ibasePoints = _basePoints;
-	m_icurrentPoints = CalculateWavePoints();
+	m_icurrentPoints = calculateWavePoints();
 
 	m_EnemyPoolRef = _Pool;
 	m_imaxEnemiesAtOnce = _enemiesOnScreen;
@@ -79,7 +79,7 @@ void cEnemySpawner::WaveManager()
 	{
 		m_icurrentWave++;
 		std::cout << "StartingWave" << std::endl;
-		StartWave();
+		startWave();
 	}
 	
 	//Check if there are still points to spawn and room for another enemy
@@ -97,7 +97,7 @@ Parameters: None
 Returns: int (Number of Points)
 Author : Jayden Burns
 **************************************************************************/
-int cEnemySpawner::CalculateWavePoints()
+int cEnemySpawner::calculateWavePoints()
 {
 	//TODO - Improve math for this function
 	int Points = m_ibasePoints + (m_icurrentWave * m_iwavePointGain);
@@ -115,16 +115,16 @@ Parameters: None
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cEnemySpawner::StartWave()
+void cEnemySpawner::startWave()
 {
-	m_icurrentPoints = CalculateWavePoints();
+	m_icurrentPoints = calculateWavePoints();
 	int EnemiesSpawned = 0;
 	bool CanSpawn = true;
 	while (CanSpawn)
 	{
 		if (m_icurrentPoints > 0 && m_EnemyPoolRef->getActiveEnemies().size() < m_imaxEnemiesAtOnce)
 		{
-			CanSpawn = SpawnEnemy(); //Returns false if enemy spawning fails
+			CanSpawn = spawnEnemy(); //Returns false if enemy spawning fails
 		}
 		else CanSpawn = false;
 	}
@@ -137,47 +137,63 @@ Parameters: None
 Returns: bool - false if unsuccessful
 Author : Jayden Burns
 **************************************************************************/
-bool cEnemySpawner::SpawnEnemy()
+bool cEnemySpawner::spawnEnemy()
 {
 	int EnemyChoice = 0;
-	EnemyChoice = randRangeInt(0, 1);
+	EnemyChoice = randRangeInt(0, 3);
 	if (EnemyChoice == 0 && m_icurrentPoints >= 1)
 	{
-		return SpawnAsteroidEnemy();
+		return spawnAsteroidEnemy();
 	} else if (EnemyChoice == 1 && m_icurrentPoints >= 2)
 	{
-		return SpawnRandomEnemy();
+		return spawnRandomEnemy();
+	}
+	else if (EnemyChoice == 2 && m_icurrentPoints >= 2)
+	{
+		return spawnChaseEnemy();
 	}
 	else if (m_icurrentPoints <= 0)
 	{
 		return false;
 	}
 	else {
-		return SpawnEnemy(); //If we reach this point, we still have points to spend.
+		return spawnEnemy(); //If we reach this point, we still have points to spend.
 	}
 	
 }
 
 /************************************************************************
-Name: SpawnRandomEnemy
+Name: spawnRandomEnemy
 Description : Spawns Random Type Enemy
 Parameters: None
 Returns: bool - false if unsuccessful
 Author : Jayden Burns
 **************************************************************************/
-bool cEnemySpawner::SpawnRandomEnemy()
+bool cEnemySpawner::spawnRandomEnemy()
 {
 	return m_EnemyPoolRef->loadRandomEnemy(sf::Vector2f(0, 0));
 }
 
 /************************************************************************
-Name: SpawnAsteroidEnemy
+Name: spawnAsteroidEnemy
 Description : Spawns Asteroid Type Enemy
 Parameters: None
 Returns: bool - false if unsuccessful
 Author : Jayden Burns
 **************************************************************************/
-bool cEnemySpawner::SpawnAsteroidEnemy()
+bool cEnemySpawner::spawnAsteroidEnemy()
 {
 	return m_EnemyPoolRef->loadAsteroidEnemy(sf::Vector2f((float)randRangeInt(-20, 20), 0), sf::Vector2f(1, 1), 1);
+}
+
+/************************************************************************
+Name: spawnChaseEnemy
+Description : Spawns Chase Type Enemy
+Parameters: None
+Returns: bool - false if unsuccessful
+Author : Jayden Burns
+**************************************************************************/
+bool cEnemySpawner::spawnChaseEnemy()
+{
+	return m_EnemyPoolRef->loadChaseEnemy(sf::Vector2f(1, 1));
 }

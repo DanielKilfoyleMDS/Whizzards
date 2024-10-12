@@ -162,7 +162,7 @@ Author : Jayden Burns
 **************************************************************************/
 void cEnemy::setMovement(sf::Vector2f _movement)
 {
-	m_movement = _movement;
+	m_movement = _movement * m_fmovespeed;
 }
 
 /************************************************************************
@@ -188,6 +188,7 @@ float cEnemy::getMoveTime()
 {
 	return m_fmoveTime;
 }
+
 
 /************************************************************************
 Name: otherCollide()

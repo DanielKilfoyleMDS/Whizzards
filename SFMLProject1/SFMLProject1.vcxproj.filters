@@ -37,6 +37,9 @@
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cProjectile.cpp" />
     <ClCompile Include="cCollisionManager.cpp" />
+    <ClCompile Include="cChaseBehaviour.cpp">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -77,6 +80,9 @@
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cProjectile.h" />
     <ClInclude Include="cCollisionManager.h" />
+    <ClInclude Include="cChaseBehaviour.h">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

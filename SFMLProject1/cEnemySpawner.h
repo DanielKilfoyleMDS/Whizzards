@@ -32,13 +32,13 @@ private:
 	int m_imaxEnemiesAtOnce;
 	int m_imaxEnemiesInWave;
 
-	int CalculateWavePoints();
-	void StartWave();
-	bool SpawnEnemy();
+	int calculateWavePoints();
+	void startWave();
+	bool spawnEnemy();
 
-	bool SpawnRandomEnemy();
-	bool SpawnAsteroidEnemy();
-
+	bool spawnRandomEnemy();
+	bool spawnAsteroidEnemy();
+	bool spawnChaseEnemy();
 	
 
 };

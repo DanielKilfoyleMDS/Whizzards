@@ -123,15 +123,10 @@ Author : Jayden Burns
 **************************************************************************/
 void cRandomBehaviour::pickDirection(cEnemy* _parent)
 {
-	//CONCEPT WORKS, REDO RAND
 	float RandXDirection = randRangeFloat(-1,1);
 	float RandYDirection = randRangeFloat(-1, 1);
 
 	float Movetime = 5 * randRangeFloat(20,40);
 	_parent->setMoveTime(Movetime);
 	_parent->setMovement(sf::Vector2f(RandXDirection, RandYDirection));
-
-
-	//Randomly picks a direction (-1 to 1)
-	//Also randomly picks a movetime
 }
