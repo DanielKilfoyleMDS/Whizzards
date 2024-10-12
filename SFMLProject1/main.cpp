@@ -1,3 +1,14 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : main.cpp
+Description : Main program for Whizzards Game
+Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
+**************************************************************************/
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
@@ -5,6 +16,8 @@
 #include <ctime>
 #include <map>
 #include <fstream>
+#include <sstream>
+#include <filesystem>
 #include "cGameCameras.h"
 #include "cLevelLoader.h"
 #include "cPlayer.h"
@@ -13,9 +26,7 @@
 #include "cGameManager.h"
 #include "cEnemySpawner.h"
 
-#include <fstream>
-#include <sstream>
-#include <filesystem>
+
 
 
 // Function to create a projectile
