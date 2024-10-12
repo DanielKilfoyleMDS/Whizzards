@@ -1,8 +1,8 @@
 #include "cEnemy.h"
 
 
-cEnemy::cEnemy(sf::Sprite* _sprite, sf::Vector2f _startPosition)
-	: cCharacter(_sprite, _startPosition)
+cEnemy::cEnemy(sf::Sprite* sprite, sf::Vector2f position)
+	: cCharacter(sprite, position)
 {
 	//Runs original constructor and then additional logic below
 	m_bAwake = false;

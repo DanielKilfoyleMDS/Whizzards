@@ -24,7 +24,7 @@ public:
 	virtual void healthCheck();
 
 	// Changed setSprite to virtual as it will be used only for the enemies
-	virtual void setSprite(std::string _FilePath);
+	virtual void setSprite(const std::string& _FilePath);
 
 	void setWindowRef(sf::RenderWindow* _window) { p_windowRef = _window; };
 

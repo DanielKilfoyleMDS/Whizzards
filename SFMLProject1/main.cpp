@@ -13,6 +13,7 @@
 #include "cGameManager.h"
 #include "cEnemySpawner.h"
 
+
 // Function to create a projectile
 cProjectile* CreateProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rotation)
 {
@@ -20,13 +21,31 @@ cProjectile* CreateProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rota
     return proj;
 }
 
-void LoadTileTextures(std::map<int, sf::Texture>& textures) {
-    // Load your textures based on identifiers
-    textures[1].loadFromFile("Resources/Textures/Grass.png");
-    textures[2].loadFromFile("Resources/Textures/Sand.png");
-    // Add more textures as needed
+// Function to load spawn points from a file
+std::vector<sf::Vector2f> LoadSpawnPoints(const std::string& filename) {
+    std::vector<sf::Vector2f> spawnPoints;
+    std::ifstream file(filename);
+
+    if (!file) {
+        std::cerr << "Failed to open spawn points file!" << std::endl;
+        return spawnPoints;
+    }
+
+    float x, y;
+    while (file >> x >> y) {
+        spawnPoints.emplace_back(x, y);  // Add each spawn point to the vector
+    }
+
+    return spawnPoints;
 }
 
+// Load textures for Grass and Sand tiles
+void LoadTileTextures(std::map<int, sf::Texture>& textures) {
+    textures[1].loadFromFile("Resources/Textures/Grass.png"); // Grass tile
+    textures[2].loadFromFile("Resources/Textures/Sand.png");  // Sand tile
+}
+
+// Load the tile map from a text file
 std::vector<std::vector<int>> LoadLevel(const std::string& filename) {
     std::vector<std::vector<int>> tileMap;
     std::ifstream file(filename);
@@ -46,7 +65,7 @@ std::vector<std::vector<int>> LoadLevel(const std::string& filename) {
                 row.push_back(2); // Sand
             }
             else {
-                row.push_back(0); // Empty
+                row.push_back(0); // Empty or other tiles can be added later
             }
         }
         tileMap.push_back(row);
@@ -54,11 +73,12 @@ std::vector<std::vector<int>> LoadLevel(const std::string& filename) {
     return tileMap;
 }
 
+// Render the tile map
 void RenderTileMap(sf::RenderWindow& window, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& textures, int tileWidth, int tileHeight) {
     for (size_t y = 0; y < tileMap.size(); ++y) {
         for (size_t x = 0; x < tileMap[y].size(); ++x) {
             int tileId = tileMap[y][x];
-            if (tileId > 0) { // Assuming 0 is no tile
+            if (tileId > 0) { // Only render non-empty tiles
                 sf::Sprite tile;
                 tile.setTexture(textures.at(tileId));
                 tile.setPosition(x * tileWidth, y * tileHeight);
@@ -117,8 +137,17 @@ int main()
     // Load the level from the text file
     std::vector<std::vector<int>> tileMap = LoadLevel("Resources/Levels/level1.txt");
 
-    int tileWidth = 64;  // Width of the tile
-    int tileHeight = 64; // Height of the tile
+    // Load enemy spawn points from file
+    std::vector<sf::Vector2f> enemySpawnPoints = LoadSpawnPoints("Resources/Levels/spawn_points.txt");
+
+    // Tile dimensions
+    int tileWidth = 64;
+    int tileHeight = 64;
+
+    // Spawn enemies at the loaded spawn points
+    for (const auto& spawnPoint : enemySpawnPoints) {
+        Spawner.SpawnEnemy(spawnPoint); // Ensure this matches the method name and parameters
+    }
 
     // Main loop
     while (window.isOpen())
