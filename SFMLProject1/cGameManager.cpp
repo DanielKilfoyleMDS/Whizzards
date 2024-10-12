@@ -57,6 +57,11 @@ sf::Sprite* cGameManager::getEnemyDefaultSprite()
 	return &m_defaultEnemySprite;
 }
 
+sf::Sprite* cGameManager::getEnemyChaseSprite()
+{
+	return  &m_chaseEnemySprite;
+}
+
 void cGameManager::AddToCollisionList(cCharacter* _Character)
 {
 	m_CollisionList->push_back(_Character);
