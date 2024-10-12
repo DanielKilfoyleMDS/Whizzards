@@ -132,8 +132,8 @@ int main()
     window.setFramerateLimit(60);
 
     // Create player instances
-    cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(400, 300), Manager.getCollisionList());
-    cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(500, 300), Manager.getCollisionList());
+    cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(700, 500), Manager.getCollisionList());
+    cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(800, 600), Manager.getCollisionList());
 
     // Load projectile texture
     sf::Texture blueProjectileTexture;

@@ -206,25 +206,33 @@ sf::Vector2f cGameCameras::RestrictCameraToBounds(sf::Vector2f _cameraPosition, 
 	{
 		XScale = 4;
 	}
+	
+	//TODO - Move these to member variables to avoid doing these calculations every frame
+	float RightLimit = m_LevelCenter.x + m_iMapXSize / 2;
+	float LeftLimit = m_LevelCenter.x + -m_iMapXSize / 2;
+	float BottomLimit = m_LevelCenter.y + m_iMapYSize / 2;
+	float TopLimit = m_LevelCenter.y + -m_iMapYSize / 2;
 
 	int NewPositionX = _cameraPosition.x;
 	int NewPositionY = _cameraPosition.y;
-	if (_cameraPosition.x + m_iWindowWidth / XScale >= m_iMapXSize / 2)
+	//Right and Left Side of Screen
+	if (_cameraPosition.x + m_iWindowWidth / XScale >= RightLimit)
 	{
-		NewPositionX = m_iMapXSize / 2 - m_iWindowWidth / 4;
+		NewPositionX = RightLimit - m_iWindowWidth / 4;
 	}
-	else if (_cameraPosition.x - m_iWindowWidth / XScale < -m_iMapXSize / 2)
+	else if (_cameraPosition.x - m_iWindowWidth / XScale < LeftLimit)
 	{
-		NewPositionX = -m_iMapXSize / 2 + m_iWindowWidth / 4;
+		NewPositionX = LeftLimit + m_iWindowWidth / 4; //LEFT
 	}
 
-	if (_cameraPosition.y + m_iWindowWidth / 2 >= m_iMapYSize / 2)
+	//Bottom and Top Side of Screen
+	if (_cameraPosition.y + m_iWindowHeight / 2 >= BottomLimit)
 	{
-		NewPositionY = m_iMapYSize / 2 - m_iWindowWidth / 2;
+		NewPositionY = BottomLimit - m_iWindowHeight / 2;
 	}
-	else if (_cameraPosition.y - m_iWindowWidth / 2 < -m_iMapYSize / 2)
+	else if (_cameraPosition.y - m_iWindowHeight / 2 < TopLimit)
 	{
-		NewPositionY = -m_iMapYSize / 2 + m_iWindowWidth / 2;
+		NewPositionY = TopLimit + m_iWindowHeight / 2; //TOP
 	}
 
 	return sf::Vector2f(NewPositionX,NewPositionY);
