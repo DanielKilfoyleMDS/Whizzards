@@ -25,7 +25,7 @@ public:
 	void rotateCharacter(sf::Keyboard::Key _key, int _scalar);
 	void processInput();
 	void movePlayer();
-	
+	void draw();
 
 	void castSpell();
 

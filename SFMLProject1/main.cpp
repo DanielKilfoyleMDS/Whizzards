@@ -70,7 +70,7 @@ std::vector<sf::Vector2f> LoadSpawnPoints(const std::string& filename) {
 }
 
 // Load textures for Grass and Sand tiles
-void LoadTileTextures(std::map<int, sf::Texture>& textures) {
+void LoadTileTextures(std::map<int, sf::Texture> textures) {
     textures[1].loadFromFile("Resources/Textures/Grass.png"); // Grass tile
     textures[2].loadFromFile("Resources/Textures/Sand.png");  // Sand tile
 }
@@ -186,8 +186,8 @@ int main()
         std::cerr << "Failed to load level!" << std::endl;
     }
     // Create player instances
-    cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(), "Player 1", sf::Vector2f(700, 500), Manager.getCollisionList());
-    cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(), "Player 2", sf::Vector2f(800, 600), Manager.getCollisionList());
+    cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(), "Player 1", sf::Vector2f(700, 500), Manager.getCollisionList(), level);
+    cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(), "Player 2", sf::Vector2f(800, 600), Manager.getCollisionList(), level);
     Player1->setProjectileSprite(Manager.getFirstPlayerProjectile());
     Player2->setProjectileSprite(Manager.getSecondPlayerProjectile());
     Player1->setProjectileList(Manager.getProjectilesList());
@@ -223,7 +223,7 @@ int main()
     std::map<int, sf::Texture> tileTextures;
     LoadTileTextures(tileTextures);
 
-    // Load the level from the text file
+    // Load the level from the &text file
     std::vector<std::vector<int>> tileMap = LoadLevel("Resources/Levels/level1.txt");
 
 
@@ -231,10 +231,6 @@ int main()
     int tileWidth = 64;
     int tileHeight = 64;
 
-    // Spawn enemies at the loaded spawn points
-    for (const auto& spawnPoint : enemySpawnPoints) {
-        Spawner.SpawnEnemy(spawnPoint);
-    }
 
     // Main loop
     while (window.isOpen())
@@ -364,7 +360,7 @@ void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player
         cameras.Render(enemy, &window);
     }
     for (auto projectile : projectiles) {
-        window.draw(projectile->m_Sprite);
+        window.draw(projectile->m_sprite);
     }
 }
 
@@ -377,6 +373,6 @@ void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer*
         cameras.Render(enemy, &window);
     }
     for (auto projectile : projectiles) {
-        window.draw(projectile->m_Sprite);
+        window.draw(projectile->m_sprite);
     }
 }

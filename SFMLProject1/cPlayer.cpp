@@ -13,12 +13,12 @@ Mail : DanielKilfoyle@mds.ac.nz
 #include "cPlayer.h"
 #include "SFML/Graphics.hpp"
 
-cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position, cLevel& _level)
+cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position, std::vector<cCharacter*>* _activeCharacters, cLevel& _level)
 	: cCharacter(_Sprite, _Position), // Call to base class constructor
 	m_playerName(_PlayerName), // Initialize player name
 	level(_level) // Initialize the level reference
 {
-	// m_playerName = _playerName; // This line is unnecessary
+	
 
 	// Set control keys based on player name
 	if (m_playerName == "Player 1") {
