@@ -14,10 +14,19 @@ cEnemyPool::cEnemyPool(int _enemyCount, sf::Sprite* _defaultSprite, std::vector<
 	}
 }
 
-cEnemyPool::~cEnemyPool()
-{
-}
+cEnemyPool::~cEnemyPool() {
+	// Clean up active enemies
+	for (auto enemy : m_enemiesActive) {
+		delete enemy;
+	}
+	m_enemiesActive.clear();
 
+	// Clean up inactive enemies
+	for (auto enemy : m_enemiesInactive) {
+		delete enemy;
+	}
+	m_enemiesInactive.clear();
+}
 
 //TODO - Debug mode printout active/inactive
 bool cEnemyPool::loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movement, float _speed)
@@ -80,6 +89,9 @@ void cEnemyPool::tickEnemies()
 	}
 }
 
+void cEnemyPool::AddEnemy(cEnemy* _enemy) {
+	m_enemiesInactive.push_back(_enemy);
+}
 
 std::vector<cEnemy*> cEnemyPool::GetActiveEnemies()
 {

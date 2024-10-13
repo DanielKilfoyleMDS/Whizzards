@@ -23,20 +23,31 @@
     <ClCompile Include="cLevelLoader.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Powerup.cpp" />
-    <ClCompile Include="PowerupManager.cpp" />
-    <ClCompile Include="Wand.cpp" />
     <ClCompile Include="cRandomBehaviour.cpp">
       <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
     <ClCompile Include="cEnemySpawner.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="cFollowBehaviour.cpp" />
     <ClCompile Include="cGameManager.cpp" />
-    <ClCompile Include="cPlayer.cpp" />
-    <ClCompile Include="cProjectile.cpp" />
-    <ClCompile Include="cCollisionManager.cpp" />
+    <ClCompile Include="Powerup.cpp">
+      <Filter>Pickups</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerupManager.cpp">
+      <Filter>Pickups</Filter>
+    </ClCompile>
+    <ClCompile Include="Wand.cpp">
+      <Filter>Pickups</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayer.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="cFollowBehaviour.cpp">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="cProjectile.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -63,20 +74,31 @@
     <ClInclude Include="cLevelLoader.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="Powerup.h" />
-    <ClInclude Include="PowerupManager.h" />
-    <ClInclude Include="Wand.h" />
     <ClInclude Include="cRandomBehaviour.h">
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
     <ClInclude Include="cEnemySpawner.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="cFollowBehaviour.h" />
     <ClInclude Include="cGameManager.h" />
-    <ClInclude Include="cPlayer.h" />
-    <ClInclude Include="cProjectile.h" />
-    <ClInclude Include="cCollisionManager.h" />
+    <ClInclude Include="Wand.h">
+      <Filter>Pickups</Filter>
+    </ClInclude>
+    <ClInclude Include="Powerup.h">
+      <Filter>Pickups</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerupManager.h">
+      <Filter>Pickups</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayer.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="cFollowBehaviour.h">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="cProjectile.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">
@@ -99,6 +121,9 @@
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{9e08edea-ffa9-4e19-b2e3-404dc8e09053}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pickups">
+      <UniqueIdentifier>{047cd615-e43d-400a-a895-99105473603e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,22 +1,24 @@
 #include "cCharacter.h"
 
-
-
 cCharacter::cCharacter(sf::Sprite* _sprite, sf::Vector2f _StartPosition)
 {
-
 	m_characterSprite = _sprite;
-	m_characterSprite->setOrigin(m_characterSprite->getTexture()->getSize().x / 2, m_characterSprite->getTexture()->getSize().y / 2);
+
+	// Ensure the texture is loaded before setting the origin
+	if (m_characterSprite->getTexture() != nullptr) {
+		auto textureSize = m_characterSprite->getTexture()->getSize();
+		m_characterSprite->setOrigin(textureSize.x / 2.f, textureSize.y / 2.f);
+	}
+	else {
+		std::cerr << "Texture not set for sprite, cannot set origin." << std::endl;
+		return; // Handle the error accordingly
+	}
+
 	m_characterPosition = _StartPosition;
 	m_characterSprite->setPosition(m_characterPosition);
-	
+
 	m_fmaxHealth = 100;
-
-	m_fcurrentHealth = m_fmaxHealth;
-	m_fcharacterRotation = 0.0f;
-	m_fradiansRotation = 0.0f;
-
-
+	m_fcurrentHealth = m_fmaxHealth; // Initialize current health to max health
 }
 
 void cCharacter::setHealth(float _Health)
@@ -50,7 +52,6 @@ void cCharacter::healthCheck()
 	// Check if health has reached or gone below 0, then call appropriate death function for the 
 	else if (m_fcurrentHealth <= 0)
 	{
-		m_fcurrentHealth = 0;
 		// run death functions
 	}
 
@@ -60,23 +61,20 @@ void cCharacter::healthCheck()
 }
 // TODO - Keep set sprite for enemies
 // TODO - pass in reference to sprite not file path
-void cCharacter::setSprite(std::string _FilePath)
+void cCharacter::setSprite(const std::string& _FilePath)
 {
-	m_characterTexture.loadFromFile(_FilePath);
+	if (!m_characterTexture.loadFromFile(_FilePath)) {
+		std::cerr << "Failed to load texture from " << _FilePath << std::endl;
+		return; // Handle the error
+	}
+
 	m_characterSprite->setTexture(m_characterTexture);
+
+	// Now that the texture is set, we can safely set the origin
+	auto textureSize = m_characterSprite->getTexture()->getSize();
+	m_characterSprite->setOrigin(textureSize.x / 2.f, textureSize.y / 2.f);
 }
 
-
-
-void cCharacter::setCharacterType(CharacterType _type)
-{
-	m_characterType = _type;
-}
-
-CharacterType cCharacter::getCharacterType()
-{
-	return m_characterType;
-}
 
 void cCharacter::setRotation(float _Rotation)
 {
