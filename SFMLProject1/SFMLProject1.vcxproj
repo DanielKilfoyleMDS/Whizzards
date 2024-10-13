@@ -160,6 +160,7 @@
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cProjectile.cpp" />
     <ClCompile Include="cRandomBehaviour.cpp" />
+    <ClCompile Include="cWandManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Powerup.cpp" />
     <ClCompile Include="PowerupManager.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cProjectile.h" />
     <ClInclude Include="cRandomBehaviour.h" />
+    <ClInclude Include="cWandManager.h" />
     <ClInclude Include="MathLibrary.h" />
     <ClInclude Include="Powerup.h" />
     <ClInclude Include="PowerupManager.h" />

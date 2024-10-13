@@ -1,36 +1,52 @@
 #include "PowerupManager.h"
-#include "cPlayer.h"
+#include <iostream>
 
 PowerupManager::PowerupManager() {
-    // Initialize the manager (e.g., initial powerups if needed)
+    // Load the texture for the power-ups
+    if (!powerUpTexture.loadFromFile("Resources/Textures/PowerUp.png")) {
+        std::cerr << "Failed to load power-up texture!" << std::endl;
+    }
+}
+
+void PowerupManager::initializePowerUps(const std::vector<sf::Vector2f>& spawnPoints) {
+    // Loop through all the spawn points and create a power-up sprite for each
+    for (const auto& point : spawnPoints) {
+        spawnPowerUp(point);
+    }
+}
+
+void PowerupManager::spawnPowerUp(const sf::Vector2f& position) {
+    // Create a new sprite for the power-up and set its position
+    sf::Sprite powerUp;
+    powerUp.setTexture(powerUpTexture);
+    powerUp.setPosition(position);
+    powerUps.push_back(powerUp);
 }
 
 void PowerupManager::update(float deltaTime) {
-    for (auto& powerup : powerups) {
-        powerup.update(deltaTime);  // Update each powerup
+    // Here you can add any logic that should run every frame (e.g., animation)
+}
+
+void PowerupManager::render(sf::RenderWindow& window) {
+    // Draw all power-ups on the screen
+    for (const auto& powerUp : powerUps) {
+        window.draw(powerUp);
     }
 }
 
-void PowerupManager::draw(sf::RenderWindow& window) {
-    for (auto& powerup : powerups) {
-        powerup.draw(window);  // Draw each powerup
-    }
-}
+void PowerupManager::collectPowerUp(const sf::Vector2f& playerPosition) {
+    std::cout << "Player position: (" << playerPosition.x << ", " << playerPosition.y << ")" << std::endl;
 
-void PowerupManager::spawnPowerup(WandType wandType, sf::Vector2f position) {
-    powerups.push_back(Powerup(wandType, position));  // Add new powerup to the list
-}
+    for (auto it = powerUps.begin(); it != powerUps.end();) {
+        std::cout << "Power-up position: (" << it->getPosition().x << ", " << it->getPosition().y << ")" << std::endl;
 
-bool PowerupManager::checkCollision(cPlayer& player) {
-    for (auto it = powerups.begin(); it != powerups.end();) {
-        if (player.getBounds().intersects(it->getBounds())) {
-            it->getWand().applyEffect(player);  // Apply the wand's effect to the player
-            it = powerups.erase(it);  // Remove the powerup after it's picked up
-            return true;  // Collision detected
+        if (it->getGlobalBounds().contains(playerPosition)) {
+            it = powerUps.erase(it);
+            std::cout << "Power-up collected!" << std::endl;
         }
         else {
             ++it;
         }
     }
-    return false;  // No collision detected
 }
+

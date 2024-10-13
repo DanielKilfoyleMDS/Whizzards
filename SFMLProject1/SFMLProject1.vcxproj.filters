@@ -51,6 +51,9 @@
     <ClCompile Include="cLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="cWandManager.cpp">
+      <Filter>Pickups</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -104,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="cLevel.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="cWandManager.h">
+      <Filter>Pickups</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

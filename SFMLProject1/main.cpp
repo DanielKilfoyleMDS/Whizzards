@@ -11,7 +11,9 @@
 #include "cProjectile.h"
 #include <SFML/System/Clock.hpp>
 #include "cGameManager.h"
+#include "PowerupManager.h"
 #include "cEnemySpawner.h"
+#include "cWandManager.h"
 
 // Function to create a projectile
 cProjectile* CreateProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rotation)
@@ -35,6 +37,7 @@ void RenderTileMap(sf::RenderWindow& window, const std::vector<std::vector<int>>
 }
 
 sf::Clock castTimer;
+sf::Clock gameClock;
 
 void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles);
 
@@ -43,8 +46,12 @@ void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player
 
 int main()
 {
+
+    float deltaTime = gameClock.restart().asSeconds();
+
     srand(static_cast<unsigned>(time(0)));
     cGameManager Manager;
+
 
     // Create the window with a set resolution
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
@@ -62,21 +69,32 @@ int main()
         return -1;
     }
 
-    // Initialize level loader
-    cLevel level(3000.f, 3000.f); // Create your level with specified dimensions
-
-    // Load tile textures into a map (texture ID mapped to sf::Texture)
-    std::map<int, sf::Texture> tileTextures;
-    level.LoadTileTextures(tileTextures);
-
-    // Load the level (tile map, spawn points, player positions)
+    // Initialize level and load textures internally
+    cLevel level(3000, 3000);
     std::vector<std::vector<int>> tileMap;
     std::vector<sf::Vector2f> enemySpawnPoints;
     sf::Vector2f player1Pos, player2Pos;
-    if (!level.LoadLevel("Resources/Levels/level1.txt", tileTextures, tileMap, enemySpawnPoints, player1Pos, player2Pos)) {
-        return -1;
-    }
 
+    // Create the power-up manager
+    PowerupManager powerupManager;
+
+    // Create the Wand manager
+    cWandManager wandManager;
+
+    // Initialize power-ups with spawn points from the level
+    powerupManager.initializePowerUps(level.getPowerUpSpawnPoints());
+
+    // Load the level
+    std::vector<sf::Vector2f> wandSpawnPoints; // Load this from your level
+    wandManager.initializeWands(wandSpawnPoints);
+
+    // Load tile textures into a map (texture ID mapped to sf::Texture)
+    const std::map<int, sf::Texture>& tileTextures = level.getTileTextures();  // Use the getter directly
+
+    // Load the level data
+    if (!level.LoadLevel("Resources/Levels/Level1.txt", level.getTileTextures(), tileMap, enemySpawnPoints, player1Pos, player2Pos)) {
+        std::cerr << "Failed to load level!" << std::endl;
+    }
     // Create player instances
     cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(600, 500), level);
     cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(400, 500), level);
@@ -119,9 +137,16 @@ int main()
                 window.close();
         }
 
+        // Calculate deltaTime
+        float deltaTime = gameClock.restart().asSeconds(); // Calculate deltaTime
+
         Player1->processInput();
         Player2->processInput();
         bool bfired = false;
+
+        // Check for player collision with wands
+        wandManager.collectWand(Player1->getPosition());
+        wandManager.collectWand(Player2->getPosition());
 
         // Handle projectile firing
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -147,6 +172,9 @@ int main()
         // Manage enemy waves
         Spawner.WaveManager();
 
+        // Update the wand manager
+        wandManager.update(deltaTime);
+
         window.clear();
 
         // Check if combined view or individual views should be used
@@ -163,6 +191,8 @@ int main()
             RenderView(window, m_Cameras, Player1, Player2, tileMap, tileTextures, tileWidth, tileHeight, Pool.GetActiveEnemies(), activeProjectiles, false);
         }
 
+        wandManager.render(window);
+        powerupManager.render(window);
         window.display();
     }
 

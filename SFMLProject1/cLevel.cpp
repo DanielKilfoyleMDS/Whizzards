@@ -6,24 +6,24 @@
 cLevel::cLevel(float width, float height) : levelWidth(width), levelHeight(height)
 {
     levelCenter = sf::Vector2f(1500.f, 1500.f);
-    LoadTileTextures(tileTextures);
+    LoadTileTextures();  
 }
 
-void cLevel::LoadTileTextures(std::map<int, sf::Texture>& textures)
+void cLevel::LoadTileTextures()
 {
-    if (!textures[1].loadFromFile("Resources/Textures/Grass.png"))
+    if (!tileTextures[1].loadFromFile("Resources/Textures/Grass.png"))
     {
         std::cerr << "Failed to load grass texture!" << std::endl;
     }
-    if (!textures[2].loadFromFile("Resources/Textures/Sand.png"))
+    if (!tileTextures[2].loadFromFile("Resources/Textures/Sand.png"))
     {
         std::cerr << "Failed to load sand texture!" << std::endl;
     }
-    if (!textures[3].loadFromFile("Resources/Textures/Water.png"))
+    if (!tileTextures[3].loadFromFile("Resources/Textures/Water.png"))
     {
         std::cerr << "Failed to load water texture!" << std::endl;
     }
-    if (!textures[4].loadFromFile("Resources/Textures/Path.png"))
+    if (!tileTextures[4].loadFromFile("Resources/Textures/Path.png"))
     {
         std::cerr << "Failed to load path texture!" << std::endl;
     }
@@ -53,7 +53,7 @@ bool cLevel::LoadLevel(const std::string& filename, const std::map<int, sf::Text
                 wandSpawnPoints.emplace_back(y * 64, row.size() * 64);
             }
             else if (tile == 'P') {
-                powerUpSpawnPoints.emplace_back(y * 64, row.size() * 64);
+                powerUpSpawnPoints.emplace_back(y * 64, row.size() * 64);  // Adding power-up points
             }
             else {
                 row.push_back(0);
@@ -110,4 +110,9 @@ float cLevel::getLevelHeight() const
 sf::Vector2f cLevel::getLevelCenter() const
 {
     return levelCenter;
+}
+
+
+std::vector<sf::Vector2f> cLevel::getPowerUpSpawnPoints() const {
+    return powerUpSpawnPoints;
 }
