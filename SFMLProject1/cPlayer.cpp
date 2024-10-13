@@ -1,6 +1,25 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cPlayer.cpp
+Description : player class, child of cCharacter.  Contains all methods for the player characters
+Author : Daniel Kilfoyle
+Mail : DanielKilfoyle@mds.ac.nz
+**************************************************************************/
+
 #include "cPlayer.h"
 #include "SFML/Graphics.hpp"
 
+/*************************************************************************
+Name: cPlayer
+Description : constructs the player object by calling the base character constructor and then calling relevant character related 
+Parameters: sf::sprite* - player sprite, string - Player name, sf::vector2f - startPosition, vector<character*>* active characters
+Returns: None
+Author : Daniel Kilfoyle
+**************************************************************************/
 cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _position, std::vector<cCharacter*>* _activeCharacters)
 	: cCharacter(_sprite, _position)
 {
@@ -30,6 +49,13 @@ cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _pos
 	m_castTimer.restart();
 }
 
+/*************************************************************************
+Name: rotateCharacter
+Description : rotates the character given a key for direction, and a scalar for whether they are moving already or not
+Parameters: sf::keyboard::key - direction key, int - rotation scalar
+Returns: None
+Author : Daniel Kilfoyle
+**************************************************************************/
 void cPlayer::rotateCharacter(sf::Keyboard::Key _key, int _scalar)
 {
 	int irotationDirection;
@@ -50,6 +76,14 @@ void cPlayer::rotateCharacter(sf::Keyboard::Key _key, int _scalar)
 	m_fradiansRotation = DegreesToRadians(m_fcharacterRotation);
 
 }
+
+/*************************************************************************
+Name: processInput
+Description : processes input for the character, checking for if the keys pressed match the character's specific movement and cast keys
+Parameters: None
+Returns: None
+Author : Daniel Kilfoyle
+**************************************************************************/
 void cPlayer::processInput()
 {
 	if (sf::Keyboard::isKeyPressed(forwardMovementKey))
@@ -84,25 +118,26 @@ void cPlayer::processInput()
 	}
 }
 
+/*************************************************************************
+Name: movePlayer
+Description : calculates movement direction based on rotation and adds to the player's current position
+Parameters: None
+Returns: None
+Author : Daniel Kilfoyle
+**************************************************************************/
 void cPlayer::movePlayer()
 {
-	//std::cout << m_playerName << " position: " << m_characterSprite->getPosition().x << " , " << m_characterSprite->getPosition().y << std::endl;
-	//m_characterSprite->move
 	sf::Vector2f NewPos(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
 	setPosition(getPosition() + NewPos);
-	//m_playerSprite.setPosition()
-	
 }
 
-
-void cPlayer::draw()
-{
-	
-	m_characterSprite->setOrigin(m_characterSprite->getTexture()->getSize().x / 2, m_characterSprite->getTexture()->getSize().y / 2);
-
-	//p_windowRef->draw(m_characterSprite);
-}
-
+/*************************************************************************
+Name: castSpell
+Description : casts the player spell. Creating a projectile and adding it to the vector of active projectiles
+Parameters: None
+Returns: None
+Author : Daniel Kilfoyle
+**************************************************************************/
 void cPlayer::castSpell()
 {
 	if ((m_castTimer.getElapsedTime().asMilliseconds() >= 500.0f))
@@ -125,11 +160,25 @@ void cPlayer::castSpell()
 	std::cout << m_castTimer.getElapsedTime().asMilliseconds() << std::endl;
 
 }
+
+/*************************************************************************
+Name: setProjectileSprite
+Description : sets the sprite used for the player projectile 
+Parameters: sf::sprite* - projectileSprite
+Returns: None
+Author : Daniel Kilfoyle
+**************************************************************************/
 void cPlayer::setProjectileSprite(sf::Sprite* _projectile)
 {
 	m_projectileSprite = *_projectile;
 }
-
+/*************************************************************************
+Name: setProjectileList
+Description : sets the reference to the projectile list 
+Parameters: vector<cProjectile*>* - projectileList
+Returns: None
+Author : Daniel Kilfoyle
+**************************************************************************/
 void cPlayer::setProjectileList(std::vector<cProjectile*>* _projectiles)
 {
 	m_projectilesList = _projectiles;

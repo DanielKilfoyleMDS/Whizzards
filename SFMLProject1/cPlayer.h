@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cPlayer.h
+Description : player class, child of cCharacter.  Contains all methods for the player characters
+Author : Daniel Kilfoyle
+Mail : DanielKilfoyle@mds.ac.nz
+**************************************************************************/
+
 #pragma once
 #include "cCharacter.h"
 #include "MathLibrary.h"
@@ -12,7 +24,7 @@ public:
 	void rotateCharacter(sf::Keyboard::Key _key, int _scalar);
 	void processInput();
 	void movePlayer();
-	void draw();
+	
 
 	void castSpell();
 

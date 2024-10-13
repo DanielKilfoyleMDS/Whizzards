@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cGameManager.h
+Description : Game Manager class. Used for loading sprites once at runtime and for storing our collision vectors to be accessed by other classes
+Author : Daniel Kilfoyle & Jayden Burns
+Mail : DanielKilfoyle@mds.ac.nz & JaydenBurns@mds.ac.nz
+**************************************************************************/
+
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "cCharacter.h"
@@ -18,8 +30,6 @@ public:
 	sf::Sprite* getSecondPlayerSprite();
 	sf::Sprite* getFirstPlayerProjectile();
 	sf::Sprite* getSecondPlayerProjectile();
-
-
 
 
 

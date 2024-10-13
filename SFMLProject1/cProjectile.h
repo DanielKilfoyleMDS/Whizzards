@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cProjectile.h
+Description : Projectile class to interact with characters in game
+Author : Daniel Kilfoyle
+Mail : DanielKilfoyle@mds.ac.nz
+**************************************************************************/
+
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "MathLibrary.h"
@@ -19,9 +31,6 @@ public:
 
 	void tick();
 
-
-	
-private:
 
 };
 

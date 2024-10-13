@@ -71,7 +71,7 @@ private:
 	float m_fmovespeed = 1;
 
 	//Damage values
-	float m_fdamage = 0;
+	float m_fdamage = 10.0f;
 
 
 	//Follow Behaviour

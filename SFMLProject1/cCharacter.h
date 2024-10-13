@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cCharacter.h
+Description : Base character class. Is the parent class for enemies and players. Contains all methods that are needed by both child classes
+Author : Daniel Kilfoyle & Jayden Burns
+Mail : DanielKilfoyle@mds.ac.nz & JaydenBurns@mds.ac.nz
+**************************************************************************/
+
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -14,8 +26,6 @@ enum CharacterType
 class cCharacter
 {
 public:
-	// TODO pass in sprite instead of load on character creation -  In game manager
-	// TODO - Move character name to player if needed.
 	cCharacter(sf::Sprite* _sprite, sf::Vector2f _StartPosition);
 
 	// setHealth function used for setting health to specific numbers, instead of applying healing or damage as in update health. 
@@ -29,11 +39,11 @@ public:
 	// will check the character's health against its max and min, and runs necessary functions depending on the health value
 	virtual void healthCheck();
 
-	// Changed setSprite to virtual as it will be used only for the enemies
+	
 	virtual void setSprite(const std::string& _FilePath);
 	virtual void setSprite(sf::Sprite* _Sprite);
 
-	// DONE - lower upper 
+	
 	virtual void setPosition(sf::Vector2f _Pos) { m_characterPosition = _Pos;}
 	virtual sf::Vector2f getPosition() { return m_characterPosition; };
 

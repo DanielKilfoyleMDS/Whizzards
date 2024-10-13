@@ -1,9 +1,35 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cCollisionManager.cpp
+Description : The manager class for all of the collisions in game
+Author : Daniel Kilfoyle
+Mail : DanielKilfoyle@mds.ac.nz
+**************************************************************************/
+
 #include "cCollisionManager.h"
 
+/*************************************************************************
+Name: cCollisionManager
+Description : constructor for the collision manager
+Parameters: None
+Returns: None
+Author : Daniel Kilfoyle
+**************************************************************************/
 cCollisionManager::cCollisionManager()
 {
 }
 
+/*************************************************************************
+Name: collisionCheck
+Description : iterates through the vector of all active characters, and checks if they are colliding. Runs relevant events accordingly
+Parameters: vector<cCharacter*> active characters
+Returns: None
+Author : Daniel Kilfoyle
+**************************************************************************/
 void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacters)
 {
 	for (int i = 0; i < _activeCharacters.size(); i++)
@@ -40,21 +66,35 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 							/// Move the second player in the direction the first player was moving
 							_activeCharacters[j]->setPosition(_activeCharacters[j]->getPosition() - newPos);
 
-
-				
 							std::cout << "BONK!!" << std::endl;
 						}
+						else if (_activeCharacters[j]->getCharacterType() == Enemy)
+						{
+							// Deal damage to the player
+							std::cout << "Player i - enemy j - Damage" << std::endl;
+
+							// Colliding enemy
+							cEnemy* collidingEnemy = dynamic_cast<cEnemy*>(_activeCharacters[j]);
+							collidingEnemy->otherCollide(_activeCharacters[i]);
+							
+						}
 					}
+					// If the first character type is enemy, and colliding character is a player
 					else if (_activeCharacters[i]->getCharacterType() == Enemy)
 					{
 						if (_activeCharacters[j]->getCharacterType() == Player)
 						{
+
 							// Deal damage to the player
-							std::cout << "DAMAGE PLAYER" << std::endl;
+							std::cout << "enemy i - Player j - Damage" << std::endl;
 
 							// Colliding enemy
 							cEnemy* collidingEnemy = dynamic_cast<cEnemy*>(_activeCharacters[i]);
-							collidingEnemy->otherCollide(_activeCharacters[j]);
+							
+							if (collidingEnemy->getAwake())
+							{
+								collidingEnemy->otherCollide(_activeCharacters[j]);
+							}
 						}
 					}
 				}
@@ -63,6 +103,13 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 	}
 }
 
+/*************************************************************************
+Name: projectileCheck
+Description : checks the vector of projectiles against the vector of characters and whether they collide
+Parameters: vector<cCharacter*> - characters, vector<cProjectile*> - projectiles
+Returns: None
+Author : Daniel Kilfoyle
+**************************************************************************/
 void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacters, std::vector<cProjectile*> _activeProjectiles)
 {
 	for (int proj = 0; proj < _activeProjectiles.size(); proj++)
