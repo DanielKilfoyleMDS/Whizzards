@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "cCharacter.h"
+#include "cProjectile.h"
 
 class cGameManager
 {
@@ -13,39 +14,26 @@ public:
 	sf::Sprite* getEnemyChaseSprite();
 
 
-	sf::Sprite getFirstPlayerSprite();
-	sf::Sprite getSecondPlayerSprite();
-	sf::Sprite getFirstPlayerProjectile();
-	sf::Sprite getSecondPlayerProjectile();
+	sf::Sprite* getFirstPlayerSprite();
+	sf::Sprite* getSecondPlayerSprite();
+	sf::Sprite* getFirstPlayerProjectile();
+	sf::Sprite* getSecondPlayerProjectile();
 
 
 
 
-	// Player Sprites
-	sf::Sprite m_firstPlayerSprite;
-	sf::Sprite m_secondPlayerSprite;
 
-
-
-	sf::Sprite m_blueProjectileSprite;
-	sf::Sprite m_redProjectileSprite;
-
-	//Textures
-	
-
-	sf::Texture m_firstPlayerTexture;
-	sf::Texture m_secondPlayerTexture;
-
-	sf::Texture m_blueProjectileTexture;
-	sf::Texture m_redProjectileTexture;
 
 	void AddToCollisionList(cCharacter* _Character);
 	cCharacter* GetFromCollisionList(int _ListPosition);
 	std::vector<cCharacter*>* getCollisionList();
+	std::vector<cProjectile*>* getProjectilesList();
 
 private:
 	//Collision
 	std::vector<cCharacter*>* m_CollisionList;
+
+	std::vector<cProjectile*>* m_ProjectileList;
 
 
 	//Enemy Textures
@@ -59,5 +47,17 @@ private:
 	sf::Sprite m_defaultEnemySprite;
 	sf::Sprite m_randomEnemySprite;
 	sf::Sprite m_chaseEnemySprite;
+
+	// Player Sprites
+	sf::Sprite m_firstPlayerSprite;
+	sf::Sprite m_secondPlayerSprite;
+	sf::Sprite m_blueProjectileSprite;
+	sf::Sprite m_redProjectileSprite;
+
+	// Player Textures
+	sf::Texture m_firstPlayerTexture;
+	sf::Texture m_secondPlayerTexture;
+	sf::Texture m_blueProjectileTexture;
+	sf::Texture m_redProjectileTexture;
 };
 

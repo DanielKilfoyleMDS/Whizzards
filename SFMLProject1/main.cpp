@@ -25,16 +25,13 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 #include <SFML/System/Clock.hpp>
 #include "cGameManager.h"
 #include "cEnemySpawner.h"
+#include "cCollisionManager.h"
 
 
 
 
-// Function to create a projectile
-cProjectile* CreateProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rotation)
-{
-    cProjectile* proj = new cProjectile(_sprite, _pos, _rotation);
-    return proj;
-}
+
+
 
 // Function to load spawn points from a file
 std::vector<sf::Vector2f> LoadSpawnPoints(const std::string& filename) {
@@ -126,14 +123,42 @@ int main()
 {
     srand(static_cast<unsigned>(time(0)));
     cGameManager Manager;
+    cCollisionManager Collision;
 
     // Create the window with a set resolution
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
     window.setFramerateLimit(60);
 
+    // Loading the font for UI
+    sf::Font WizardFont;
+    WizardFont.loadFromFile("Resources/Fonts/Wizard.ttf");
+
+    sf::Text firstPlayerHealthText;
+    firstPlayerHealthText.setFont(WizardFont);
+    firstPlayerHealthText.setFillColor(sf::Color::Red);
+    firstPlayerHealthText.setCharacterSize(36);
+    firstPlayerHealthText.setPosition(sf::Vector2f(100, 50));
+    sf::Text secondPlayerHealthText;
+    secondPlayerHealthText.setFont(WizardFont);
+    secondPlayerHealthText.setFillColor(sf::Color::Red);
+    secondPlayerHealthText.setCharacterSize(36);
+    secondPlayerHealthText.setPosition(sf::Vector2f(100, 100));
+
+    // View for UI drawing only
+    sf::View uiViewPort(sf::Vector2f(640, 360), sf::Vector2f(1280, 720));
+
+
     // Create player instances
-    cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(700, 500), Manager.getCollisionList());
-    cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(800, 600), Manager.getCollisionList());
+    cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(), "Player 1", sf::Vector2f(700, 500), Manager.getCollisionList());
+    cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(), "Player 2", sf::Vector2f(800, 600), Manager.getCollisionList());
+    Player1->setProjectileSprite(Manager.getFirstPlayerProjectile());
+    Player2->setProjectileSprite(Manager.getSecondPlayerProjectile());
+    Player1->setProjectileList(Manager.getProjectilesList());
+    Player2->setProjectileList(Manager.getProjectilesList());
+
+
+
+
 
     // Load projectile texture
     sf::Texture blueProjectileTexture;
@@ -181,22 +206,21 @@ int main()
 
         Player1->processInput();
         Player2->processInput();
-        bool bfired = false;
+        
 
-        // Handle projectile firing
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-        {
-            if (castTimer.getElapsedTime().asMilliseconds() >= 500.0f && !bfired)
-            {
-                activeProjectiles.push_back(CreateProjectile(blueProjectileSprite, Player1->getPosition(), Player1->getRotation()));
-                std::cout << "castTimer duration: " << castTimer.getElapsedTime().asMilliseconds() << std::endl;
-                castTimer.restart();
-                bfired = true;
-            }
-        }
+
+
+        //if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) 
+        //{
+        //    Player1->castSpell(Manager.getProjectilesList());
+        //}
+        //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        //{
+        //    Player2->castSpell(Manager.getProjectilesList());
+        //}
 
         // Update projectiles
-        for (auto projectile : activeProjectiles)
+        for (auto projectile : *Manager.getProjectilesList())
         {
             projectile->tick();
         }
@@ -205,6 +229,10 @@ int main()
         Spawner.WaveManager();
 
         window.clear();
+
+        // Checking the collisions for all characters (Enemies and players) and then checking the projectiles
+        Collision.collisionCheck(*Manager.getCollisionList());
+        Collision.projectileCheck(*Manager.getCollisionList(), *Manager.getProjectilesList());
 
         if (m_Cameras.UseCombinedView())
         {
@@ -217,9 +245,9 @@ int main()
             {
                 m_Cameras.Render(iter, &window);
             }
-            for (auto iter : activeProjectiles)
+            for (auto iter : *Manager.getProjectilesList())
             {
-                window.draw(iter->m_Sprite);
+                window.draw(iter->m_sprite);
             }
         }
         else
@@ -233,9 +261,9 @@ int main()
             {
                 m_Cameras.Render(iter, &window);
             }
-            for (auto iter : activeProjectiles)
+            for (auto iter : *Manager.getProjectilesList())
             {
-                window.draw(iter->m_Sprite);
+                window.draw(iter->m_sprite);
             }
 
             m_Cameras.setViewSecondPlayer();
@@ -246,11 +274,20 @@ int main()
             {
                 m_Cameras.Render(iter, &window);
             }
-            for (auto iter : activeProjectiles)
+            for (auto iter : *Manager.getProjectilesList())
             {
-                window.draw(iter->m_Sprite);
+                window.draw(iter->m_sprite);
             }
         }
+
+        
+        window.setView(uiViewPort);
+
+        firstPlayerHealthText.setString("Wizard 1 Health: " + std::to_string(int(Player1->getHealth())));
+        secondPlayerHealthText.setString("Wizard 2 Health: " + std::to_string(int(Player2->getHealth())));
+
+        window.draw(firstPlayerHealthText);
+        window.draw(secondPlayerHealthText);
 
         window.display();
     }

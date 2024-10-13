@@ -25,6 +25,7 @@ cEnemy::cEnemy(sf::Sprite* _sprite, sf::Vector2f _startPosition)
 	m_bAwake = false;
 	m_Behaviour = nullptr;
 	m_enemyState = Idle;
+	m_characterType = Enemy;
 }
 
 /************************************************************************

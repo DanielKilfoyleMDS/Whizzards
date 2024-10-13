@@ -27,6 +27,7 @@ cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _pos
 	setCharacterType(Player);
 
 	_activeCharacters->push_back(this);
+	m_castTimer.restart();
 }
 
 void cPlayer::rotateCharacter(sf::Keyboard::Key _key, int _scalar)
@@ -79,6 +80,7 @@ void cPlayer::processInput()
 	if (sf::Keyboard::isKeyPressed(castSpellKey))
 	{
 		// Cast the spell
+		castSpell();
 	}
 }
 
@@ -103,7 +105,34 @@ void cPlayer::draw()
 
 void cPlayer::castSpell()
 {
+	if ((m_castTimer.getElapsedTime().asMilliseconds() >= 500.0f))
+	{
+		if (!m_bFired)
+		{
 
+			// Base projectile function. 
+			cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation(), false);
+			m_projectilesList->push_back(newProjectile);
+			
+			m_castTimer.restart();
+			m_bFired = true;
+		}
+		else if (m_castTimer.getElapsedTime().asMilliseconds() >= 500.0f && m_bFired)
+		{
+			m_bFired = false;
+		}
+	}
+	std::cout << m_castTimer.getElapsedTime().asMilliseconds() << std::endl;
+
+}
+void cPlayer::setProjectileSprite(sf::Sprite* _projectile)
+{
+	m_projectileSprite = *_projectile;
+}
+
+void cPlayer::setProjectileList(std::vector<cProjectile*>* _projectiles)
+{
+	m_projectilesList = _projectiles;
 }
 
 

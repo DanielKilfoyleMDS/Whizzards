@@ -1,6 +1,7 @@
 #pragma once
 #include "cCharacter.h"
 #include "MathLibrary.h"
+#include "cProjectile.h"
 
 class cPlayer : public cCharacter
 {
@@ -23,11 +24,19 @@ public:
 	sf::FloatRect getBounds() {
 		return m_characterSprite->getGlobalBounds();
 	}
+	
+	void setProjectileSprite(sf::Sprite* _projectile);
+	void setProjectileList(std::vector<cProjectile*>* _projectiles);
 
 
 private:
 
 	// character name, used for setting different controls for player 1 and player 2
 	std::string m_playerName;
+
+	sf::Sprite m_projectileSprite;
+	sf::Clock m_castTimer;
+	bool m_bFired;
+	std::vector<cProjectile*>* m_projectilesList;
 };
 
