@@ -48,6 +48,10 @@
     <ClCompile Include="cProjectile.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="cCollisionManager.cpp" />
+    <ClCompile Include="cChaseBehaviour.cpp">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -98,6 +102,10 @@
     </ClInclude>
     <ClInclude Include="cProjectile.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="cCollisionManager.h" />
+    <ClInclude Include="cChaseBehaviour.h">
+      <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

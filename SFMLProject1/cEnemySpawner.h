@@ -1,35 +1,49 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cEnemySpawner.h
+Description : Enemy Spawner for Whizzards Game
+Author : Jayden Burns
+Mail : JaydenBurns@mds.ac.nz
+**************************************************************************/
 #pragma once
 #include "cEnemyPool.h"
-#include <SFML/System.hpp>
-#include <vector>
-#include <string>
-#include <iostream>
 
-class cEnemySpawner {
+class cEnemySpawner
+{
 public:
-    void LoadSpawnPoints(const std::string& filename);
-    cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool);
-    ~cEnemySpawner();
+	cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool);
+	cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool, int _enemiesOnScreen, int _enemiesTotal);
+	~cEnemySpawner();
 
-    bool SpawnEnemy(sf::Vector2f position); // Declaration should match
-    void WaveManager();
+	void setSpawnPoints(std::vector<sf::Vector2f>* _spawnpoints);
+
+	void WaveManager();
 
 private:
-    std::vector<sf::Vector2f> m_SpawnPoints; // List of spawn points
 
-    int m_icurrentPoints;
-    int m_icurrentWave;
-    int m_ibasePoints;
-    int m_iwavePointGain;
-    cEnemyPool* m_EnemyPoolRef;
+	int m_icurrentPoints;
+	int m_icurrentWave;
+	int m_ibasePoints;
+	int m_iwavePointGain;
+	cEnemyPool* m_EnemyPoolRef;
 
-    int m_imaxEnemiesAtOnce;
-    int m_imaxEnemiesInWave;
+	int m_imaxEnemiesAtOnce;
+	int m_imaxEnemiesInWave;
 
-    int CalculateWavePoints();
-    void StartWave();
-    //bool SpawnEnemy(); // Method to spawn enemy without parameters
+	std::vector<sf::Vector2f>* m_spawnPoints = nullptr;
 
-    bool SpawnAsteroidEnemy(sf::Vector2f spawnPosition);
-    bool SpawnRandomEnemy(sf::Vector2f spawnPosition);
+	int calculateWavePoints();
+	void startWave();
+	bool spawnEnemy();
+
+	bool spawnRandomEnemy(sf::Vector2f _position);
+	bool spawnAsteroidEnemy(sf::Vector2f _position);
+	bool spawnChaseEnemy(sf::Vector2f _position);
+	
+
 };
+

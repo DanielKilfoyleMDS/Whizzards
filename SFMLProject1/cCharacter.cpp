@@ -1,5 +1,7 @@
 #include "cCharacter.h"
 
+
+
 cCharacter::cCharacter(sf::Sprite* _sprite, sf::Vector2f _StartPosition)
 {
 	m_characterSprite = _sprite;
@@ -18,7 +20,12 @@ cCharacter::cCharacter(sf::Sprite* _sprite, sf::Vector2f _StartPosition)
 	m_characterSprite->setPosition(m_characterPosition);
 
 	m_fmaxHealth = 100;
-	m_fcurrentHealth = m_fmaxHealth; // Initialize current health to max health
+
+	m_fcurrentHealth = m_fmaxHealth;
+	m_fcharacterRotation = 0.0f;
+	m_fradiansRotation = 0.0f;
+
+
 }
 
 void cCharacter::setHealth(float _Health)
@@ -52,6 +59,7 @@ void cCharacter::healthCheck()
 	// Check if health has reached or gone below 0, then call appropriate death function for the 
 	else if (m_fcurrentHealth <= 0)
 	{
+		m_fcurrentHealth = 0;
 		// run death functions
 	}
 
@@ -75,6 +83,22 @@ void cCharacter::setSprite(const std::string& _FilePath)
 	m_characterSprite->setOrigin(textureSize.x / 2.f, textureSize.y / 2.f);
 }
 
+void cCharacter::setSprite(sf::Sprite* _Sprite)
+{
+	m_characterSprite = _Sprite;
+}
+
+
+
+void cCharacter::setCharacterType(CharacterType _type)
+{
+	m_characterType = _type;
+}
+
+CharacterType cCharacter::getCharacterType()
+{
+	return m_characterType;
+}
 
 void cCharacter::setRotation(float _Rotation)
 {

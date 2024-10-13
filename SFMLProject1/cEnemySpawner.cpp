@@ -1,97 +1,117 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cEnemySpawner.cpp
+Description : Enemy Spawner for Whizzards Game
+Author : Jayden Burns
+Mail : JaydenBurns@mds.ac.nz
+**************************************************************************/
 #include "cEnemySpawner.h"
 #include "MathLibrary.h"
-#include <fstream>
-#include <sstream>
-#include <filesystem>
 
-void cEnemySpawner::LoadSpawnPoints(const std::string& filename)
-{
-	std::string fullPath = "Resources/Levels/" + filename; // Build the full path
-	std::ifstream file(fullPath);
-	if (!file.is_open())
-	{
-		std::cerr << "Failed to open spawn points file: " << fullPath << std::endl;
-		return;
-	}
-
-	std::string line;
-	while (std::getline(file, line))
-	{
-		std::istringstream iss(line);
-		float x, y;
-		char comma; // To skip the comma if you have a comma-separated format
-
-		// Assuming the spawn points are in the format: x,y
-		if (iss >> x >> comma >> y) // Read x and y values
-		{
-			m_SpawnPoints.emplace_back(x, y); // Store the spawn point
-			std::cout << "Loaded spawn point: (" << x << ", " << y << ")" << std::endl; // Debug output
-		}
-		else
-		{
-			std::cerr << "Invalid line format in spawn points file: " << line << std::endl; // Handle parsing errors
-		}
-	}
-
-	file.close();
-	std::cout << "Finished loading spawn points. Total spawn points loaded: " << m_SpawnPoints.size() << std::endl;
-}
-
-
-//cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool, int _enemiesOnScreen, int _enemiesTotal)
-//{
-//	m_icurrentWave = 0;
-//	m_iwavePointGain = _wavePointGain;
-//	m_ibasePoints = _basePoints;
-//	m_icurrentPoints = CalculateWavePoints();
-//
-//	m_EnemyPoolRef = _Pool;
-//	m_imaxEnemiesAtOnce = _enemiesOnScreen;
-//	m_imaxEnemiesInWave = _enemiesTotal;
-//}
+/************************************************************************
+Name: cEnemySpawner
+Description : Constructor for Enemy Spawner. Sets Max values based on Pool Size
+Parameters: int _basePoints, int _wavePointGain, cEnemyPool* _Pool
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool)
 {
 	m_icurrentWave = 0;
 	m_iwavePointGain = _wavePointGain;
 	m_ibasePoints = _basePoints;
-	m_icurrentPoints = CalculateWavePoints();
+	m_icurrentPoints = calculateWavePoints();
 
 	m_EnemyPoolRef = _Pool;
-	m_imaxEnemiesAtOnce = m_EnemyPoolRef->GetInactiveEnemies().size();
+	m_imaxEnemiesAtOnce = m_EnemyPoolRef->getInactiveEnemies().size();
 	m_imaxEnemiesInWave = m_imaxEnemiesAtOnce * 2;
 
-	// Load spawn points from the file
-	LoadSpawnPoints("spawn_points.txt");
 }
 
+/************************************************************************
+Name: cEnemySpawner
+Description : Constructor for Enemy Spawner. Sets Max values based on Constructor
+Parameters: int _basePoints, int _wavePointGain, cEnemyPool* _Pool, int _enemiesOnScreen, int _enemiesTotal
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool, int _enemiesOnScreen, int _enemiesTotal)
+{
+	m_icurrentWave = 0;
+	m_iwavePointGain = _wavePointGain;
+	m_ibasePoints = _basePoints;
+	m_icurrentPoints = calculateWavePoints();
 
+	m_EnemyPoolRef = _Pool;
+	m_imaxEnemiesAtOnce = _enemiesOnScreen;
+	m_imaxEnemiesInWave = _enemiesTotal;
+}
+
+/************************************************************************
+Name: ~cEnemyPool
+Description : Deconstructor for Enemyspawner.
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 cEnemySpawner::~cEnemySpawner()
 {
+	m_EnemyPoolRef = nullptr;
 }
 
+/************************************************************************
+Name: setSpawnPoints
+Description : sets SpawnPoints used by spawner
+Parameters: std::vector<sf::Vector2f>* _spawnpoints
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cEnemySpawner::setSpawnPoints(std::vector<sf::Vector2f>* _spawnpoints)
+{
+	m_spawnPoints = _spawnpoints;
+}
+
+/************************************************************************
+Name: WaveManager
+Description : Checks to see if wave is complete, starts new wave.
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 void cEnemySpawner::WaveManager()
 {
 	m_EnemyPoolRef->tickEnemies();
 
 	//Check if there are no enemies left on screen
-	if (m_EnemyPoolRef->GetActiveEnemies().size() == 0)
+	if (m_EnemyPoolRef->getActiveEnemies().size() == 0)
 	{
 		m_icurrentWave++;
 		std::cout << "StartingWave" << std::endl;
-		StartWave();
+		startWave();
 	}
 	
 	//Check if there are still points to spawn and room for another enemy
-	if (m_icurrentPoints > 0 && m_EnemyPoolRef->GetActiveEnemies().size() < m_imaxEnemiesAtOnce) 
+	if (m_icurrentPoints > 0 && m_EnemyPoolRef->getActiveEnemies().size() < m_imaxEnemiesAtOnce) 
 	{
 		//Spawning additional enemies per wave can go here - BETA SPRINT GOAL
 	}
 
 }
 
-
-int cEnemySpawner::CalculateWavePoints()
+/************************************************************************
+Name: CalculateWavePoints
+Description : Calculates Points based on current wave, point gain, and max enemies.
+Parameters: None
+Returns: int (Number of Points)
+Author : Jayden Burns
+**************************************************************************/
+int cEnemySpawner::calculateWavePoints()
 {
+	//TODO - Improve math for this function
 	int Points = m_ibasePoints + (m_icurrentWave * m_iwavePointGain);
 	if (Points > m_imaxEnemiesAtOnce * 2) //Set to highest cost enemy - maybe make these const member variables
 	{
@@ -100,99 +120,106 @@ int cEnemySpawner::CalculateWavePoints()
 	return Points;
 }
 
-void cEnemySpawner::StartWave() {
-	m_icurrentPoints = CalculateWavePoints();
+/************************************************************************
+Name: StartWave
+Description : Starts Next Wave
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cEnemySpawner::startWave()
+{
+	m_icurrentPoints = calculateWavePoints();
 	int EnemiesSpawned = 0;
 	bool CanSpawn = true;
-
-	while (CanSpawn) {
-		if (m_icurrentPoints > 0 && m_EnemyPoolRef->GetActiveEnemies().size() < m_imaxEnemiesAtOnce) {
-			// Ensure there are spawn points available
-			if (!m_SpawnPoints.empty()) {
-				// Get a random spawn position
-				int spawnIndex = randRangeInt(0, m_SpawnPoints.size() - 1);
-				sf::Vector2f spawnPosition = m_SpawnPoints[spawnIndex];
-
-				// Call SpawnEnemy with the position
-				SpawnEnemy(spawnPosition); // Pass the spawn position
-				EnemiesSpawned++;
-			}
-			else {
-				CanSpawn = false; // No spawn points available
-			}
+	while (CanSpawn)
+	{
+		if (m_icurrentPoints > 0 && m_EnemyPoolRef->getActiveEnemies().size() < m_imaxEnemiesAtOnce)
+		{
+			CanSpawn = spawnEnemy(); //Returns false if enemy spawning fails
 		}
-		else {
-			CanSpawn = false; // No more points or too many enemies on screen
-		}
+		else CanSpawn = false;
 	}
 }
 
-
-
-//bool cEnemySpawner::SpawnEnemy()
-//{
-//	int EnemyChoice = 0;
-//	EnemyChoice = randRangeInt(0, 1);
-//	if (EnemyChoice == 0 && m_icurrentPoints >= 1)
-//	{
-//		return SpawnAsteroidEnemy();
-//	} else if (EnemyChoice == 1 && m_icurrentPoints >= 2)
-//	{
-//		return SpawnRandomEnemy();
-//	}
-//	else if (m_icurrentPoints <= 0)
-//	{
-//		return false;
-//	}
-//	else {
-//		std::cout << "Reroll" << std::endl;
-//		return SpawnEnemy(); //If we reach this point, we still have points to spend.
-//	}
-//	
-//}
-
-bool cEnemySpawner::SpawnEnemy(sf::Vector2f position) {
-	if (m_SpawnPoints.empty()) {
-		std::cerr << "No spawn points available!" << std::endl;
-		return false; // No spawn points available
-	}
-
-	// Get a random spawn point from the loaded list
-	int spawnIndex = randRangeInt(0, m_SpawnPoints.size() - 1);
-	sf::Vector2f spawnPosition = m_SpawnPoints[spawnIndex];
-
-	// Assuming you have a way to get a sprite for the enemy
-	sf::Sprite* enemySprite = new sf::Sprite(); // Create a new sprite (make sure to set texture later)
-
-	// Create a new enemy with the required parameters
-	cEnemy* newEnemy = new cEnemy(enemySprite, spawnPosition); // Use spawnPosition instead of position
-
-	// Use the EnemyChoice to determine which enemy type to spawn
-	int EnemyChoice = randRangeInt(0, 1);
-	if (EnemyChoice == 0 && m_icurrentPoints >= 1) {
-		if (SpawnAsteroidEnemy(spawnPosition)) {
-			m_EnemyPoolRef->AddEnemy(newEnemy); // Add enemy to the pool
-			return true; // Successfully spawned an asteroid enemy
-		}
-	}
-	else if (EnemyChoice == 1 && m_icurrentPoints >= 2) {
-		if (SpawnRandomEnemy(spawnPosition)) {
-			m_EnemyPoolRef->AddEnemy(newEnemy); // Add enemy to the pool
-			return true; // Successfully spawned a random enemy
-		}
-	}
-
-	delete newEnemy; // Clean up if not spawned
-	return false; // Failed to spawn an enemy
-}
-
-
-bool cEnemySpawner::SpawnAsteroidEnemy(sf::Vector2f spawnPosition)
+/************************************************************************
+Name: SpawnEnemy
+Description : Chooses Enemy to Spawn and subtracts the point cost
+Parameters: None
+Returns: bool - false if unsuccessful
+Author : Jayden Burns
+**************************************************************************/
+bool cEnemySpawner::spawnEnemy()
 {
-	return m_EnemyPoolRef->loadAsteroidEnemy(spawnPosition, sf::Vector2f(1, 1), 1);
+	int iEnemyChoice = randRangeInt(0, 3);
+	sf::Vector2f SpawnPosition = sf::Vector2f(0,0);
+	if (m_spawnPoints != nullptr && m_spawnPoints->size() > 0)
+	{
+		if (m_spawnPoints->size() > 1)
+		{
+			int ispawnPointChoice = randRangeInt(0, m_spawnPoints->size() - 1);
+			SpawnPosition = (*m_spawnPoints)[ispawnPointChoice];
+		}
+		else if (m_spawnPoints->size() == 1)
+		{
+			SpawnPosition = (*m_spawnPoints)[0];
+		}
+	}
+
+	
+	if (iEnemyChoice == 0 && m_icurrentPoints >= 1)
+	{
+		return spawnAsteroidEnemy(SpawnPosition);
+	} else if (iEnemyChoice == 1 && m_icurrentPoints >= 2)
+	{
+		return spawnRandomEnemy(SpawnPosition);
+	}
+	else if (iEnemyChoice == 2 && m_icurrentPoints >= 2)
+	{
+		return spawnChaseEnemy(SpawnPosition);
+	}
+	else if (m_icurrentPoints <= 0)
+	{
+		return false;
+	}
+	else {
+		return spawnEnemy(); //If we reach this point, we still have points to spend.
+	}
+	
 }
 
-bool cEnemySpawner::SpawnRandomEnemy(sf::Vector2f spawnPosition)
+/************************************************************************
+Name: spawnRandomEnemy
+Description : Spawns Random Type Enemy
+Parameters: None
+Returns: bool - false if unsuccessful
+Author : Jayden Burns
+**************************************************************************/
+bool cEnemySpawner::spawnRandomEnemy(sf::Vector2f _position)
 {
-	return m_EnemyPoolRef->loadRandomEnemy(spawnPosition);
+	return m_EnemyPoolRef->loadRandomEnemy(_position);
+}
+
+/************************************************************************
+Name: spawnAsteroidEnemy
+Description : Spawns Asteroid Type Enemy
+Parameters: None
+Returns: bool - false if unsuccessful
+Author : Jayden Burns
+**************************************************************************/
+bool cEnemySpawner::spawnAsteroidEnemy(sf::Vector2f _position)
+{
+	return m_EnemyPoolRef->loadAsteroidEnemy(_position, sf::Vector2f(1, 1), 1);
+}
+
+/************************************************************************
+Name: spawnChaseEnemy
+Description : Spawns Chase Type Enemy
+Parameters: None
+Returns: bool - false if unsuccessful
+Author : Jayden Burns
+**************************************************************************/
+bool cEnemySpawner::spawnChaseEnemy(sf::Vector2f _position)
+{
+	return m_EnemyPoolRef->loadChaseEnemy(_position);
 }

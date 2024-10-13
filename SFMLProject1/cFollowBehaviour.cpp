@@ -4,25 +4,25 @@ cFollowBehaviour::~cFollowBehaviour()
 {
 }
 
-bool cFollowBehaviour::TickEnemy(cEnemy* _parent)
+bool cFollowBehaviour::tickEnemy(cEnemy* _parent)
 {
 	return false;
 }
 
-bool cFollowBehaviour::CheckDeath(cEnemy* _parent)
+bool cFollowBehaviour::checkDeath(cEnemy* _parent)
 {
 	return false;
 }
 
-bool cFollowBehaviour::CanAttack(cEnemy* _parent)
+bool cFollowBehaviour::canAttack(cEnemy* _parent)
 {
 	return false;
 }
 
-void cFollowBehaviour::Attack(cEnemy* _parent)
+void cFollowBehaviour::enemyAttack(cEnemy* _parent)
 {
 }
 
-void cFollowBehaviour::Move(cEnemy* _parent)
+void cFollowBehaviour::enemyMove(cEnemy* _parent)
 {
 }

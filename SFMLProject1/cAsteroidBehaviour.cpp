@@ -1,17 +1,48 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cAsteroidBehaviour.cpp
+Description : Behaviour class for Asteroid enemy
+Author : Jayden Burns
+Mail : JaydenBurns@mds.ac.nz
+**************************************************************************/
 #include "cAsteroidBehaviour.h"
 #include "cEnemy.h"
 
-
+/************************************************************************
+Name: cAsteroidBehaviour
+Description : constructor for Asteroid Behaviour Class
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 cAsteroidBehaviour::cAsteroidBehaviour()
 {
 
 }
 
+/************************************************************************
+Name: ~cAsteroidBehaviour
+Description : deconstructor for Asteroid Behaviour Class
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 cAsteroidBehaviour::~cAsteroidBehaviour()
 {
 }
 
-bool cAsteroidBehaviour::TickEnemy(cEnemy* _parent)
+/************************************************************************
+Name: tickEnemy
+Description : runs tick behaviour on enemy.
+Parameters: cEnemy* _parent
+Returns: bool - false if unsuccessful.
+Author : Jayden Burns
+**************************************************************************/
+bool cAsteroidBehaviour::tickEnemy(cEnemy* _parent)
 {
 	if (_parent != nullptr)
 	{
@@ -21,7 +52,7 @@ bool cAsteroidBehaviour::TickEnemy(cEnemy* _parent)
 			switch (_parent->getState())
 			{
 			case Idle:
-				Move(_parent);
+				enemyMove(_parent);
 				break;
 			default:
 				_parent->setState(Idle);
@@ -30,7 +61,7 @@ bool cAsteroidBehaviour::TickEnemy(cEnemy* _parent)
 		}
 	}
 
-	if (CheckDeath(_parent))
+	if (checkDeath(_parent))
 	{
 		return false;
 	}
@@ -38,7 +69,14 @@ bool cAsteroidBehaviour::TickEnemy(cEnemy* _parent)
 
 }
 
-bool cAsteroidBehaviour::CheckDeath(cEnemy* _parent)
+/************************************************************************
+Name: checkDeath
+Description : checks if enemy should be dead.
+Parameters: cEnemy* _parent
+Returns: bool - true if it should be dead
+Author : Jayden Burns
+**************************************************************************/
+bool cAsteroidBehaviour::checkDeath(cEnemy* _parent)
 {
 	if (_parent->getHealth() < 1)
 	{
@@ -47,26 +85,55 @@ bool cAsteroidBehaviour::CheckDeath(cEnemy* _parent)
 	return false;
 }
 
-bool cAsteroidBehaviour::CanAttack(cEnemy* _parent)
+/************************************************************************
+Name: canAttack
+Description : checks if enemy canAttack.
+Parameters: cEnemy* _parent
+Returns: bool - true if can Attack
+Author : Jayden Burns
+**************************************************************************/
+bool cAsteroidBehaviour::canAttack(cEnemy* _parent)
 {
 	//Disabled for now
 	return false;
 }
 
-void cAsteroidBehaviour::Attack(cEnemy* _parent)
+/************************************************************************
+Name: enemyAttack
+Description : runs attack behaviour of enemy.
+Parameters: cEnemy* _parent
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cAsteroidBehaviour::enemyAttack(cEnemy* _parent)
 {
 	return;
 }
 
-void cAsteroidBehaviour::Move(cEnemy* _parent)
+/************************************************************************
+Name: enemyMove
+Description : runs move behaviour of enemy.
+Parameters: cEnemy* _parent
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cAsteroidBehaviour::enemyMove(cEnemy* _parent)
 {
 	sf::Vector2f NewPosition = _parent->getPosition() + _parent->getMovement();
 	_parent->setPosition(NewPosition);
-
-	//TODO - ScreenWrap
 }
 
-
-//TODO - Death function
-
-//TODO - Variables for size
+/************************************************************************
+Name: pickDirection
+Description : picks initial direction of asteroid
+Parameters: cEnemy* _parent
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cAsteroidBehaviour::pickDirection(cEnemy* _parent)
+{
+	//TO DO - Set Speed by multiplying RandX or RandY
+	float RandXDirection = randRangeFloat(-1, 1);
+	float RandYDirection = randRangeFloat(-1, 1);
+	_parent->setMovement(sf::Vector2f(RandXDirection, RandYDirection));
+}

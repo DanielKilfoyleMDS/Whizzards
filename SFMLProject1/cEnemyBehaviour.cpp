@@ -1,37 +1,52 @@
 #include "cEnemyBehaviour.h"
 #include "cEnemy.h"
 
+/************************************************************************
+Name: cEnemyBehaviour
+Description : Constructs EnemyBehaviour. Overwritten by Subclasses.
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 cEnemyBehaviour::cEnemyBehaviour()
 {
 }
 
+/************************************************************************
+Name: ~cEnemyBehaviour
+Description : Deconstructs EnemyBehaviour. Overwritten by Subclasses.
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 cEnemyBehaviour::~cEnemyBehaviour()
 {
+	m_behaviourSprite = nullptr;
 }
 
-bool cEnemyBehaviour::TickEnemy(cEnemy* _parent)
+/************************************************************************
+Name: setBehaviourSprite
+Description : sets sprite for this behaviour
+Parameters: sf::Sprite* _Reference
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cEnemyBehaviour::setBehaviourSprite(sf::Sprite* _reference)
 {
-	return false;
+	m_behaviourSprite = _reference;
 }
 
-bool cEnemyBehaviour::CheckDeath(cEnemy* _parent)
+/************************************************************************
+Name: setBehaviourSprite
+Description : sets enemy sprite to behaviour sprite
+Parameters: cEnemy* _parent
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cEnemyBehaviour::setEnemySprite(cEnemy* _parent)
 {
-	if (_parent->getHealth() < 1)
+	if (m_behaviourSprite != nullptr)
 	{
-		return true;
+		_parent->setSprite(m_behaviourSprite);
 	}
-	return false;
-}
-
-bool cEnemyBehaviour::CanAttack(cEnemy* _parent)
-{
-	return false;
-}
-
-void cEnemyBehaviour::Attack(cEnemy* _parent)
-{
-}
-
-void cEnemyBehaviour::Move(cEnemy* _parent)
-{
 }

@@ -1,3 +1,14 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cGameCameras.h
+Description : Handles Cameras and views for Whizzards Game
+Author : Jayden Burns
+Mail : JaydenBurns@mds.ac.nz
+**************************************************************************/
 #pragma once
 #include "SFML/Graphics.hpp"
 class cGameCameras
@@ -36,6 +47,9 @@ private:
 	int m_iMapXSize;
 	int m_iMapYSize;
 
+
+	sf::Vector2f m_LevelCenter;
+
 	sf::Vector2f m_playerCameraRelativeVector;
 	float m_fcameraCurrentDistance = 0;
 	float m_fcameraJoinDistance = 300;
@@ -43,5 +57,6 @@ private:
 	void UpdateCameraRelative(sf::Vector2f _position1, sf::Vector2f _position2);
 	sf::Vector2f RestrictCameraToBounds(sf::Vector2f _cameraPosition, bool _bSplit);
 	
+
 };
 

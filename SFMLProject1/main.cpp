@@ -1,3 +1,14 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : main.cpp
+Description : Main program for Whizzards Game
+Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
+**************************************************************************/
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
@@ -5,6 +16,8 @@
 #include <ctime>
 #include <map>
 #include <fstream>
+#include <sstream>
+#include <filesystem>
 #include "cGameCameras.h"
 #include "cLevelLoader.h"
 #include "cPlayer.h"
@@ -12,6 +25,8 @@
 #include <SFML/System/Clock.hpp>
 #include "cGameManager.h"
 #include "cEnemySpawner.h"
+
+
 
 
 // Function to create a projectile
@@ -25,16 +40,33 @@ cProjectile* CreateProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rota
 std::vector<sf::Vector2f> LoadSpawnPoints(const std::string& filename) {
     std::vector<sf::Vector2f> spawnPoints;
     std::ifstream file(filename);
-
-    if (!file) {
-        std::cerr << "Failed to open spawn points file!" << std::endl;
+    if (!file.is_open())
+    {
+        std::cerr << "Failed to open spawn points file: " << filename << std::endl;
         return spawnPoints;
     }
 
-    float x, y;
-    while (file >> x >> y) {
-        spawnPoints.emplace_back(x, y);  // Add each spawn point to the vector
+    std::string line;
+    while (std::getline(file, line))
+    {
+        std::istringstream iss(line);
+        float x, y;
+        char comma; // To skip the comma if you have a comma-separated format
+
+        // Assuming the spawn points are in the format: x,y
+        if (iss >> x >> comma >> y) // Read x and y values
+        {
+            spawnPoints.emplace_back(x, y); // Store the spawn point
+            std::cout << "Loaded spawn point: (" << x << ", " << y << ")" << std::endl; // Debug output
+        }
+        else
+        {
+            std::cerr << "Invalid line format in spawn points file: " << line << std::endl; // Handle parsing errors
+        }
     }
+
+    file.close();
+    std::cout << "Finished loading spawn points. Total spawn points loaded: " << spawnPoints.size() << std::endl;
 
     return spawnPoints;
 }
@@ -99,21 +131,9 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
     window.setFramerateLimit(60);
 
-    // Load player textures
-    sf::Texture firstPlayerTexture;
-    if (!firstPlayerTexture.loadFromFile("Resources/Textures/Sprites/Blue Player.png")) {
-        std::cerr << "Failed to load first player texture!" << std::endl;
-        return -1;
-    }
-    sf::Texture secondPlayerTexture;
-    if (!secondPlayerTexture.loadFromFile("Resources/Textures/Sprites/Red Player.png")) {
-        std::cerr << "Failed to load second player texture!" << std::endl;
-        return -1;
-    }
-
     // Create player instances
-    cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(400, 300));
-    cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(500, 300));
+    cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(700, 500), Manager.getCollisionList());
+    cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(800, 600), Manager.getCollisionList());
 
     // Load projectile texture
     sf::Texture blueProjectileTexture;
@@ -127,8 +147,14 @@ int main()
     std::vector<cProjectile*> activeProjectiles;
 
     cGameCameras m_Cameras(&window, 3000, 3000);
-    cEnemyPool Pool(200, &Manager.m_defaultEnemySprite);
-    cEnemySpawner Spawner(10, 5, &Pool);
+    cEnemyPool Pool(200, Manager.getEnemyDefaultSprite(), Manager.getCollisionList());
+    Pool.setBehaviourSprites(Manager.getEnemyAsteroidSprite(), Manager.getEnemyRandomSprite(), Manager.getEnemyChaseSprite());
+    Pool.setPlayers(Player1,Player2);
+
+    // Load enemy spawn points from file
+    std::vector<sf::Vector2f> enemySpawnPoints = LoadSpawnPoints("Resources/Levels/spawn_points.txt");
+    cEnemySpawner Spawner(10, 5, &Pool, 20, 30);
+    Spawner.setSpawnPoints(&enemySpawnPoints);
 
     // Load tile textures
     std::map<int, sf::Texture> tileTextures;
@@ -137,17 +163,11 @@ int main()
     // Load the level from the text file
     std::vector<std::vector<int>> tileMap = LoadLevel("Resources/Levels/level1.txt");
 
-    // Load enemy spawn points from file
-    std::vector<sf::Vector2f> enemySpawnPoints = LoadSpawnPoints("Resources/Levels/spawn_points.txt");
 
     // Tile dimensions
     int tileWidth = 64;
     int tileHeight = 64;
 
-    // Spawn enemies at the loaded spawn points
-    for (const auto& spawnPoint : enemySpawnPoints) {
-        Spawner.SpawnEnemy(spawnPoint); // Ensure this matches the method name and parameters
-    }
 
     // Main loop
     while (window.isOpen())
@@ -193,7 +213,7 @@ int main()
             m_Cameras.Render(Player1, &window);
             m_Cameras.Render(Player2, &window);
 
-            for (auto iter : Pool.GetActiveEnemies())
+            for (auto iter : Pool.getActiveEnemies())
             {
                 m_Cameras.Render(iter, &window);
             }
@@ -209,7 +229,7 @@ int main()
             RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
             m_Cameras.Render(Player1, &window);
             m_Cameras.Render(Player2, &window);
-            for (auto iter : Pool.GetActiveEnemies())
+            for (auto iter : Pool.getActiveEnemies())
             {
                 m_Cameras.Render(iter, &window);
             }
@@ -222,7 +242,7 @@ int main()
             RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
             m_Cameras.Render(Player1, &window);
             m_Cameras.Render(Player2, &window);
-            for (auto iter : Pool.GetActiveEnemies())
+            for (auto iter : Pool.getActiveEnemies())
             {
                 m_Cameras.Render(iter, &window);
             }

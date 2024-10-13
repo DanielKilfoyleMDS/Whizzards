@@ -1,28 +1,67 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cRandomBehaviour.cpp
+Description : Behaviour class for Random wander enemy
+Author : Jayden Burns
+Mail : JaydenBurns@mds.ac.nz
+**************************************************************************/
 #include "cRandomBehaviour.h"
 #include "cEnemy.h"
 #include <iostream>
 #include "MathLibrary.h"
 
+/************************************************************************
+Name: cRandomBehaviour
+Description : constructor for Random Behaviour Class
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 cRandomBehaviour::cRandomBehaviour()
 {
 }
 
+/************************************************************************
+Name: ~cRandomBehaviour
+Description : deconstructor for Random Behaviour Class
+Parameters: None
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
 cRandomBehaviour::~cRandomBehaviour()
 {
 }
 
-bool cRandomBehaviour::TickEnemy(cEnemy* _parent)
+/************************************************************************
+Name: tickEnemy
+Description : runs random behaviour on enemy.
+Parameters: cEnemy* _parent
+Returns: bool - false if unsuccessful.
+Author : Jayden Burns
+**************************************************************************/
+bool cRandomBehaviour::tickEnemy(cEnemy* _parent)
 {
-	Move(_parent);
+	enemyMove(_parent);
 
-	if (CheckDeath(_parent))
+	if (checkDeath(_parent))
 	{
 		return false;
 	}
 	return true;
 }
 
-bool cRandomBehaviour::CheckDeath(cEnemy* _parent)
+/************************************************************************
+Name: checkDeath
+Description : checks if enemy should be dead.
+Parameters: cEnemy* _parent
+Returns: bool - true if it should be dead
+Author : Jayden Burns
+**************************************************************************/
+bool cRandomBehaviour::checkDeath(cEnemy* _parent)
 {
 	if (_parent->getHealth() < 1)
 	{
@@ -31,16 +70,38 @@ bool cRandomBehaviour::CheckDeath(cEnemy* _parent)
 	return false;
 }
 
-bool cRandomBehaviour::CanAttack(cEnemy* _parent)
+/************************************************************************
+Name: canAttack
+Description : checks if enemy canAttack.
+Parameters: cEnemy* _parent
+Returns: bool - true if can Attack
+Author : Jayden Burns
+**************************************************************************/
+bool cRandomBehaviour::canAttack(cEnemy* _parent)
 {
 	return false;
 }
 
-void cRandomBehaviour::Attack(cEnemy* _parent)
+
+/************************************************************************
+Name: enemyAttack
+Description : runs attack behaviour of enemy. 
+Parameters: cEnemy* _parent
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cRandomBehaviour::enemyAttack(cEnemy* _parent)
 {
 }
 
-void cRandomBehaviour::Move(cEnemy* _parent)
+/************************************************************************
+Name: enemyMove
+Description : runs move behaviour of enemy.
+Parameters: cEnemy* _parent
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cRandomBehaviour::enemyMove(cEnemy* _parent)
 {
 	if (_parent->getMoveTime() > 0)
 	{
@@ -49,21 +110,23 @@ void cRandomBehaviour::Move(cEnemy* _parent)
 	}
 	else
 	{
-		PickDirection(_parent);
+		pickDirection(_parent);
 	}
 }
 
-void cRandomBehaviour::PickDirection(cEnemy* _parent)
+/************************************************************************
+Name: pickDirection
+Description : picks which direction to move towards
+Parameters: cEnemy* _parent
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cRandomBehaviour::pickDirection(cEnemy* _parent)
 {
-	//CONCEPT WORKS, REDO RAND
 	float RandXDirection = randRangeFloat(-1,1);
 	float RandYDirection = randRangeFloat(-1, 1);
 
-	float Movetime = 5 * randRangeFloat(0,20);
+	float Movetime = 5 * randRangeFloat(20,40);
 	_parent->setMoveTime(Movetime);
 	_parent->setMovement(sf::Vector2f(RandXDirection, RandYDirection));
-
-
-	//Randomly picks a direction (-1 to 1)
-	//Also randomly picks a movetime
 }
