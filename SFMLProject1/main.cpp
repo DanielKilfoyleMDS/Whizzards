@@ -6,89 +6,40 @@
 #include <map>
 #include <fstream>
 #include "cGameCameras.h"
-#include "cLevelLoader.h"
+#include "cLevel.h" 
 #include "cPlayer.h"
 #include "cProjectile.h"
 #include <SFML/System/Clock.hpp>
 #include "cGameManager.h"
 #include "cEnemySpawner.h"
 
-
 // Function to create a projectile
 cProjectile* CreateProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rotation)
 {
-    cProjectile* proj = new cProjectile(_sprite, _pos, _rotation);
-    return proj;
+    return new cProjectile(_sprite, _pos, _rotation);
 }
 
-// Function to load spawn points from a file
-std::vector<sf::Vector2f> LoadSpawnPoints(const std::string& filename) {
-    std::vector<sf::Vector2f> spawnPoints;
-    std::ifstream file(filename);
-
-    if (!file) {
-        std::cerr << "Failed to open spawn points file!" << std::endl;
-        return spawnPoints;
-    }
-
-    float x, y;
-    while (file >> x >> y) {
-        spawnPoints.emplace_back(x, y);  // Add each spawn point to the vector
-    }
-
-    return spawnPoints;
-}
-
-// Load textures for Grass and Sand tiles
-void LoadTileTextures(std::map<int, sf::Texture>& textures) {
-    textures[1].loadFromFile("Resources/Textures/Grass.png"); // Grass tile
-    textures[2].loadFromFile("Resources/Textures/Sand.png");  // Sand tile
-}
-
-// Load the tile map from a text file
-std::vector<std::vector<int>> LoadLevel(const std::string& filename) {
-    std::vector<std::vector<int>> tileMap;
-    std::ifstream file(filename);
-    if (!file) {
-        std::cerr << "Failed to open level file!" << std::endl;
-        return tileMap;
-    }
-
-    std::string line;
-    while (std::getline(file, line)) {
-        std::vector<int> row;
-        for (char tile : line) {
-            if (tile == 'G') {
-                row.push_back(1); // Grass
-            }
-            else if (tile == 'S') {
-                row.push_back(2); // Sand
-            }
-            else {
-                row.push_back(0); // Empty or other tiles can be added later
-            }
-        }
-        tileMap.push_back(row);
-    }
-    return tileMap;
-}
-
-// Render the tile map
-void RenderTileMap(sf::RenderWindow& window, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& textures, int tileWidth, int tileHeight) {
-    for (size_t y = 0; y < tileMap.size(); ++y) {
-        for (size_t x = 0; x < tileMap[y].size(); ++x) {
-            int tileId = tileMap[y][x];
-            if (tileId > 0) { // Only render non-empty tiles
-                sf::Sprite tile;
-                tile.setTexture(textures.at(tileId));
-                tile.setPosition(x * tileWidth, y * tileHeight);
-                window.draw(tile);
+// Renders the tile map
+void RenderTileMap(sf::RenderWindow& window, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& tileTextures, int tileWidth, int tileHeight) {
+    for (size_t i = 0; i < tileMap.size(); ++i) {
+        for (size_t j = 0; j < tileMap[i].size(); ++j) {
+            int tileId = tileMap[i][j];
+            if (tileTextures.find(tileId) != tileTextures.end()) {
+                sf::Sprite tileSprite;
+                tileSprite.setTexture(tileTextures.at(tileId));
+                tileSprite.setPosition(static_cast<float>(j * tileWidth), static_cast<float>(i * tileHeight));
+                window.draw(tileSprite);
             }
         }
     }
 }
 
 sf::Clock castTimer;
+
+void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles);
+
+void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& tileTextures, int tileWidth, int tileHeight, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles, bool firstPlayerView);
+
 
 int main()
 {
@@ -111,9 +62,25 @@ int main()
         return -1;
     }
 
+    // Initialize level loader
+    cLevel level(3000.f, 3000.f);
+
+    // Load tile textures into a map (texture ID mapped to sf::Texture)
+    std::map<int, sf::Texture> tileTextures;
+    level.LoadTileTextures(tileTextures);
+
+    // Load the level (tile map, spawn points, player positions)
+    std::vector<std::vector<int>> tileMap;
+    std::vector<sf::Vector2f> enemySpawnPoints;
+    sf::Vector2f player1Pos, player2Pos;
+    if (!level.LoadLevel("Resources/Levels/level1.txt", tileTextures, tileMap, enemySpawnPoints, player1Pos, player2Pos)) {
+        return -1;
+    }
+
     // Create player instances
-    cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(400, 300));
-    cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(500, 300));
+    cPlayer* Player1 = new cPlayer(&Manager.m_firstPlayerSprite, "Player 1", sf::Vector2f(600, 500), level);
+    cPlayer* Player2 = new cPlayer(&Manager.m_secondPlayerSprite, "Player 2", sf::Vector2f(400, 500), level);
+
 
     // Load projectile texture
     sf::Texture blueProjectileTexture;
@@ -126,19 +93,12 @@ int main()
 
     std::vector<cProjectile*> activeProjectiles;
 
+    // Initialize game camera
     cGameCameras m_Cameras(&window, 3000, 3000);
+
+    // Initialize enemy pool and spawner
     cEnemyPool Pool(200, &Manager.m_defaultEnemySprite);
     cEnemySpawner Spawner(10, 5, &Pool);
-
-    // Load tile textures
-    std::map<int, sf::Texture> tileTextures;
-    LoadTileTextures(tileTextures);
-
-    // Load the level from the text file
-    std::vector<std::vector<int>> tileMap = LoadLevel("Resources/Levels/level1.txt");
-
-    // Load enemy spawn points from file
-    std::vector<sf::Vector2f> enemySpawnPoints = LoadSpawnPoints("Resources/Levels/spawn_points.txt");
 
     // Tile dimensions
     int tileWidth = 64;
@@ -146,7 +106,7 @@ int main()
 
     // Spawn enemies at the loaded spawn points
     for (const auto& spawnPoint : enemySpawnPoints) {
-        Spawner.SpawnEnemy(spawnPoint); // Ensure this matches the method name and parameters
+        Spawner.SpawnEnemy(spawnPoint);
     }
 
     // Main loop
@@ -181,59 +141,67 @@ int main()
             projectile->tick();
         }
 
+        // Update camera positions based on player movements
         m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
+
+        // Manage enemy waves
         Spawner.WaveManager();
 
         window.clear();
 
+        // Check if combined view or individual views should be used
         if (m_Cameras.UseCombinedView())
         {
             m_Cameras.SetViewBothPlayers();
-            RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
-            m_Cameras.Render(Player1, &window);
-            m_Cameras.Render(Player2, &window);
-
-            for (auto iter : Pool.GetActiveEnemies())
-            {
-                m_Cameras.Render(iter, &window);
-            }
-            for (auto iter : activeProjectiles)
-            {
-                window.draw(iter->m_Sprite);
-            }
+            RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight);
+            RenderGameObjects(window, m_Cameras, Player1, Player2, Pool.GetActiveEnemies(), activeProjectiles);
         }
         else
         {
             // Render everything twice for individual views
-            m_Cameras.setViewFirstPlayer();
-            RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
-            m_Cameras.Render(Player1, &window);
-            m_Cameras.Render(Player2, &window);
-            for (auto iter : Pool.GetActiveEnemies())
-            {
-                m_Cameras.Render(iter, &window);
-            }
-            for (auto iter : activeProjectiles)
-            {
-                window.draw(iter->m_Sprite);
-            }
-
-            m_Cameras.setViewSecondPlayer();
-            RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
-            m_Cameras.Render(Player1, &window);
-            m_Cameras.Render(Player2, &window);
-            for (auto iter : Pool.GetActiveEnemies())
-            {
-                m_Cameras.Render(iter, &window);
-            }
-            for (auto iter : activeProjectiles)
-            {
-                window.draw(iter->m_Sprite);
-            }
+            RenderView(window, m_Cameras, Player1, Player2, tileMap, tileTextures, tileWidth, tileHeight, Pool.GetActiveEnemies(), activeProjectiles, true);
+            RenderView(window, m_Cameras, Player1, Player2, tileMap, tileTextures, tileWidth, tileHeight, Pool.GetActiveEnemies(), activeProjectiles, false);
         }
 
         window.display();
     }
 
     return 0;
+}
+
+
+// Helper function to render a single view
+void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& tileTextures, int tileWidth, int tileHeight, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles, bool firstPlayerView) {
+    if (firstPlayerView) {
+        cameras.setViewFirstPlayer();
+    }
+    else {
+        cameras.setViewSecondPlayer();
+    }
+
+    // Render the tile map
+    RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight);
+
+    // Render game objects
+    cameras.Render(Player1, &window);
+    cameras.Render(Player2, &window);
+    for (auto enemy : enemies) {
+        cameras.Render(enemy, &window);
+    }
+    for (auto projectile : projectiles) {
+        window.draw(projectile->m_Sprite);
+    }
+}
+
+// Helper function to render game objects
+void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles)
+{
+    cameras.Render(Player1, &window);
+    cameras.Render(Player2, &window);
+    for (auto enemy : enemies) {
+        cameras.Render(enemy, &window);
+    }
+    for (auto projectile : projectiles) {
+        window.draw(projectile->m_Sprite);
+    }
 }

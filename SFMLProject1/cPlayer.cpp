@@ -1,29 +1,30 @@
 #include "cPlayer.h"
 #include "SFML/Graphics.hpp"
 
-cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _position)
-	: cCharacter(_sprite, _position)
+cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position, cLevel& _level)
+	: cCharacter(_Sprite, _Position), // Call to base class constructor
+	m_playerName(_PlayerName), // Initialize player name
+	level(_level) // Initialize the level reference
 {
-	m_playerName = _playerName;
+	// m_playerName = _playerName; // This line is unnecessary
 
-	if (m_playerName == "Player 1")
-	{
+	// Set control keys based on player name
+	if (m_playerName == "Player 1") {
 		leftRotateKey = sf::Keyboard::Key::A;
 		rightRotateKey = sf::Keyboard::Key::D;
 		forwardMovementKey = sf::Keyboard::Key::W;
 		castSpellKey = sf::Keyboard::Key::S;
 	}
-	else if (m_playerName == "Player 2")
-	{
+	else if (m_playerName == "Player 2") {
 		leftRotateKey = sf::Keyboard::Key::Left;
 		rightRotateKey = sf::Keyboard::Key::Right;
 		forwardMovementKey = sf::Keyboard::Key::Up;
 		castSpellKey = sf::Keyboard::Key::Down;
 	}
 
-	// Setting the current health of a player to max, as they have yet to take damage
-	m_fcurrentHealth = m_fmaxHealth;
+	m_fcurrentHealth = m_fmaxHealth; // Set current health to max
 }
+
 
 void cPlayer::rotateCharacter(sf::Keyboard::Key _key, int _scalar)
 {
@@ -78,14 +79,29 @@ void cPlayer::processInput()
 	}
 }
 
-void cPlayer::movePlayer()
-{
+void cPlayer::movePlayer() {
 	std::cout << m_playerName << " position: " << m_characterSprite->getPosition().x << " , " << m_characterSprite->getPosition().y << std::endl;
-	//m_characterSprite->move
+
 	sf::Vector2f NewPos(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
 	setPosition(getPosition() + NewPos);
-	//m_playerSprite.setPosition()
-	
+
+	// Screen wrapping logic
+	sf::Vector2f position = getPosition();
+	if (position.x < 0) {
+		position.x += level.getLevelWidth();
+	}
+	else if (position.x > level.getLevelWidth()) {
+		position.x -= level.getLevelWidth();
+	}
+
+	if (position.y < 0) {
+		position.y += level.getLevelHeight();
+	}
+	else if (position.y > level.getLevelHeight()) {
+		position.y -= level.getLevelHeight();
+	}
+
+	setPosition(position); // Update the player position after wrapping
 }
 
 

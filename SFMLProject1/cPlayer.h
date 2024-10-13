@@ -1,13 +1,13 @@
 #pragma once
 #include "cCharacter.h"
 #include "MathLibrary.h"
+#include "cLevel.h"
 
 class cPlayer : public cCharacter
 {
 public:
-	cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position);
-	
-	
+	cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position, cLevel& _level);
+
 	void rotateCharacter(sf::Keyboard::Key _key, int _scalar);
 	void processInput();
 	void movePlayer();
@@ -30,10 +30,7 @@ private:
 	// character name, used for setting different controls for player 1 and player 2
 	std::string m_playerName;
 
-	
-
-
-
+	cLevel& level; // Reference to the level for boundary checks
 
 };
 
