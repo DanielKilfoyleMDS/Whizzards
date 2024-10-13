@@ -1,15 +1,19 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 #include <vector>
-#include "Powerup.h"
 
 class PowerupManager {
 public:
     PowerupManager();
+
+    void initializePowerUps(const std::vector<sf::Vector2f>& spawnPoints);
     void update(float deltaTime);
-    void draw(sf::RenderWindow& window);
-    void spawnPowerup(WandType wandType, sf::Vector2f position);
-    bool checkCollision(class cPlayer& player);  // Check if player picks up a powerup
+    void render(sf::RenderWindow& window);
+
+    void spawnPowerUp(const sf::Vector2f& position);
+    void collectPowerUp(const sf::Vector2f& playerPosition);
 
 private:
-    std::vector<Powerup> powerups;
+    std::vector<sf::Sprite> powerUps;
+    sf::Texture powerUpTexture;
 };

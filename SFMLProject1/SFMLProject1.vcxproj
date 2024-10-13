@@ -157,10 +157,12 @@
     <ClCompile Include="cFollowBehaviour.cpp" />
     <ClCompile Include="cGameCameras.cpp" />
     <ClCompile Include="cGameManager.cpp" />
+    <ClCompile Include="cLevel.cpp" />
     <ClCompile Include="cLevelLoader.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cProjectile.cpp" />
     <ClCompile Include="cRandomBehaviour.cpp" />
+    <ClCompile Include="cWandManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Powerup.cpp" />
     <ClCompile Include="PowerupManager.cpp" />
@@ -177,10 +179,12 @@
     <ClInclude Include="cEnemySpawner.h" />
     <ClInclude Include="cFollowBehaviour.h" />
     <ClInclude Include="cGameManager.h" />
+    <ClInclude Include="cLevel.h" />
     <ClInclude Include="cLevelLoader.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cProjectile.h" />
     <ClInclude Include="cRandomBehaviour.h" />
+    <ClInclude Include="cWandManager.h" />
     <ClInclude Include="MathLibrary.h" />
     <ClInclude Include="Powerup.h" />
     <ClInclude Include="PowerupManager.h" />

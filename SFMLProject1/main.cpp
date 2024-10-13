@@ -19,15 +19,16 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 #include <sstream>
 #include <filesystem>
 #include "cGameCameras.h"
-#include "cLevelLoader.h"
+#include "cLevel.h" 
 #include "cPlayer.h"
 #include "cProjectile.h"
 #include <SFML/System/Clock.hpp>
 #include "cGameManager.h"
+#include "PowerupManager.h"
 #include "cEnemySpawner.h"
 #include "cCollisionManager.h"
-
-
+#include "cLevelLoader.h"
+#include "cWandManager.h"
 
 
 
@@ -118,12 +119,22 @@ void RenderTileMap(sf::RenderWindow& window, const std::vector<std::vector<int>>
 }
 
 sf::Clock castTimer;
+sf::Clock gameClock;
+
+void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles);
+
+void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& tileTextures, int tileWidth, int tileHeight, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles, bool firstPlayerView);
+
 
 int main()
 {
+
+    float deltaTime = gameClock.restart().asSeconds();
+
     srand(static_cast<unsigned>(time(0)));
     cGameManager Manager;
     cCollisionManager Collision;
+
 
     // Create the window with a set resolution
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
@@ -148,6 +159,32 @@ int main()
     sf::View uiViewPort(sf::Vector2f(640, 360), sf::Vector2f(1280, 720));
 
 
+    // Initialize level and load textures internally
+    cLevel level(3000, 3000);
+    std::vector<std::vector<int>> tileMap;
+    std::vector<sf::Vector2f> enemySpawnPoints;
+    sf::Vector2f player1Pos, player2Pos;
+
+    // Create the power-up manager
+    PowerupManager powerupManager;
+
+    // Create the Wand manager
+    cWandManager wandManager;
+
+    // Initialize power-ups with spawn points from the level
+    powerupManager.initializePowerUps(level.getPowerUpSpawnPoints());
+
+    // Load the level
+    std::vector<sf::Vector2f> wandSpawnPoints; // Load this from your level
+    wandManager.initializeWands(wandSpawnPoints);
+
+    // Load tile textures into a map (texture ID mapped to sf::Texture)
+    const std::map<int, sf::Texture>& tileTextures = level.getTileTextures();  // Use the getter directly
+
+    // Load the level data
+    if (!level.LoadLevel("Resources/Levels/Level1.txt", level.getTileTextures(), tileMap, enemySpawnPoints, player1Pos, player2Pos)) {
+        std::cerr << "Failed to load level!" << std::endl;
+    }
     // Create player instances
     cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(), "Player 1", sf::Vector2f(700, 500), Manager.getCollisionList());
     cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(), "Player 2", sf::Vector2f(800, 600), Manager.getCollisionList());
@@ -171,6 +208,7 @@ int main()
 
     std::vector<cProjectile*> activeProjectiles;
 
+    // Initialize game camera
     cGameCameras m_Cameras(&window, 3000, 3000);
     cEnemyPool Pool(200, Manager.getEnemyDefaultSprite(), Manager.getCollisionList());
     Pool.setBehaviourSprites(Manager.getEnemyAsteroidSprite(), Manager.getEnemyRandomSprite(), Manager.getEnemyChaseSprite());
@@ -193,6 +231,10 @@ int main()
     int tileWidth = 64;
     int tileHeight = 64;
 
+    // Spawn enemies at the loaded spawn points
+    for (const auto& spawnPoint : enemySpawnPoints) {
+        Spawner.SpawnEnemy(spawnPoint);
+    }
 
     // Main loop
     while (window.isOpen())
@@ -204,20 +246,18 @@ int main()
                 window.close();
         }
 
+        // Calculate deltaTime
+        float deltaTime = gameClock.restart().asSeconds(); // Calculate deltaTime
+
         Player1->processInput();
         Player2->processInput();
         
 
+        // Check for player collision with wands
+        wandManager.collectWand(Player1->getPosition());
+        wandManager.collectWand(Player2->getPosition());
 
-
-        //if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) 
-        //{
-        //    Player1->castSpell(Manager.getProjectilesList());
-        //}
-        //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        //{
-        //    Player2->castSpell(Manager.getProjectilesList());
-        //}
+        
 
         // Update projectiles
         for (auto projectile : *Manager.getProjectilesList())
@@ -225,8 +265,14 @@ int main()
             projectile->tick();
         }
 
+        // Update camera positions based on player movements
         m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
+
+        // Manage enemy waves
         Spawner.WaveManager();
+
+        // Update the wand manager
+        wandManager.update(deltaTime);
 
         window.clear();
 
@@ -281,6 +327,9 @@ int main()
         }
 
         
+        wandManager.render(window);
+        powerupManager.render(window);
+        
         window.setView(uiViewPort);
 
         firstPlayerHealthText.setString("Wizard 1 Health: " + std::to_string(int(Player1->getHealth())));
@@ -293,4 +342,41 @@ int main()
     }
 
     return 0;
+}
+
+
+// Helper function to render a single view
+void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& tileTextures, int tileWidth, int tileHeight, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles, bool firstPlayerView) {
+    if (firstPlayerView) {
+        cameras.setViewFirstPlayer();
+    }
+    else {
+        cameras.setViewSecondPlayer();
+    }
+
+    // Render the tile map
+    RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight);
+
+    // Render game objects
+    cameras.Render(Player1, &window);
+    cameras.Render(Player2, &window);
+    for (auto enemy : enemies) {
+        cameras.Render(enemy, &window);
+    }
+    for (auto projectile : projectiles) {
+        window.draw(projectile->m_Sprite);
+    }
+}
+
+// Helper function to render game objects
+void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles)
+{
+    cameras.Render(Player1, &window);
+    cameras.Render(Player2, &window);
+    for (auto enemy : enemies) {
+        cameras.Render(enemy, &window);
+    }
+    for (auto projectile : projectiles) {
+        window.draw(projectile->m_Sprite);
+    }
 }

@@ -13,27 +13,21 @@ Mail : DanielKilfoyle@mds.ac.nz
 #include "cPlayer.h"
 #include "SFML/Graphics.hpp"
 
-/*************************************************************************
-Name: cPlayer
-Description : constructs the player object by calling the base character constructor and then calling relevant character related 
-Parameters: sf::sprite* - player sprite, string - Player name, sf::vector2f - startPosition, vector<character*>* active characters
-Returns: None
-Author : Daniel Kilfoyle
-**************************************************************************/
-cPlayer::cPlayer(sf::Sprite* _sprite, std::string _playerName, sf::Vector2f _position, std::vector<cCharacter*>* _activeCharacters)
-	: cCharacter(_sprite, _position)
+cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position, cLevel& _level)
+	: cCharacter(_Sprite, _Position), // Call to base class constructor
+	m_playerName(_PlayerName), // Initialize player name
+	level(_level) // Initialize the level reference
 {
-	m_playerName = _playerName;
+	// m_playerName = _playerName; // This line is unnecessary
 
-	if (m_playerName == "Player 1")
-	{
+	// Set control keys based on player name
+	if (m_playerName == "Player 1") {
 		leftRotateKey = sf::Keyboard::Key::A;
 		rightRotateKey = sf::Keyboard::Key::D;
 		forwardMovementKey = sf::Keyboard::Key::W;
 		castSpellKey = sf::Keyboard::Key::S;
 	}
-	else if (m_playerName == "Player 2")
-	{
+	else if (m_playerName == "Player 2") {
 		leftRotateKey = sf::Keyboard::Key::Left;
 		rightRotateKey = sf::Keyboard::Key::Right;
 		forwardMovementKey = sf::Keyboard::Key::Up;
@@ -137,6 +131,33 @@ void cPlayer::movePlayer()
 {
 	sf::Vector2f NewPos(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
 	setPosition(getPosition() + NewPos);
+
+	// Screen wrapping logic
+	sf::Vector2f position = getPosition();
+	if (position.x < 0) {
+		position.x += level.getLevelWidth();
+	}
+	else if (position.x > level.getLevelWidth()) {
+		position.x -= level.getLevelWidth();
+	}
+
+	if (position.y < 0) {
+		position.y += level.getLevelHeight();
+	}
+	else if (position.y > level.getLevelHeight()) {
+		position.y -= level.getLevelHeight();
+	}
+
+	setPosition(position); // Update the player position after wrapping
+}
+
+
+void cPlayer::draw()
+{
+	
+	m_characterSprite->setOrigin(m_characterSprite->getTexture()->getSize().x / 2, m_characterSprite->getTexture()->getSize().y / 2);
+
+	//p_windowRef->draw(m_characterSprite);
 }
 
 /*************************************************************************
