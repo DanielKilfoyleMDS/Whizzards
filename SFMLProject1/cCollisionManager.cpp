@@ -44,9 +44,27 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 			}
 			else 
 			{
+
+				float xStart = _activeCharacters[i]->getPosition().x + (_activeCharacters[i]->getSprite()->getTexture()->getSize().x / 2);
+				float yStart = _activeCharacters[i]->getPosition().y + (_activeCharacters[i]->getSprite()->getTexture()->getSize().y / 2);
+				float xBounds = _activeCharacters[i]->getSprite()->getTexture()->getSize().x;
+				float yBounds = _activeCharacters[i]->getSprite()->getTexture()->getSize().y;
+				sf::FloatRect firstcollider(xStart, yStart, xBounds, yBounds);
+
+
+				xStart = _activeCharacters[j]->getPosition().x + (_activeCharacters[j]->getSprite()->getTexture()->getSize().x / 2);
+				yStart = _activeCharacters[j]->getPosition().y + (_activeCharacters[j]->getSprite()->getTexture()->getSize().y / 2);
+				xBounds = _activeCharacters[j]->getSprite()->getTexture()->getSize().x;
+				yBounds = _activeCharacters[j]->getSprite()->getTexture()->getSize().y;
+				sf::FloatRect secondcollider(xStart, yStart, xBounds, yBounds);
+
+
+
 				// Checking if the characters are overlapping, then processing what happens with the collision afterwards
-				if (_activeCharacters[i]->getSprite()->getGlobalBounds().intersects(_activeCharacters[j]->getSprite()->getGlobalBounds()))
+				if (firstcollider.intersects(secondcollider))
 				{
+
+					// _activeCharacters[j]->getSprite()_activeCharacters[j]->getSprite()->getGlobalBounds()
 					// Checks for specific character types 
 
 					if (_activeCharacters[i]->getCharacterType() == Player)
@@ -116,7 +134,13 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 	{
 		for (int i = 0; i < _activeCharacters.size(); i++)
 		{
-			if (_activeProjectiles[proj]->m_sprite.getGlobalBounds().intersects(_activeCharacters[i]->getSprite()->getGlobalBounds()))
+			float xStart = _activeCharacters[i]->getPosition().x - (_activeCharacters[i]->getSprite()->getTexture()->getSize().x / 2);
+			float yStart = _activeCharacters[i]->getPosition().y - (_activeCharacters[i]->getSprite()->getTexture()->getSize().y / 2);
+			float xBounds = _activeCharacters[i]->getSprite()->getTexture()->getSize().x;
+			float yBounds = _activeCharacters[i]->getSprite()->getTexture()->getSize().y;
+			sf::FloatRect firstcollider(xStart, yStart, xBounds, yBounds);
+
+			if (_activeProjectiles[proj]->m_sprite.getGlobalBounds().intersects(firstcollider))
 			{
 				if (!_activeProjectiles[proj]->b_enemyOwned)
 				{
@@ -125,7 +149,8 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 						// If the projectile belongs to a player, and it intersects with an enemy, then deal damage to the enemy
 						_activeCharacters[i]->updateHealth(-10.0f);
 						std::cout << "Enemy damaged! Remaining health: " << _activeCharacters[i]->getHealth() << std:: endl;
-						//_activeProjectiles.erase(_activeProjectiles.begin() + proj);
+
+						break;
 						
 					}
 				}

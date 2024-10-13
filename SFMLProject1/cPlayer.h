@@ -40,6 +40,12 @@ public:
 	void setProjectileSprite(sf::Sprite* _projectile);
 	void setProjectileList(std::vector<cProjectile*>* _projectiles);
 
+	void healthCheck();
+
+	void killPlayer();
+
+	void respawnPlayer();
+
 
 private:
 
@@ -50,5 +56,9 @@ private:
 	sf::Clock m_castTimer;
 	bool m_bFired;
 	std::vector<cProjectile*>* m_projectilesList;
+
+	bool m_bActive = true;
+	sf::Vector2f m_previousPosition;
+	sf::Clock m_respawnTimer;
 };
 

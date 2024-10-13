@@ -86,36 +86,44 @@ Author : Daniel Kilfoyle
 **************************************************************************/
 void cPlayer::processInput()
 {
-	if (sf::Keyboard::isKeyPressed(forwardMovementKey))
+	if (m_respawnTimer.getElapsedTime().asSeconds() >= 5.0f && !m_bActive)
 	{
-		// Rotate the player, and then move player forward
-		if (sf::Keyboard::isKeyPressed(leftRotateKey))
+		respawnPlayer();
+	}
+	if (m_bActive)
+	{
+		if (sf::Keyboard::isKeyPressed(forwardMovementKey))
 		{
-			rotateCharacter(leftRotateKey, 3);
+			// Rotate the player, and then move player forward
+			if (sf::Keyboard::isKeyPressed(leftRotateKey))
+			{
+				rotateCharacter(leftRotateKey, 3);
+			}
+			else if (sf::Keyboard::isKeyPressed(rightRotateKey))
+			{
+				rotateCharacter(rightRotateKey, 3);
+			}
+			movePlayer();
 		}
+		// If the left rotate key is pressed, but not the forward movement, rotate the player slowly
+		else if (sf::Keyboard::isKeyPressed(leftRotateKey))
+		{
+			rotateCharacter(leftRotateKey, 1);
+		}
+		// If the right rotate key is pressed, but not the forward movement, rotate the player slowly
 		else if (sf::Keyboard::isKeyPressed(rightRotateKey))
 		{
-			rotateCharacter(rightRotateKey, 3);
+			rotateCharacter(rightRotateKey, 1);
 		}
-		movePlayer();
-	}
-	// If the left rotate key is pressed, but not the forward movement, rotate the player slowly
-	else if (sf::Keyboard::isKeyPressed(leftRotateKey))
-	{
-		rotateCharacter(leftRotateKey, 1);
-	}
-	// If the right rotate key is pressed, but not the forward movement, rotate the player slowly
-	else if (sf::Keyboard::isKeyPressed(rightRotateKey))
-	{
-		rotateCharacter(rightRotateKey, 1);
-	}
 
-	// Separate if check from the movement. Process the input of casting spell after making the player move.
-	if (sf::Keyboard::isKeyPressed(castSpellKey))
-	{
-		// Cast the spell
-		castSpell();
+		// Separate if check from the movement. Process the input of casting spell after making the player move.
+		if (sf::Keyboard::isKeyPressed(castSpellKey))
+		{
+			// Cast the spell
+			castSpell();
+		}
 	}
+	
 }
 
 /*************************************************************************
@@ -182,6 +190,38 @@ Author : Daniel Kilfoyle
 void cPlayer::setProjectileList(std::vector<cProjectile*>* _projectiles)
 {
 	m_projectilesList = _projectiles;
+}
+
+void cPlayer::healthCheck()
+{
+	// Check if the character health has gone above its maximum, and set the value to the maximum instead.
+	if (m_fcurrentHealth > m_fmaxHealth)
+	{
+		m_fcurrentHealth = m_fmaxHealth;
+	}
+
+	// Check if health has reached or gone below 0, then call appropriate death function for the 
+	else if (m_fcurrentHealth <= 0)
+	{
+		m_fcurrentHealth = 0;
+		// run death functions
+		m_bActive = false;
+		m_previousPosition = m_characterPosition;
+		setPosition(sf::Vector2f(-10000, -10000));
+		std::cout << m_playerName << " has died." << std::endl;
+		m_respawnTimer.restart();
+	}
+
+	// Return in all other cases, when health is in the intended range (Above 0 and less than or equal to maximum)
+	else
+		return;
+}
+
+void cPlayer::respawnPlayer()
+{
+	m_fcurrentHealth = m_fmaxHealth;
+	m_bActive = true;
+	setPosition(m_previousPosition);
 }
 
 
