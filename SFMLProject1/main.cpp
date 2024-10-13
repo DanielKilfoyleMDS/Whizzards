@@ -63,7 +63,7 @@ int main()
     }
 
     // Initialize level loader
-    cLevel level(3000.f, 3000.f);
+    cLevel level(3000.f, 3000.f); // Create your level with specified dimensions
 
     // Load tile textures into a map (texture ID mapped to sf::Texture)
     std::map<int, sf::Texture> tileTextures;
