@@ -153,7 +153,7 @@ int main()
     //cBurstWand* burster = new cBurstWand();
     //Player1->setCurrentWand(burster);
     //burster->applyEffect(Player1);
-
+    Player1->setFireRate(0.5);
     Player1->setProjectileCount(3);
 
 
@@ -242,7 +242,7 @@ int main()
             }
             for (auto iter : *Manager.getProjectilesList())
             {
-                window.draw(*iter->m_sprite);
+                window.draw(*iter->getSprite());
             }        
             for (auto& wandPickup : wandManager.getWandPickups())
             {

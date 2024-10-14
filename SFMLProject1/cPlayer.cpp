@@ -169,7 +169,7 @@ Author : Daniel Kilfoyle
 **************************************************************************/
 void cPlayer::castSpell()
 {
-	if (m_castTimer.getElapsedTime().asSeconds() >= 0.5)
+	if (m_castTimer.getElapsedTime().asSeconds() >= m_fFireRate)
 	{
 		if (!m_bFired)
 		{
