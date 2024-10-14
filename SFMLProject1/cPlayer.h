@@ -15,8 +15,8 @@ Mail : DanielKilfoyle@mds.ac.nz
 #include "MathLibrary.h"
 #include "cLevel.h"
 #include "cProjectile.h"
-//#include "cWand.h"
-//#include "cBurstWand.h"
+#include "cWand.h"
+
 
 class cPlayer : public cCharacter
 {
@@ -53,7 +53,7 @@ public:
 
 	void respawnPlayer();
 
-
+	void setWandRef(class cWand* _wand);
 private:
 
 	// character name, used for setting different controls for player 1 and player 2
@@ -72,5 +72,7 @@ private:
 	int m_iProjectileCount;
 	float m_fFireRate;
 	float m_fDamage;
+
+	class cWand* m_currentWandRef = nullptr;
 };
 

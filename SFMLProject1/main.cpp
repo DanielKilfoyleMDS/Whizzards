@@ -95,7 +95,7 @@ int main()
     cGameManager Manager;
     cCollisionManager Collision;
     
-    cBurstWand wand;
+    cBurstWand* wand = new cBurstWand();
 
 
     // Create the window with a set resolution
@@ -154,7 +154,7 @@ int main()
     Player1->setFireRate(0.5);
     Player1->setProjectileCount(3);
 
-
+    Player1->setWandRef(wand);
 
     // Load projectile texture
     sf::Texture blueProjectileTexture;
@@ -295,8 +295,8 @@ int main()
         window.draw(firstPlayerHealthText);
         window.draw(secondPlayerHealthText);
 
-        // Draw the wand
-        wand.draw(window);
+        //// Draw the wand
+        //wand.draw(window);
 
         window.display();
     }

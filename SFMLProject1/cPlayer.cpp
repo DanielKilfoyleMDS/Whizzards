@@ -13,6 +13,7 @@ Mail : DanielKilfoyle@mds.ac.nz
 #include "cPlayer.h"
 #include "SFML/Graphics.hpp"
 
+
 cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position, std::vector<cCharacter*>* _activeCharacters, cLevel& _level)
 	: cCharacter(_Sprite, _Position), // Call to base class constructor
 	m_playerName(_PlayerName), // Initialize player name
@@ -173,20 +174,26 @@ void cPlayer::castSpell()
 	{
 		if (!m_bFired)
 		{
-			//// Base projectile function. 
-			//cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation(), false);
-			//m_projectilesList->push_back(newProjectile);
 
 
-			// Burst wand function
-			//if (dynamic_cast<cBurstWand*>(m_currentWandRef) != nullptr)
-			//{
+			if (m_currentWandRef != nullptr)
+			{
 				for (int i = -1; i < m_iProjectileCount - 1; i++)
 				{
-					cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition() , getRotation() + (30 * i), false);
+					cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation() + (30 * i), false);
 					m_projectilesList->push_back(newProjectile);
 				}
-			//}
+			}
+			else 
+			{
+				// Base projectile function. 
+				cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation(), false);
+				m_projectilesList->push_back(newProjectile);
+			}
+			
+			
+
+			
 
 
 
@@ -255,6 +262,11 @@ void cPlayer::respawnPlayer()
 	m_fcurrentHealth = m_fmaxHealth;
 	m_bActive = true;
 	setPosition(m_previousPosition);
+}
+
+void cPlayer::setWandRef(cWand* _wand)
+{
+	m_currentWandRef = _wand;
 }
 
 
