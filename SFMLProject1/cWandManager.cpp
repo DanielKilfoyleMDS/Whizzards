@@ -8,7 +8,6 @@
 
 cWandManager::cWandManager(sf::Sprite* _pickupSprite, std::vector<sf::Vector2f>* _wandSpawns)
 {
-    m_wandDrops = new std::vector<cWandPickup*>;
     m_wandPickupSprite = _pickupSprite;
 
     cBurstWand* BurstWandType = new cBurstWand;
@@ -28,7 +27,7 @@ float distance(const sf::Vector2f& point1, const sf::Vector2f& point2) {
 
 std::vector<cWandPickup*> cWandManager::getWandPickups()
 {
-    return *m_wandDrops;
+    return m_wandDrops;
 }
 
 float cWandManager::distance(const sf::Vector2f& point1, const sf::Vector2f& point2)
@@ -56,7 +55,7 @@ void cWandManager::spawnWand() {
         sf::Vector2f SpawnPoint = m_wandSpawnPoints[SpawnPointChoice];
 
         cWandPickup* NewWandPickup = new cWandPickup(NewWand, SpawnPoint, m_wandPickupSprite);
-        m_wandDrops->push_back(NewWandPickup);
+        m_wandDrops.push_back(NewWandPickup);
     }
 }
 
@@ -68,7 +67,7 @@ void cWandManager::addWandType(cWand* Wand)
 void cWandManager::update(float _deltaTime) {
     // Handle wand updates (e.g., despawn logic)
 
-    if (m_wandDrops->size() < m_maxWandSpawns)
+    if (m_wandDrops.size() < m_maxWandSpawns)
     {
         m_spawnTick -= _deltaTime;
 
@@ -77,7 +76,19 @@ void cWandManager::update(float _deltaTime) {
             spawnWand();
             m_spawnTick = randRangeFloat(m_spawnTimeMin, m_spawnTimeMax);
         }
+    }
 
+    //Check if any Drops need to be destroyed
+    for (int DropCount = 0; DropCount < m_wandDrops.size(); DropCount++)
+    {
+        cWandPickup* WandDrop = m_wandDrops[DropCount];
+        if (WandDrop->getPickedUp())
+        {
+            //removes it from vector and deletes it
+            m_wandDrops.erase(m_wandDrops.begin() + DropCount);
+            WandDrop->~cWandPickup();
+
+        }
     }
 }
 

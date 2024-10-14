@@ -10,8 +10,14 @@ public:
 	sf::Sprite* getSprite();
 	cWand* getWand();
 	sf::Vector2f getPosition();
+	bool getPickedUp();
+
+	void playerCollision(class cPlayer* _other);
 
 private:
+
+	bool m_bpickedup = false;
+
 	cWand* m_wand = nullptr;
 	sf::Vector2f m_position;
 	sf::Sprite* m_wandSprite;

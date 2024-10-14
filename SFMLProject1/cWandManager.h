@@ -33,7 +33,7 @@ private:
     sf::Sprite* m_wandPickupSprite;
 
     std::vector<cWand*> m_wandTypes; // Store wand instances
-    std::vector<cWandPickup*>* m_wandDrops; // Store wand instances
+    std::vector<cWandPickup*> m_wandDrops; // Store wand instances
     std::vector<sf::Vector2f> m_wandSpawnPoints;
 };
 
