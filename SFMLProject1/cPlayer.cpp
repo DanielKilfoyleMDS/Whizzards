@@ -42,6 +42,10 @@ cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Pos
 
 	_activeCharacters->push_back(this);
 	m_castTimer.restart();
+
+	m_fFireRate = 1.0f;
+	m_iProjectileCount = 1;
+	m_fDamage = 10.0f;
 }
 
 /*************************************************************************
@@ -267,6 +271,7 @@ void cPlayer::respawnPlayer()
 void cPlayer::setWandRef(cWand* _wand)
 {
 	m_currentWandRef = _wand;
+	_wand->applyEffect(this);
 }
 
 

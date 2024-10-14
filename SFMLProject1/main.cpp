@@ -148,13 +148,15 @@ int main()
     Player1->setProjectileList(Manager.getProjectilesList());
     Player2->setProjectileList(Manager.getProjectilesList());
 
+
+
     //cBurstWand* burster = new cBurstWand();
     //Player1->setCurrentWand(burster);
     //burster->applyEffect(Player1);
-    Player1->setFireRate(0.5);
-    Player1->setProjectileCount(3);
+    //Player1->setFireRate(0.5);
+    //Player1->setProjectileCount(3);
 
-    Player1->setWandRef(wand);
+    //Player1->setWandRef(wand);
 
     // Load projectile texture
     sf::Texture blueProjectileTexture;
@@ -226,6 +228,7 @@ int main()
         // Checking the collisions for all characters (Enemies and players) and then checking the projectiles
         Collision.collisionCheck(*Manager.getCollisionList());
         Collision.projectileCheck(*Manager.getCollisionList(), *Manager.getProjectilesList());
+        Collision.wandCheck(*Manager.getCollisionList(), wandManager.getWandPickups());
 
         if (m_Cameras.UseCombinedView())
         {
