@@ -130,7 +130,7 @@ int main()
 
 
     // Create the Wand manager
-    cWandManager wandManager;
+    cWandManager wandManager(Manager.getWandPickupSprite());
 
     // Load the level
     std::vector<sf::Vector2f> wandSpawnPoints; // Load this from your level
@@ -217,15 +217,9 @@ int main()
         // Update the wand manager
         wandManager.update(deltaTime);
 
-        wandManager.render(window);
-
         window.clear();
 
-        // Render wands in the game loop
-        for (auto& cWand : wandManager.getWands()) 
-        {
-            window.draw(cWand->getSprite());
-        }
+
 
         // Checking the collisions for all characters (Enemies and players) and then checking the projectiles
         Collision.collisionCheck(*Manager.getCollisionList());
@@ -245,6 +239,10 @@ int main()
             for (auto iter : *Manager.getProjectilesList())
             {
                 window.draw(iter->m_sprite);
+            }        
+            for (auto& wandPickup : wandManager.getWandPickups())
+            {
+                m_Cameras.Render(wandPickup, &window);
             }
         }
         else
@@ -262,6 +260,10 @@ int main()
             {
                 window.draw(iter->m_sprite);
             }
+            for (auto& wandPickup : wandManager.getWandPickups())
+            {
+                m_Cameras.Render(wandPickup, &window);
+            }
 
             m_Cameras.setViewSecondPlayer();
             RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
@@ -274,6 +276,10 @@ int main()
             for (auto iter : *Manager.getProjectilesList())
             {
                 window.draw(iter->m_sprite);
+            }
+            for (auto& wandPickup : wandManager.getWandPickups())
+            {
+                m_Cameras.Render(wandPickup, &window);
             }
         }
 
