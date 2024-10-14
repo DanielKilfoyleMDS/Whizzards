@@ -182,7 +182,7 @@ void cPlayer::castSpell()
 
 			if (m_currentWandRef != nullptr)
 			{
-
+				m_currentWandRef->castSpell( getPosition(), getRotation(), m_projectileSprite, m_projectilesList);
 			}
 			else 
 			{
