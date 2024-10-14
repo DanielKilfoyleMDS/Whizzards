@@ -1,3 +1,14 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cLevelLoader.cpp
+Description : implent the logic to reading and mapping the sprite based off 
+the Level1.txt
+Author : Jandre Cronje
+**************************************************************************/
 #include "cLevelLoader.h"
 #include <fstream>
 #include <sstream>
@@ -15,16 +26,9 @@ cLevelLoader::cLevelLoader()
     {
         std::cerr << "Failed to load sand texture!" << std::endl;
     }
-
-    // Load new textures for Water and Path
-    if (!waterTex.loadFromFile("Resources/Textures/Water.png"))
+    if (!wandTex.loadFromFile("Resources/Textures/Wand.png"))
     {
         std::cerr << "Failed to load water texture!" << std::endl;
-    }
-
-    if (!pathTex.loadFromFile("Resources/Textures/Path.png"))
-    {
-        std::cerr << "Failed to load path texture!" << std::endl;
     }
 }
 
@@ -71,9 +75,6 @@ bool cLevelLoader::LoadLevel(const std::string& filename, sf::Sprite& map, sf::V
                 }
                 else if (tokens[x] == "W") { // Wand spawn
                     wandSpawnPoints.emplace_back(x * 64, y * 64); // Store the spawn point
-                }
-                else if (tokens[x] == "P") { // Power-up spawn
-                    powerUpSpawnPoints.emplace_back(x * 64, y * 64); // Store the spawn point
                 }
                 else {
                     std::cerr << "Invalid tile type in level file: " << tokens[x] << std::endl;

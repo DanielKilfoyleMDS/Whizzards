@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cBurstWand.cpp" />
     <ClCompile Include="cCharacter.cpp" />
     <ClCompile Include="cChaseBehaviour.cpp" />
     <ClCompile Include="cCollisionManager.cpp" />
@@ -162,13 +163,12 @@
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cProjectile.cpp" />
     <ClCompile Include="cRandomBehaviour.cpp" />
+    <ClCompile Include="cWand.cpp" />
     <ClCompile Include="cWandManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Powerup.cpp" />
-    <ClCompile Include="PowerupManager.cpp" />
-    <ClCompile Include="Wand.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cBurstWand.h" />
     <ClInclude Include="cCharacter.h" />
     <ClInclude Include="cChaseBehaviour.h" />
     <ClInclude Include="cCollisionManager.h" />
@@ -184,11 +184,9 @@
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cProjectile.h" />
     <ClInclude Include="cRandomBehaviour.h" />
+    <ClInclude Include="cWand.h" />
     <ClInclude Include="cWandManager.h" />
     <ClInclude Include="MathLibrary.h" />
-    <ClInclude Include="Powerup.h" />
-    <ClInclude Include="PowerupManager.h" />
-    <ClInclude Include="Wand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cGameCameras.h" />

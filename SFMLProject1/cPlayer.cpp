@@ -245,4 +245,15 @@ void cPlayer::respawnPlayer()
 	setPosition(m_previousPosition);
 }
 
+void cPlayer::setProjectileCount(int _count) {
+	m_iProjectileCount = _count;
+}
+
+void cPlayer::setFireRate(float _rate) {
+	m_fFireRate = _rate;
+}
+
+void cPlayer::setDamageStrength(float _damage) {
+	m_fDamage = _damage;
+}
 

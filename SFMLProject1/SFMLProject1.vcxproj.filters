@@ -30,15 +30,6 @@
       <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="cGameManager.cpp" />
-    <ClCompile Include="Powerup.cpp">
-      <Filter>Pickups</Filter>
-    </ClCompile>
-    <ClCompile Include="PowerupManager.cpp">
-      <Filter>Pickups</Filter>
-    </ClCompile>
-    <ClCompile Include="Wand.cpp">
-      <Filter>Pickups</Filter>
-    </ClCompile>
     <ClCompile Include="cPlayer.cpp">
       <Filter>Player</Filter>
     </ClCompile>
@@ -52,6 +43,14 @@
     <ClCompile Include="cChaseBehaviour.cpp">
       <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
+    <ClCompile Include="cLevel.cpp" />
+    <ClCompile Include="cWand.cpp">
+      <Filter>Pickups</Filter>
+    </ClCompile>
+    <ClCompile Include="cWandManager.cpp">
+      <Filter>Pickups</Filter>
+    </ClCompile>
+    <ClCompile Include="cBurstWand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -85,15 +84,6 @@
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="cGameManager.h" />
-    <ClInclude Include="Wand.h">
-      <Filter>Pickups</Filter>
-    </ClInclude>
-    <ClInclude Include="Powerup.h">
-      <Filter>Pickups</Filter>
-    </ClInclude>
-    <ClInclude Include="PowerupManager.h">
-      <Filter>Pickups</Filter>
-    </ClInclude>
     <ClInclude Include="cPlayer.h">
       <Filter>Player</Filter>
     </ClInclude>
@@ -107,6 +97,14 @@
     <ClInclude Include="cChaseBehaviour.h">
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
+    <ClInclude Include="cLevel.h" />
+    <ClInclude Include="cWand.h">
+      <Filter>Pickups</Filter>
+    </ClInclude>
+    <ClInclude Include="cWandManager.h">
+      <Filter>Pickups</Filter>
+    </ClInclude>
+    <ClInclude Include="cBurstWand.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

@@ -1,3 +1,13 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cLevel.cpp
+Description : 
+Author : Jandre Cronje
+**************************************************************************/
 #include "cLevel.h"
 #include <fstream>
 #include <iostream>
@@ -19,14 +29,11 @@ void cLevel::LoadTileTextures()
     {
         std::cerr << "Failed to load sand texture!" << std::endl;
     }
-    if (!tileTextures[3].loadFromFile("Resources/Textures/Water.png"))
+    if (!tileTextures[3].loadFromFile("Resources/Textures/Wand.png"))
     {
         std::cerr << "Failed to load water texture!" << std::endl;
     }
-    if (!tileTextures[4].loadFromFile("Resources/Textures/Path.png"))
-    {
-        std::cerr << "Failed to load path texture!" << std::endl;
-    }
+
 }
 
 bool cLevel::LoadLevel(const std::string& filename, const std::map<int, sf::Texture>& tileTextures, std::vector<std::vector<int>>& tileMap, std::vector<sf::Vector2f>& enemySpawnPoints, sf::Vector2f& player1Pos, sf::Vector2f& player2Pos)
@@ -51,9 +58,6 @@ bool cLevel::LoadLevel(const std::string& filename, const std::map<int, sf::Text
             }
             else if (tile == 'W') {
                 wandSpawnPoints.emplace_back(y * 64, row.size() * 64);
-            }
-            else if (tile == 'P') {
-                powerUpSpawnPoints.emplace_back(y * 64, row.size() * 64);  // Adding power-up points
             }
             else {
                 row.push_back(0);

@@ -1,5 +1,14 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cLevel.h
+Description : Main program for Whizzards Game
+Author : Jandre Cronje
+**************************************************************************/
 #pragma once
-
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <vector>

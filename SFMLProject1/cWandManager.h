@@ -1,17 +1,30 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "cWand.h"
+#include "cLevelLoader.h"
 #include <vector>
 
 class cWandManager {
 public:
     cWandManager();
-    void initializeWands(const std::vector<sf::Vector2f>& spawnPoints);
-    void spawnWand(const sf::Vector2f& position);
-    void update(float deltaTime);
+    ~cWandManager();
+
+    std::vector<std::shared_ptr<cWand>> getWands() const {
+        return cWands; // wands should be a member variable holding the wand instances
+    }
+
+    float distance(const sf::Vector2f& point1, const sf::Vector2f& point2);
+
+    sf::Vector2f getPosition() const;
+    void spawnWand(sf::Vector2f _position);
+    void update(float _deltaTime);
+    void checkCollision(cPlayer* _player);
+
     void render(sf::RenderWindow& window);
-    void collectWand(const sf::Vector2f& playerPosition);
 
 private:
-    sf::Texture wandTexture; // Texture for the wands
-    std::vector<sf::Sprite> wands; // Vector to store wand sprites
+    std::vector<cWand*> m_vWands;
+    sf::Vector2f position;
+    std::vector<std::shared_ptr<cWand>> cWands; // Store wand instances
 };
+
+

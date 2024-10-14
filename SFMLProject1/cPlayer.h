@@ -41,6 +41,10 @@ public:
 	void setProjectileSprite(sf::Sprite* _projectile);
 	void setProjectileList(std::vector<cProjectile*>* _projectiles);
 
+	void setProjectileCount(int _count);
+	void setFireRate(float _rate);
+	void setDamageStrength(float _damage);
+
 	void healthCheck();
 
 	void killPlayer();
@@ -62,5 +66,9 @@ private:
 	bool m_bActive = true;
 	sf::Vector2f m_previousPosition;
 	sf::Clock m_respawnTimer;
+
+	int m_iProjectileCount;
+	float m_fFireRate;
+	float m_fDamage;
 };
 

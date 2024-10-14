@@ -1,49 +1,57 @@
+#pragma once
 #include "cWandManager.h"
-#include <iostream>
+#include "cBurstWand.h"
+#include "cCollisionManager.h"
+#include <cmath>
 
-cWandManager::cWandManager() {
-    // Load the texture for the wands
-    if (!wandTexture.loadFromFile("Resources/Textures/Wand.png")) {
-        std::cerr << "Failed to load wand texture!" << std::endl;
+cWandManager::cWandManager() {}
+
+cWandManager::~cWandManager() {
+    for (auto wand : m_vWands) {
+        delete wand;
     }
 }
 
-void cWandManager::initializeWands(const std::vector<sf::Vector2f>& spawnPoints) {
-    // Loop through all the spawn points and create a wand sprite for each
-    for (const auto& point : spawnPoints) {
-        spawnWand(point);
+float distance(const sf::Vector2f& point1, const sf::Vector2f& point2) {
+    return std::sqrt(std::pow(point1.x - point2.x, 2) + std::pow(point1.y - point2.y, 2));
+}
+
+float cWandManager::distance(const sf::Vector2f& point1, const sf::Vector2f& point2)
+{
+    return 0.0f;
+}
+
+sf::Vector2f cWandManager::getPosition() const
+{
+    return sf::Vector2f();
+}
+
+void cWandManager::spawnWand(sf::Vector2f _position) {
+    cWand* newWand = new cBurstWand();
+    newWand->setPosition(_position);  // Now this method exists in cWand
+    m_vWands.push_back(newWand);
+}
+
+void cWandManager::update(float _deltaTime) {
+    // Handle wand updates (e.g., despawn logic)
+}
+
+// Usage in your checkCollision function
+void cWandManager::checkCollision(cPlayer* _player) {
+    const float collisionThreshold = 50.0f;  // Define the threshold
+    for (auto& wand : m_vWands) {
+        if (distance(_player->getPosition(), wand->getPosition()) < collisionThreshold) {
+            wand->applyEffect(_player);
+            // Optionally: remove the wand after collecting
+        }
     }
-}
-
-void cWandManager::spawnWand(const sf::Vector2f& position) {
-    // Create a new sprite for the wand and set its position
-    sf::Sprite wand;
-    wand.setTexture(wandTexture);
-    wand.setPosition(position);
-    wands.push_back(wand);
-}
-
-void cWandManager::update(float deltaTime) {
-    // Here you can add any logic that should run every frame (e.g., animation)
 }
 
 void cWandManager::render(sf::RenderWindow& window) {
-    // Draw all wands on the screen
-    for (const auto& wand : wands) {
-        window.draw(wand);
+    for (const auto& wand : m_vWands) {
+        sf::Sprite wandSprite = wand->getSprite();
+        wandSprite.setPosition(wand->getPosition());
+        window.draw(wandSprite);
     }
 }
 
-void cWandManager::collectWand(const sf::Vector2f& playerPosition) {
-    // Check if the player collides with any wand
-    for (auto it = wands.begin(); it != wands.end();) {
-        if (it->getGlobalBounds().contains(playerPosition)) {
-            // Wand collected, remove it from the list
-            it = wands.erase(it);
-            std::cout << "Wand collected!" << std::endl;
-        }
-        else {
-            ++it;
-        }
-    }
-}

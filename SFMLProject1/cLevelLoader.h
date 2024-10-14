@@ -1,3 +1,13 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2024 Media Design School
+File Name : cLevelLoader.h
+Description : Declare all the Required functions for loading the Levels
+Author : Jandre Cronje
+**************************************************************************/
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -14,6 +24,5 @@ private:
     std::vector<std::string> SplitString(const std::string& str, char delimiter);
     sf::Texture grassTex;  // Grass texture
     sf::Texture sandTex;   // Sand texture
-    sf::Texture pathTex;  // Declare pathTex
-    sf::Texture waterTex; // Declare waterTex
+    sf::Texture wandTex; // Wand Texture
 };

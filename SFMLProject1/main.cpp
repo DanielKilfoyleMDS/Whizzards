@@ -8,7 +8,6 @@ File Name : main.cpp
 Description : Main program for Whizzards Game
 Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 **************************************************************************/
-
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
@@ -24,14 +23,10 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 #include "cProjectile.h"
 #include <SFML/System/Clock.hpp>
 #include "cGameManager.h"
-#include "PowerupManager.h"
 #include "cEnemySpawner.h"
 #include "cCollisionManager.h"
 #include "cLevelLoader.h"
 #include "cWandManager.h"
-
-
-
 
 
 // Function to load spawn points from a file
@@ -134,6 +129,7 @@ int main()
     srand(static_cast<unsigned>(time(0)));
     cGameManager Manager;
     cCollisionManager Collision;
+    cWand wand;
 
 
     // Create the window with a set resolution
@@ -165,18 +161,13 @@ int main()
     std::vector<sf::Vector2f> enemySpawnPoints;
     sf::Vector2f player1Pos, player2Pos;
 
-    // Create the power-up manager
-    PowerupManager powerupManager;
+
 
     // Create the Wand manager
     cWandManager wandManager;
 
-    // Initialize power-ups with spawn points from the level
-    powerupManager.initializePowerUps(level.getPowerUpSpawnPoints());
-
     // Load the level
     std::vector<sf::Vector2f> wandSpawnPoints; // Load this from your level
-    wandManager.initializeWands(wandSpawnPoints);
 
     // Load tile textures into a map (texture ID mapped to sf::Texture)
     const std::map<int, sf::Texture>& tileTextures = level.getTileTextures();  // Use the getter directly
@@ -215,16 +206,16 @@ int main()
     Pool.setPlayers(Player1,Player2);
 
     // Load enemy spawn points from file
-    std::vector<sf::Vector2f> enemySpawnPoints = LoadSpawnPoints("Resources/Levels/spawn_points.txt");
+    //std::vector<sf::Vector2f> enemySpawnPoints = LoadSpawnPoints("Resources/Levels/spawn_points.txt");
     cEnemySpawner Spawner(10, 5, &Pool, 20, 30);
     Spawner.setSpawnPoints(&enemySpawnPoints);
 
     // Load tile textures
-    std::map<int, sf::Texture> tileTextures;
+    //std::map<int, sf::Texture> tileTextures;
     LoadTileTextures(tileTextures);
 
     // Load the level from the &text file
-    std::vector<std::vector<int>> tileMap = LoadLevel("Resources/Levels/level1.txt");
+    //std::vector<std::vector<int>> tileMap = LoadLevel("Resources/Levels/level1.txt");
 
 
     // Tile dimensions
@@ -249,12 +240,6 @@ int main()
         Player2->processInput();
         
 
-        // Check for player collision with wands
-        wandManager.collectWand(Player1->getPosition());
-        wandManager.collectWand(Player2->getPosition());
-
-        
-
         // Update projectiles
         for (auto projectile : *Manager.getProjectilesList())
         {
@@ -270,7 +255,15 @@ int main()
         // Update the wand manager
         wandManager.update(deltaTime);
 
+        wandManager.render(window);
+
         window.clear();
+
+        // Render wands in the game loop
+        for (auto& cWand : wandManager.getWands()) 
+        {
+            window.draw(cWand->getSprite());
+        }
 
         // Checking the collisions for all characters (Enemies and players) and then checking the projectiles
         Collision.collisionCheck(*Manager.getCollisionList());
@@ -323,9 +316,6 @@ int main()
         }
 
         
-        wandManager.render(window);
-        powerupManager.render(window);
-        
         window.setView(uiViewPort);
 
         firstPlayerHealthText.setString("Wizard 1 Health: " + std::to_string(int(Player1->getHealth())));
@@ -333,6 +323,9 @@ int main()
 
         window.draw(firstPlayerHealthText);
         window.draw(secondPlayerHealthText);
+
+        // Draw the wand
+        wand.draw(window);
 
         window.display();
     }
