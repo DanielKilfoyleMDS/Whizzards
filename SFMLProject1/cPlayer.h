@@ -15,6 +15,8 @@ Mail : DanielKilfoyle@mds.ac.nz
 #include "MathLibrary.h"
 #include "cLevel.h"
 #include "cProjectile.h"
+//#include "cWand.h"
+//#include "cBurstWand.h"
 
 class cPlayer : public cCharacter
 {

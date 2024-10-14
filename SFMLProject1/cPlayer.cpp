@@ -169,25 +169,37 @@ Author : Daniel Kilfoyle
 **************************************************************************/
 void cPlayer::castSpell()
 {
-	if ((m_castTimer.getElapsedTime().asMilliseconds() >= 500.0f))
+	if (m_castTimer.getElapsedTime().asSeconds() >= 0.5)
 	{
 		if (!m_bFired)
 		{
+			//// Base projectile function. 
+			//cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation(), false);
+			//m_projectilesList->push_back(newProjectile);
 
-			// Base projectile function. 
-			cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation(), false);
-			m_projectilesList->push_back(newProjectile);
-			
+
+			// Burst wand function
+			//if (dynamic_cast<cBurstWand*>(m_currentWandRef) != nullptr)
+			//{
+				for (int i = -1; i < m_iProjectileCount - 1; i++)
+				{
+					cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition() , getRotation() + (30 * i), false);
+					m_projectilesList->push_back(newProjectile);
+				}
+			//}
+
+
+
+
 			m_castTimer.restart();
 			m_bFired = true;
 		}
-		else if (m_castTimer.getElapsedTime().asMilliseconds() >= 500.0f && m_bFired)
+		else if (m_castTimer.getElapsedTime().asSeconds() >= m_fFireRate && m_bFired)
 		{
 			m_bFired = false;
 		}
 	}
-	std::cout << m_castTimer.getElapsedTime().asMilliseconds() << std::endl;
-
+	
 }
 
 /*************************************************************************
@@ -244,6 +256,7 @@ void cPlayer::respawnPlayer()
 	m_bActive = true;
 	setPosition(m_previousPosition);
 }
+
 
 void cPlayer::setProjectileCount(int _count) {
 	m_iProjectileCount = _count;

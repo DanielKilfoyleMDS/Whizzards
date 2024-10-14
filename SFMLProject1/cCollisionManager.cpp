@@ -140,14 +140,15 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 			float yBounds = _activeCharacters[i]->getSprite()->getTexture()->getSize().y;
 			sf::FloatRect firstcollider(xStart, yStart, xBounds, yBounds);
 
-			if (_activeProjectiles[proj]->m_sprite.getGlobalBounds().intersects(firstcollider))
+			sf::Sprite projSprite = *_activeProjectiles[proj]->getSprite();
+			if (projSprite.getGlobalBounds().intersects(firstcollider))
 			{
-				if (!_activeProjectiles[proj]->b_enemyOwned)
+				if (!_activeProjectiles[proj]->getOwned())
 				{
 					if (_activeCharacters[i]->getCharacterType() == Enemy)
 					{
 						// If the projectile belongs to a player, and it intersects with an enemy, then deal damage to the enemy
-						_activeCharacters[i]->updateHealth(-10.0f);
+						_activeCharacters[i]->updateHealth(_activeProjectiles[proj]->getDamage());
 						std::cout << "Enemy damaged! Remaining health: " << _activeCharacters[i]->getHealth() << std:: endl;
 
 						break;
@@ -159,3 +160,4 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 		
 	}
 }
+

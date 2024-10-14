@@ -160,9 +160,9 @@ Author : Jayden Burns
 **************************************************************************/
 void cGameCameras::Render(cProjectile* _Projectile, sf::RenderWindow* _window)
 {
-	sf::Sprite* RenderSprite = &_Projectile->m_sprite; //TODO - Getter
-	RenderSprite->setPosition(_Projectile->m_position);
-	RenderSprite->setRotation(_Projectile->m_fRotation);
+	sf::Sprite* RenderSprite = _Projectile->getSprite(); //TODO - Getter
+	RenderSprite->setPosition(_Projectile->getPosition());
+	RenderSprite->setRotation(_Projectile->getRotation());
 	_window->draw(*RenderSprite);
 }
 
