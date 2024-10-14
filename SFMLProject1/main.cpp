@@ -29,41 +29,6 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 #include "cWandManager.h"
 
 
-// Function to load spawn points from a file
-std::vector<sf::Vector2f> LoadSpawnPoints(const std::string& filename) {
-    std::vector<sf::Vector2f> spawnPoints;
-    std::ifstream file(filename);
-    if (!file.is_open())
-    {
-        std::cerr << "Failed to open spawn points file: " << filename << std::endl;
-        return spawnPoints;
-    }
-
-    std::string line;
-    while (std::getline(file, line))
-    {
-        std::istringstream iss(line);
-        float x, y;
-        char comma; // To skip the comma if you have a comma-separated format
-
-        // Assuming the spawn points are in the format: x,y
-        if (iss >> x >> comma >> y) // Read x and y values
-        {
-            spawnPoints.emplace_back(x, y); // Store the spawn point
-            std::cout << "Loaded spawn point: (" << x << ", " << y << ")" << std::endl; // Debug output
-        }
-        else
-        {
-            std::cerr << "Invalid line format in spawn points file: " << line << std::endl; // Handle parsing errors
-        }
-    }
-
-    file.close();
-    std::cout << "Finished loading spawn points. Total spawn points loaded: " << spawnPoints.size() << std::endl;
-
-    return spawnPoints;
-}
-
 // Load textures for Grass and Sand tiles
 void LoadTileTextures(std::map<int, sf::Texture> textures) {
     textures[1].loadFromFile("Resources/Textures/Grass.png"); // Grass tile
@@ -129,7 +94,8 @@ int main()
     srand(static_cast<unsigned>(time(0)));
     cGameManager Manager;
     cCollisionManager Collision;
-    cWand wand;
+    
+    cBurstWand wand;
 
 
     // Create the window with a set resolution
@@ -173,12 +139,12 @@ int main()
     const std::map<int, sf::Texture>& tileTextures = level.getTileTextures();  // Use the getter directly
 
     // Load the level data
-    if (!level.LoadLevel("Resources/Levels/Level1.txt", level.getTileTextures(), tileMap, enemySpawnPoints, player1Pos, player2Pos)) {
+    if (!level.LoadLevel("Resources/Levels/Level1.txt", level.getTileTextures(), tileMap, "Resources/Levels/spawn_points.txt", player1Pos, player2Pos)) {
         std::cerr << "Failed to load level!" << std::endl;
     }
     // Create player instances
-    cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(), "Player 1", sf::Vector2f(700, 500), Manager.getCollisionList(), level);
-    cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(), "Player 2", sf::Vector2f(800, 600), Manager.getCollisionList(), level);
+    cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(), "Player 1", sf::Vector2f(1000, 800), Manager.getCollisionList(), level);
+    cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(), "Player 2", sf::Vector2f(1050, 800), Manager.getCollisionList(), level);
     Player1->setProjectileSprite(Manager.getFirstPlayerProjectile());
     Player2->setProjectileSprite(Manager.getSecondPlayerProjectile());
     Player1->setProjectileList(Manager.getProjectilesList());
@@ -205,17 +171,13 @@ int main()
     Pool.setBehaviourSprites(Manager.getEnemyAsteroidSprite(), Manager.getEnemyRandomSprite(), Manager.getEnemyChaseSprite());
     Pool.setPlayers(Player1,Player2);
 
-    // Load enemy spawn points from file
-    //std::vector<sf::Vector2f> enemySpawnPoints = LoadSpawnPoints("Resources/Levels/spawn_points.txt");
+    // Load enemy spawn points from level
     cEnemySpawner Spawner(10, 5, &Pool, 20, 30);
-    Spawner.setSpawnPoints(&enemySpawnPoints);
+    Spawner.setSpawnPoints(level.getEnemySpawnPoints());
 
     // Load tile textures
-    //std::map<int, sf::Texture> tileTextures;
     LoadTileTextures(tileTextures);
 
-    // Load the level from the &text file
-    //std::vector<std::vector<int>> tileMap = LoadLevel("Resources/Levels/level1.txt");
 
 
     // Tile dimensions

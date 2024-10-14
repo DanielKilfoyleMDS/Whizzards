@@ -5,7 +5,7 @@
 class cWand {
 public:
     cWand();
-    virtual ~cWand();
+    ~cWand();
 
     void loadTexture(const std::string& texturePath);
     virtual void draw(sf::RenderWindow& window) = 0;
@@ -28,7 +28,7 @@ public:
     float getFireRate();
     int getProjectileCount();
 
-private:
+protected:
     float m_fDamage;
     float m_fFireRate;
     int m_iProjectileCount;

@@ -1,5 +1,6 @@
 #pragma once
 #include "cWand.h"
+#include "cBurstWand.h"
 #include "cLevelLoader.h"
 #include <vector>
 

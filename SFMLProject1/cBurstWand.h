@@ -16,8 +16,6 @@ public:
         window.draw(wandSprite);
     }
 
-};
-
-private:
-    sf::Sprite wandSprite; // Your sprite for the wand
+//private:
+//    sf::Sprite wandSprite; // Your sprite for the wand
 };

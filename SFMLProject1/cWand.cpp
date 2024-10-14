@@ -13,6 +13,10 @@ cWand::cWand() : m_fDamage(10), m_fFireRate(1.0f), m_iProjectileCount(1)
 
 cWand::~cWand() {}
 
+void cWand::loadTexture(const std::string& texturePath)
+{
+}
+
 void cWand::draw(sf::RenderWindow& window)
 {
     window.draw(wandSprite);
