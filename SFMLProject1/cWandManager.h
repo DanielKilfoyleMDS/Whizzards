@@ -7,7 +7,7 @@
 
 class cWandManager {
 public:
-    cWandManager(sf::Sprite* _pickupSprite);
+    cWandManager(sf::Sprite* _pickupSprite, std::vector<sf::Vector2f>* _wandSpawns);
     ~cWandManager();
 
     std::vector<cWand*> getWands() const {
@@ -19,7 +19,6 @@ public:
     float distance(const sf::Vector2f& point1, const sf::Vector2f& point2);
 
     void spawnWand();
-
     void addWandType(cWand* Wand);
 
     void update(float _deltaTime);
@@ -30,6 +29,7 @@ private:
 
     std::vector<cWand*> m_wandTypes; // Store wand instances
     std::vector<cWandPickup*>* m_wandDrops; // Store wand instances
+    std::vector<sf::Vector2f> m_wandSpawnPoints;
 };
 
 
