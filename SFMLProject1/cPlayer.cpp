@@ -13,6 +13,7 @@ Mail : DanielKilfoyle@mds.ac.nz
 #include "cPlayer.h"
 #include "SFML/Graphics.hpp"
 
+
 cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position, std::vector<cCharacter*>* _activeCharacters, cLevel& _level)
 	: cCharacter(_Sprite, _Position), // Call to base class constructor
 	m_playerName(_PlayerName), // Initialize player name
@@ -169,25 +170,43 @@ Author : Daniel Kilfoyle
 **************************************************************************/
 void cPlayer::castSpell()
 {
-	if ((m_castTimer.getElapsedTime().asMilliseconds() >= 500.0f))
+	if (m_castTimer.getElapsedTime().asSeconds() >= m_fFireRate)
 	{
 		if (!m_bFired)
 		{
 
-			// Base projectile function. 
-			cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation(), false);
-			m_projectilesList->push_back(newProjectile);
+
+			if (m_currentWandRef != nullptr)
+			{
+				for (int i = -1; i < m_iProjectileCount - 1; i++)
+				{
+					cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation() + (30 * i), false);
+					m_projectilesList->push_back(newProjectile);
+				}
+			}
+			else 
+			{
+				// Base projectile function. 
+				cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation(), false);
+				m_projectilesList->push_back(newProjectile);
+			}
 			
+			
+
+			
+
+
+
+
 			m_castTimer.restart();
 			m_bFired = true;
 		}
-		else if (m_castTimer.getElapsedTime().asMilliseconds() >= 500.0f && m_bFired)
+		else if (m_castTimer.getElapsedTime().asSeconds() >= m_fFireRate && m_bFired)
 		{
 			m_bFired = false;
 		}
 	}
-	std::cout << m_castTimer.getElapsedTime().asMilliseconds() << std::endl;
-
+	
 }
 
 /*************************************************************************
@@ -244,6 +263,12 @@ void cPlayer::respawnPlayer()
 	m_bActive = true;
 	setPosition(m_previousPosition);
 }
+
+void cPlayer::setWandRef(cWand* _wand)
+{
+	m_currentWandRef = _wand;
+}
+
 
 void cPlayer::setProjectileCount(int _count) {
 	m_iProjectileCount = _count;

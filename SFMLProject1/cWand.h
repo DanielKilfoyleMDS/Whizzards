@@ -10,7 +10,7 @@ public:
     void loadTexture(const std::string& texturePath);
     virtual void draw(sf::RenderWindow& window) = 0;
 
-    virtual void applyEffect(cPlayer* _player) = 0; // Pure virtual for specific wand effects
+    virtual void applyEffect(class cPlayer* _player) = 0; // Pure virtual for specific wand effects
 
     sf::Sprite getSprite() const; // Method to get the wand's sprite
 

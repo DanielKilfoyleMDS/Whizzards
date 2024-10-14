@@ -48,3 +48,33 @@ void cProjectile::tick()
 {
 	m_sprite.move(m_velocity);
 }
+
+void cProjectile::setDamage(float _damage)
+{
+	m_fDamage = _damage;
+}
+
+float cProjectile::getDamage()
+{
+	return m_fDamage;
+}
+
+sf::Sprite* cProjectile::getSprite()
+{
+	return &m_sprite;
+}
+
+float cProjectile::getRotation()
+{
+	return m_fRotation;
+}
+
+sf::Vector2f cProjectile::getPosition()
+{
+	return m_position;
+}
+
+bool cProjectile::getOwned()
+{
+	return b_enemyOwned;
+}

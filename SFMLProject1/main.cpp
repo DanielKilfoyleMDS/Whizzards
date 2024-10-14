@@ -95,7 +95,7 @@ int main()
     cGameManager Manager;
     cCollisionManager Collision;
     
-    cBurstWand wand;
+    cBurstWand* wand = new cBurstWand();
 
 
     // Create the window with a set resolution
@@ -148,9 +148,13 @@ int main()
     Player1->setProjectileList(Manager.getProjectilesList());
     Player2->setProjectileList(Manager.getProjectilesList());
 
+    //cBurstWand* burster = new cBurstWand();
+    //Player1->setCurrentWand(burster);
+    //burster->applyEffect(Player1);
+    Player1->setFireRate(0.5);
+    Player1->setProjectileCount(3);
 
-
-
+    Player1->setWandRef(wand);
 
     // Load projectile texture
     sf::Texture blueProjectileTexture;
@@ -236,11 +240,12 @@ int main()
             }
             for (auto iter : *Manager.getProjectilesList())
             {
-                window.draw(iter->m_sprite);
+                window.draw(*iter->getSprite());
             }        
             for (auto& wandPickup : wandManager.getWandPickups())
             {
                 m_Cameras.Render(wandPickup, &window);
+                
             }
         }
         else
@@ -256,7 +261,7 @@ int main()
             }
             for (auto iter : *Manager.getProjectilesList())
             {
-                window.draw(iter->m_sprite);
+                window.draw(*iter->getSprite());
             }
             for (auto& wandPickup : wandManager.getWandPickups())
             {
@@ -273,7 +278,7 @@ int main()
             }
             for (auto iter : *Manager.getProjectilesList())
             {
-                window.draw(iter->m_sprite);
+                window.draw(*iter->getSprite());
             }
             for (auto& wandPickup : wandManager.getWandPickups())
             {
@@ -290,8 +295,8 @@ int main()
         window.draw(firstPlayerHealthText);
         window.draw(secondPlayerHealthText);
 
-        // Draw the wand
-        wand.draw(window);
+        //// Draw the wand
+        //wand.draw(window);
 
         window.display();
     }
@@ -319,7 +324,7 @@ void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player
         cameras.Render(enemy, &window);
     }
     for (auto projectile : projectiles) {
-        window.draw(projectile->m_sprite);
+        window.draw(*projectile->getSprite());
     }
 }
 
@@ -332,6 +337,6 @@ void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer*
         cameras.Render(enemy, &window);
     }
     for (auto projectile : projectiles) {
-        window.draw(projectile->m_sprite);
+        window.draw(*projectile->getSprite());
     }
 }
