@@ -16,6 +16,7 @@ Mail : DanielKilfoyle@mds.ac.nz
 #include "cEnemy.h"
 #include "cProjectile.h"
 #include "MathLibrary.h"
+#include "cWandManager.h"
 
 
 class cCollisionManager
@@ -28,7 +29,7 @@ public:
 
 	void projectileCheck(std::vector <cCharacter*> _activeCharacters, std::vector <cProjectile*> _activeProjectiles);
 
-
+	void wandCheck(std::vector <cCharacter*> _activeCharacters, std::vector<cWandPickup*> _wandPickups);
 
 };
 

@@ -161,3 +161,25 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 	}
 }
 
+void cCollisionManager::wandCheck(std::vector <cCharacter*> _activeCharacters, std::vector<cWandPickup*> _wandPickups)
+{
+	for (int wand = 0; wand < _wandPickups.size(); wand++)
+	{
+		for (int character = 0; character < _activeCharacters.size(); character++)
+		{
+			if (_wandPickups[wand]->getSprite()->getGlobalBounds().intersects(_activeCharacters[character]->getSprite()->getGlobalBounds()))
+			{
+				if (_activeCharacters[character]->getCharacterType() == Player)
+				{
+					// Pick up wand and set
+
+					cPlayer* collidingPlayer = dynamic_cast<cPlayer*> (_activeCharacters[character]);
+					_wandPickups[wand]->playerCollision(collidingPlayer);
+
+					std::cout << "Wand picked up" << std::endl;
+				}
+			}
+		}
+	}
+}
+
