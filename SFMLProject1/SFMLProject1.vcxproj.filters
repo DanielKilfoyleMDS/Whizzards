@@ -52,6 +52,7 @@
     </ClCompile>
     <ClCompile Include="cBurstWand.cpp" />
     <ClCompile Include="cWandPickup.cpp" />
+    <ClCompile Include="cRapidWand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -107,6 +108,7 @@
     </ClInclude>
     <ClInclude Include="cBurstWand.h" />
     <ClInclude Include="cWandPickup.h" />
+    <ClInclude Include="cRapidWand.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

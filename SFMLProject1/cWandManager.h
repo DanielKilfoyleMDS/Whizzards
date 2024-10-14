@@ -31,6 +31,7 @@ private:
     float m_spawnTick = 5; //also sets time before first wand
 
     sf::Sprite* m_wandPickupSprite;
+    sf::Sprite* m_wandProjectileSprite;
 
     std::vector<cWand*> m_wandTypes; // Store wand instances
     std::vector<cWandPickup*> m_wandDrops; // Store wand instances

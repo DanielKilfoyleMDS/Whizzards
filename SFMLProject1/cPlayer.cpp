@@ -178,11 +178,7 @@ void cPlayer::castSpell()
 
 			if (m_currentWandRef != nullptr)
 			{
-				for (int i = -1; i < m_iProjectileCount - 1; i++)
-				{
-					cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation() + (30 * i), false);
-					m_projectilesList->push_back(newProjectile);
-				}
+
 			}
 			else 
 			{

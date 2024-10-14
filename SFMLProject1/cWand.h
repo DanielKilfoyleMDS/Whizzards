@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "cPlayer.h"
+#include "cProjectile.h"
 
 class cWand {
 public:
@@ -13,6 +14,8 @@ public:
     virtual void applyEffect(class cPlayer* _player) = 0; // Pure virtual for specific wand effects
 
     sf::Sprite getSprite() const; // Method to get the wand's sprite
+
+    virtual void castSpell(sf::Vector2f _PlayerPos, float _playerRot, sf::Sprite _projSprite, std::vector<cProjectile*>* _ProjList) = 0;
 
     // Methods to set and get the position
     void setPosition(const sf::Vector2f& _position);

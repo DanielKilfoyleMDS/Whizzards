@@ -10,6 +10,8 @@ public:
     // Apply burst effect on player
     void applyEffect(cPlayer* _player) override;
 
+    void castSpell(sf::Vector2f _PlayerPos, float _playerRot, sf::Sprite _projSprite, std::vector<cProjectile*>* _ProjList) override;
+
     // Implement the pure virtual function from cWand
     void draw(sf::RenderWindow& window) override {
         // Implement the draw function

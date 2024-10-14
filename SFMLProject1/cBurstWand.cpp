@@ -17,3 +17,14 @@ void cBurstWand::applyEffect(cPlayer* _player) {
     _player->setFireRate(getFireRate());
     _player->setDamageStrength(getDamage());
 }
+
+void cBurstWand::castSpell(sf::Vector2f _PlayerPos, float _playerRot, sf::Sprite _projSprite, std::vector<cProjectile*>* _ProjList)
+{
+
+
+    for (int i = -1; i < m_iProjectileCount - 1; i++)
+    {
+        cProjectile* newProjectile = new cProjectile(_projSprite, _PlayerPos, _playerRot + (30 * i), false);
+        _ProjList->push_back(newProjectile);
+    }
+}

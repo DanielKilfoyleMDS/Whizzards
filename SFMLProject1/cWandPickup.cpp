@@ -6,7 +6,6 @@ cWandPickup::cWandPickup(cWand* _wand, sf::Vector2f _position, sf::Sprite* _Spri
 	m_wand = _wand;
 	m_position = _position;
 	m_wandSprite = _Sprite;
-	std::cout << "WandPickupSpawned" << std::endl;
 }
 
 cWandPickup::~cWandPickup()
