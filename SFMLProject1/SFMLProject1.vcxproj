@@ -165,6 +165,7 @@
     <ClCompile Include="cRandomBehaviour.cpp" />
     <ClCompile Include="cWand.cpp" />
     <ClCompile Include="cWandManager.cpp" />
+    <ClCompile Include="cWandPickup.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +187,7 @@
     <ClInclude Include="cRandomBehaviour.h" />
     <ClInclude Include="cWand.h" />
     <ClInclude Include="cWandManager.h" />
+    <ClInclude Include="cWandPickup.h" />
     <ClInclude Include="MathLibrary.h" />
   </ItemGroup>
   <ItemGroup>

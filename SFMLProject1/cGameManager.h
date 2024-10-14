@@ -31,7 +31,7 @@ public:
 	sf::Sprite* getFirstPlayerProjectile();
 	sf::Sprite* getSecondPlayerProjectile();
 
-
+	sf::Sprite* getWandPickupSprite();
 
 
 	void AddToCollisionList(cCharacter* _Character);
@@ -69,5 +69,10 @@ private:
 	sf::Texture m_secondPlayerTexture;
 	sf::Texture m_blueProjectileTexture;
 	sf::Texture m_redProjectileTexture;
+
+	//WandPickupSprites
+	sf::Sprite m_wandPickupSprite;
+	//WandPickup Textures
+	sf::Texture m_wandPickupTexture;
 };
 

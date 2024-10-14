@@ -43,7 +43,9 @@ cGameManager::cGameManager()
 	m_redProjectileTexture.loadFromFile("Resources/Textures/Sprites/Projectile Red.png");
 	m_redProjectileSprite.setTexture(m_redProjectileTexture);
 
-
+	//Wand texture/sprite
+	m_wandPickupTexture.loadFromFile("Resources/Textures/Sprites/wandpickup.png");
+	m_wandPickupSprite.setTexture(m_wandPickupTexture);
 }
 
 /*************************************************************************
@@ -141,6 +143,18 @@ Author : Daniel Kilfoyle
 sf::Sprite* cGameManager::getSecondPlayerProjectile()
 {
 	return &m_redProjectileSprite;
+}
+
+/*************************************************************************
+Name: getWandPickupSprite()
+Description : gets the sprite for the wand pickup
+Parameters: None
+Returns: sf::Sprite pointer
+Author : Jayden Burns
+**************************************************************************/
+sf::Sprite* cGameManager::getWandPickupSprite()
+{
+	return &m_wandPickupSprite;
 }
 
 /*************************************************************************

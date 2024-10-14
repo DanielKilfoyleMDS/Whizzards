@@ -14,6 +14,7 @@ Mail : JaydenBurns@mds.ac.nz
 #include "cCharacter.h"
 #include "cProjectile.h"
 #include "MathLibrary.h"
+#include "cWandPickup.h"
 
 /************************************************************************
 Name: cGameCameras
@@ -176,6 +177,20 @@ Author : Jayden Burns
 void cGameCameras::Render(sf::Sprite* _Sprite, sf::RenderWindow* _window)
 {
 	_window->draw(*_Sprite);
+}
+
+/*************************************************************************
+Name: Render
+Description : Renders wandpickup to current view
+Parameters: cWandPickup* _WandDrop, sf::RenderWindow* _window
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cGameCameras::Render(cWandPickup* _WandDrop, sf::RenderWindow* _window)
+{
+	sf::Sprite* RenderSprite = _WandDrop->getSprite();
+	RenderSprite->setPosition(_WandDrop->getPosition());
+	_window->draw(*RenderSprite);
 }
 
 /*************************************************************************

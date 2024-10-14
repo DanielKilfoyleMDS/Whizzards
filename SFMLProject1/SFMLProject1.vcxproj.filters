@@ -51,6 +51,7 @@
       <Filter>Pickups</Filter>
     </ClCompile>
     <ClCompile Include="cBurstWand.cpp" />
+    <ClCompile Include="cWandPickup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -105,6 +106,7 @@
       <Filter>Pickups</Filter>
     </ClInclude>
     <ClInclude Include="cBurstWand.h" />
+    <ClInclude Include="cWandPickup.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">
