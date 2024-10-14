@@ -67,9 +67,17 @@ void cWandManager::addWandType(cWand* Wand)
 
 void cWandManager::update(float _deltaTime) {
     // Handle wand updates (e.g., despawn logic)
-    if (m_wandDrops->size() < 5)
+
+    if (m_wandDrops->size() < m_maxWandSpawns)
     {
-        spawnWand();
+        m_spawnTick -= _deltaTime;
+
+        if (m_spawnTick <= 0)
+        {
+            spawnWand();
+            m_spawnTick = randRangeFloat(m_spawnTimeMin, m_spawnTimeMax);
+        }
+
     }
 }
 

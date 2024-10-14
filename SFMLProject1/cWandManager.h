@@ -25,6 +25,11 @@ public:
 
 private:
 
+    int m_maxWandSpawns = 5;
+    float m_spawnTimeMin = 20;
+    float m_spawnTimeMax = 60;
+    float m_spawnTick = 5; //also sets time before first wand
+
     sf::Sprite* m_wandPickupSprite;
 
     std::vector<cWand*> m_wandTypes; // Store wand instances
