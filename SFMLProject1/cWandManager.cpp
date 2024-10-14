@@ -6,13 +6,14 @@
 #include <cmath>
 #include "MathLibrary.h"
 
-cWandManager::cWandManager(sf::Sprite* _pickupSprite)
+cWandManager::cWandManager(sf::Sprite* _pickupSprite, std::vector<sf::Vector2f>* _wandSpawns)
 {
     m_wandDrops = new std::vector<cWandPickup*>;
     m_wandPickupSprite = _pickupSprite;
 
     cBurstWand* BurstWandType = new cBurstWand;
     m_wandTypes.push_back(BurstWandType);
+    m_wandSpawnPoints = *_wandSpawns;
 }
 
 cWandManager::~cWandManager() {
@@ -39,16 +40,22 @@ float cWandManager::distance(const sf::Vector2f& point1, const sf::Vector2f& poi
 
 void cWandManager::spawnWand() {
 
-    int Size = m_wandTypes.size();
+    int WandsSize = m_wandTypes.size();
+    int SpawnsSize = m_wandSpawnPoints.size();
     int WandChoice = 0;
-    if (Size > 0)
+    int SpawnPointChoice = 0;
+    if (WandsSize > 0 && SpawnsSize > 0)
     {
-        if (Size == 1) WandChoice == 1;
-        else WandChoice = randRangeInt(0, m_wandTypes.size() - 1);
+        if (WandsSize == 1) WandChoice == 1;
+        else WandChoice = randRangeInt(0, WandsSize - 1);
+
+        if (SpawnsSize == 1) SpawnPointChoice = 1;
+        else SpawnPointChoice = randRangeInt(0, SpawnsSize - 1);
 
         cWand* NewWand = m_wandTypes[WandChoice];
+        sf::Vector2f SpawnPoint = m_wandSpawnPoints[SpawnPointChoice];
 
-        cWandPickup* NewWandPickup = new cWandPickup(NewWand, sf::Vector2f(50, 50), m_wandPickupSprite);
+        cWandPickup* NewWandPickup = new cWandPickup(NewWand, SpawnPoint, m_wandPickupSprite);
         m_wandDrops->push_back(NewWandPickup);
     }
 }
@@ -60,9 +67,17 @@ void cWandManager::addWandType(cWand* Wand)
 
 void cWandManager::update(float _deltaTime) {
     // Handle wand updates (e.g., despawn logic)
-    if (m_wandDrops->size() < 1)
+
+    if (m_wandDrops->size() < m_maxWandSpawns)
     {
-        spawnWand();
+        m_spawnTick -= _deltaTime;
+
+        if (m_spawnTick <= 0)
+        {
+            spawnWand();
+            m_spawnTick = randRangeFloat(m_spawnTimeMin, m_spawnTimeMax);
+        }
+
     }
 }
 

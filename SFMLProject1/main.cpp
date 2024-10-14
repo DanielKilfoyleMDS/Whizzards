@@ -128,20 +128,18 @@ int main()
     sf::Vector2f player1Pos, player2Pos;
 
 
-
-    // Create the Wand manager
-    cWandManager wandManager(Manager.getWandPickupSprite());
-
-    // Load the level
-    std::vector<sf::Vector2f> wandSpawnPoints; // Load this from your level
-
     // Load tile textures into a map (texture ID mapped to sf::Texture)
     const std::map<int, sf::Texture>& tileTextures = level.getTileTextures();  // Use the getter directly
 
     // Load the level data
-    if (!level.LoadLevel("Resources/Levels/Level1.txt", level.getTileTextures(), tileMap, "Resources/Levels/spawn_points.txt", player1Pos, player2Pos)) {
+    if (!level.LoadLevel("Resources/Levels/Level1.txt", level.getTileTextures(), tileMap,
+        "Resources/Levels/spawn_points.txt", player1Pos, player2Pos, "Resources/Levels/wand_spawn_points.txt")) {
         std::cerr << "Failed to load level!" << std::endl;
     }
+
+    // Create the Wand manager
+    cWandManager wandManager(Manager.getWandPickupSprite(), level.getWandSpawnPoints());
+
     // Create player instances
     cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(), "Player 1", sf::Vector2f(1000, 800), Manager.getCollisionList(), level);
     cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(), "Player 2", sf::Vector2f(1050, 800), Manager.getCollisionList(), level);

@@ -36,7 +36,8 @@ void cLevel::loadTileTextures()
 
 }
 
-bool cLevel::LoadLevel(const std::string& filename, const std::map<int, sf::Texture>& tileTextures, std::vector<std::vector<int>>& tileMap, const std::string& _Spawnpointfilename, sf::Vector2f& player1Pos, sf::Vector2f& player2Pos)
+bool cLevel::LoadLevel(const std::string& filename, const std::map<int, sf::Texture>& tileTextures, std::vector<std::vector<int>>& tileMap,
+    const std::string& _Spawnpointfilename, sf::Vector2f& player1Pos, sf::Vector2f& player2Pos, const std::string& _wandSpawnsfilename)
 {
     std::ifstream file(filename);
     if (!file) {
@@ -72,6 +73,7 @@ bool cLevel::LoadLevel(const std::string& filename, const std::map<int, sf::Text
     m_levelCenter = sf::Vector2f(m_flevelWidth / 2.0f, m_flevelHeight / 2.0f);
 
     m_enemySpawnPoints = LoadSpawnPoints(_Spawnpointfilename);
+    m_wandSpawnPoints = LoadSpawnPoints(_wandSpawnsfilename);
 
     file.close();
     return true;
@@ -141,4 +143,9 @@ std::vector<sf::Vector2f> cLevel::getPowerUpSpawnPoints() const {
 std::vector<sf::Vector2f>* cLevel::getEnemySpawnPoints()
 {
     return &m_enemySpawnPoints;
+}
+
+std::vector<sf::Vector2f>* cLevel::getWandSpawnPoints()
+{
+    return &m_wandSpawnPoints;
 }

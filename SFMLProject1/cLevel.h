@@ -18,7 +18,7 @@ class cLevel {
 public:
     cLevel(float width, float height);
 
-    bool LoadLevel(const std::string& filename, const std::map<int, sf::Texture>& tileTextures, std::vector<std::vector<int>>& tileMap, const std::string& _Spawnpointfilename, sf::Vector2f& player1Pos, sf::Vector2f& player2Pos);
+    bool LoadLevel(const std::string& filename, const std::map<int, sf::Texture>& tileTextures, std::vector<std::vector<int>>& tileMap, const std::string& _Spawnpointfilename, sf::Vector2f& player1Pos, sf::Vector2f& player2Pos, const std::string& _wandSpawnsfilename );
     std::vector<sf::Vector2f> LoadSpawnPoints(const std::string& filename);
 
     float getLevelWidth() const;
@@ -28,6 +28,7 @@ public:
     std::vector<sf::Vector2f> getPowerUpSpawnPoints() const;
 
     std::vector<sf::Vector2f>* getEnemySpawnPoints();
+    std::vector<sf::Vector2f>* getWandSpawnPoints();
 
     bool isWithinBounds(const sf::Vector2f& position) const;
 
