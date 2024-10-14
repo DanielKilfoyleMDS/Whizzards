@@ -36,7 +36,7 @@ bool cWandPickup::getPickedUp()
 void cWandPickup::playerCollision(cPlayer* _other)
 {
 	//set wand here
-
+	_other->setWandRef(m_wand);
 	//WandManager checks this to remove/destroy this
 	m_bpickedup = true;
 }
