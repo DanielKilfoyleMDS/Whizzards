@@ -19,22 +19,34 @@ cGameManager::cGameManager()
 
 
 	// Player Sprites
-	m_firstPlayerTexture.loadFromFile("Resources/Textures/Sprites/Blue Player.png");
-	m_firstPlayerSprite.setTexture(m_firstPlayerTexture);
+	LoadSprite(&m_firstPlayerSprite,&m_firstPlayerTexture,"Resources/Textures/Sprites/Blue Player.png");
+	LoadSprite(&m_secondPlayerSprite,&m_secondPlayerTexture,"Resources/Textures/Sprites/Red Player.png");
 
-	m_secondPlayerTexture.loadFromFile("Resources/Textures/Sprites/Red Player.png");
-	m_secondPlayerSprite.setTexture(m_secondPlayerTexture);
+	//Player Projectiles
+	LoadSprite(&m_blueProjectileSprite,&m_blueProjectileTexture,"Resources/Textures/Sprites/Projectile Blue.png");
+	LoadSprite(&m_redProjectileSprite,&m_redProjectileTexture,"Resources/Textures/Sprites/Projectile Red.png");
 
-	m_blueProjectileTexture.loadFromFile("Resources/Textures/Sprites/Projectile Blue.png");
-	m_blueProjectileSprite.setTexture(m_blueProjectileTexture);
+	//Pickups
+	LoadSprite(&m_wandPickupSprite,&m_wandPickupTexture,"Resources/Textures/Sprites/wandpickup.png");
 
-	m_redProjectileTexture.loadFromFile("Resources/Textures/Sprites/Projectile Red.png");
-	m_redProjectileSprite.setTexture(m_redProjectileTexture);
-
-	//Wand texture/sprite
-	m_wandPickupTexture.loadFromFile("Resources/Textures/Sprites/wandpickup.png");
-	m_wandPickupSprite.setTexture(m_wandPickupTexture);
 }
+
+void cGameManager::LoadSprite(sf::Sprite* _Sprite, sf::Texture* _Texture, const std::string& _FilePath)
+{
+	_Texture->loadFromFile(_FilePath);
+	_Sprite->setTexture(*_Texture);
+
+	// Ensure the texture is loaded before setting the origin
+	if (_Sprite->getTexture() != nullptr) {
+		auto textureSize = _Sprite->getTexture()->getSize();
+		_Sprite->setOrigin(textureSize.x / 2.f, textureSize.y / 2.f);
+	}
+	else {
+		std::cerr << "Texture not set for sprite, cannot set origin." << std::endl;
+		return; // Handle the error accordingly
+	}
+}
+
 
 /*************************************************************************
 Name: getEnemyAsteroidSprite
@@ -107,24 +119,26 @@ sf::Sprite* cGameManager::getEnemyTestSprite(int _Frame)
 /*************************************************************************
 Name: getFirstPlayerSprite
 Description : gets the sprite for the first player
-Parameters: None
+Parameters: int _frame
 Returns: sf::Sprite pointer
 Author : Daniel Kilfoyle
 **************************************************************************/
-sf::Sprite* cGameManager::getFirstPlayerSprite()
+sf::Sprite* cGameManager::getFirstPlayerSprite(int _frame)
 {
+	//Code To Choose Sprite Based on Frame Here!
 	return &m_firstPlayerSprite;
 }
 
 /*************************************************************************
 Name: getSecondPlayerSprite
 Description : gets the sprite for the second player
-Parameters: None
+Parameters: int _frame
 Returns: sf::Sprite pointer
 Author : Daniel Kilfoyle
 **************************************************************************/
-sf::Sprite* cGameManager::getSecondPlayerSprite()
+sf::Sprite* cGameManager::getSecondPlayerSprite(int _frame)
 {
+	//Code To Choose Sprite Based on Frame Here!
 	return &m_secondPlayerSprite;
 }
 
@@ -214,28 +228,16 @@ std::vector<cProjectile*>* cGameManager::getProjectilesList()
 
 void cGameManager::SetupEnemySprites()
 {
-	// Enemy Sprites
-	m_asteroidTexture.loadFromFile("Resources/Textures/Sprites/EnemyAsteroid.png");
-	m_asteroidEnemySprite.setTexture(m_asteroidTexture);
 
-	m_randomEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyRandom.png");
-	m_randomEnemySprite.setTexture(m_randomEnemyTexture);
+	LoadSprite(&m_asteroidEnemySprite, &m_asteroidTexture, "Resources/Textures/Sprites/EnemyAsteroid.png");
+	LoadSprite(&m_randomEnemySprite, &m_randomEnemyTexture, "Resources/Textures/Sprites/EnemyRandom.png");
+	LoadSprite(&m_chaseEnemySprite, &m_chaseEnemyTexture, "Resources/Textures/Sprites/EnemyChase.png");
 
-	m_chaseEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyChase.png");
-	m_chaseEnemySprite.setTexture(m_chaseEnemyTexture);
+	LoadSprite(&m_defaultEnemySprite, &m_defaultEnemyTexture, "Resources/Textures/Sprites/EnemyDefault.png");
 
-	m_defaultEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyDefault.png");
-	m_defaultEnemySprite.setTexture(m_defaultEnemyTexture);
+	LoadSprite(&m_TestSprite1, &m_testEnemy1Texture, "Resources/Textures/Enemy/AnimTest_1.png");
+	LoadSprite(&m_TestSprite2, &m_testEnemy2Texture, "Resources/Textures/Enemy/AnimTest_2.png");
+	LoadSprite(&m_TestSprite3, &m_testEnemy3Texture, "Resources/Textures/Enemy/AnimTest_3.png");
+	LoadSprite(&m_TestSprite4, &m_testEnemy4Texture, "Resources/Textures/Enemy/AnimTest_4.png");
 
-	m_testEnemy1Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_1.png");
-	m_TestSprite1.setTexture(m_testEnemy1Texture);
-
-	m_testEnemy2Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_2.png");
-	m_TestSprite2.setTexture(m_testEnemy2Texture);	
-
-	m_testEnemy3Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_3.png");
-	m_TestSprite3.setTexture(m_testEnemy3Texture);	
-
-	m_testEnemy4Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_4.png");
-	m_TestSprite4.setTexture(m_testEnemy4Texture);
 }

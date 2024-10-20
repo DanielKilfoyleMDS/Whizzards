@@ -270,6 +270,19 @@ void cPlayer::setWandRef(cWand* _wand)
 	_wand->applyEffect(this);
 }
 
+int cPlayer::getPlayerOneOrTwo()
+{
+	if (m_playerName == "Player 1")
+	{
+		return 1;
+	}
+	else if (m_playerName == "Player 2")
+	{
+		return 2;
+	}
+	return 0;
+}
+
 
 void cPlayer::setProjectileCount(int _count) {
 	m_iProjectileCount = _count;

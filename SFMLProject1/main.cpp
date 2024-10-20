@@ -141,8 +141,8 @@ int main()
     cWandManager wandManager(Manager.getWandPickupSprite(), level.getWandSpawnPoints());
 
     // Create player instances
-    cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(), "Player 1", sf::Vector2f(1000, 800), Manager.getCollisionList(), level);
-    cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(), "Player 2", sf::Vector2f(1050, 800), Manager.getCollisionList(), level);
+    cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(0), "Player 1", sf::Vector2f(1000, 800), Manager.getCollisionList(), level);
+    cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(0), "Player 2", sf::Vector2f(1050, 800), Manager.getCollisionList(), level);
     Player1->setProjectileSprite(Manager.getFirstPlayerProjectile());
     Player2->setProjectileSprite(Manager.getSecondPlayerProjectile());
     Player1->setProjectileList(Manager.getProjectilesList());

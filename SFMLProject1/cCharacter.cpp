@@ -221,3 +221,33 @@ sf::Sprite* cCharacter::getSprite()
 {
 	return m_characterSprite;
 }
+
+
+/*************************************************************************
+Name: framesPassed
+Description : returns how many frames have passed due to deltaTime
+Parameters: float _deltaTime
+Returns: int Frames Passed
+Author : Jayden Burns
+**************************************************************************/
+int cCharacter::framesPassed(float _deltaTime)
+{
+	int FramesPassed = 0;
+	m_fAnimationTime += _deltaTime;
+	while (m_fAnimationTime > m_fSecondsPerFrame)
+	{
+		m_fAnimationTime -= 1;
+		FramesPassed++;
+	}
+	return FramesPassed;
+}
+
+int cCharacter::getFrame()
+{
+	return m_iCurrentFrame;
+}
+
+void cCharacter::setFrame(int _Frame)
+{
+	m_iCurrentFrame = _Frame;
+}

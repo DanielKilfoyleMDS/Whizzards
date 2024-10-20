@@ -50,9 +50,15 @@
     <ClCompile Include="cWandManager.cpp">
       <Filter>Pickups</Filter>
     </ClCompile>
-    <ClCompile Include="cBurstWand.cpp" />
-    <ClCompile Include="cWandPickup.cpp" />
-    <ClCompile Include="cRapidWand.cpp" />
+    <ClCompile Include="cWandPickup.cpp">
+      <Filter>Pickups</Filter>
+    </ClCompile>
+    <ClCompile Include="cRapidWand.cpp">
+      <Filter>Pickups</Filter>
+    </ClCompile>
+    <ClCompile Include="cBurstWand.cpp">
+      <Filter>Pickups</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -106,9 +112,15 @@
     <ClInclude Include="cWandManager.h">
       <Filter>Pickups</Filter>
     </ClInclude>
-    <ClInclude Include="cBurstWand.h" />
-    <ClInclude Include="cWandPickup.h" />
-    <ClInclude Include="cRapidWand.h" />
+    <ClInclude Include="cWandPickup.h">
+      <Filter>Pickups</Filter>
+    </ClInclude>
+    <ClInclude Include="cRapidWand.h">
+      <Filter>Pickups</Filter>
+    </ClInclude>
+    <ClInclude Include="cBurstWand.h">
+      <Filter>Pickups</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

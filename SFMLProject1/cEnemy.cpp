@@ -218,15 +218,6 @@ void cEnemy::setDamageStrength(float _Damage)
 	m_fdamage = _Damage;
 }
 
-int cEnemy::getFrame()
-{
-	return m_iFrame;
-}
-
-void cEnemy::setFrame(int _Frame)
-{
-	m_iFrame = _Frame;
-}
 
 void cEnemy::setEnemyType(EnemyType _enemyType)
 {
@@ -238,14 +229,4 @@ EnemyType cEnemy::getEnemyType()
 	return m_enemyType;
 }
 
-int cEnemy::FramesPassed(float _deltaTime)
-{
-	int FramesPassed = 0;
-	m_fTime += _deltaTime;
-	while (m_fTime > 1)
-	{
-		m_fTime -= 1;
-		FramesPassed++;
-	}
-	return FramesPassed;
-}
+

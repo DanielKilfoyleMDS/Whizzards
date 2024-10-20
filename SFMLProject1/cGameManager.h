@@ -20,6 +20,8 @@ class cGameManager
 public:
 	cGameManager();
 
+	void LoadSprite(sf::Sprite* _Sprite, sf::Texture* _Texture, const std::string& _FilePath);
+
 	sf::Sprite* getEnemyAsteroidSprite();
 	sf::Sprite* getEnemyRandomSprite();
 	sf::Sprite* getEnemyDefaultSprite();
@@ -27,8 +29,9 @@ public:
 	sf::Sprite* getEnemyTestSprite(int _Frame);
 
 
-	sf::Sprite* getFirstPlayerSprite();
-	sf::Sprite* getSecondPlayerSprite();
+	sf::Sprite* getFirstPlayerSprite(int _frame);
+	sf::Sprite* getSecondPlayerSprite(int _frame);
+
 	sf::Sprite* getFirstPlayerProjectile();
 	sf::Sprite* getSecondPlayerProjectile();
 

@@ -54,6 +54,8 @@ public:
 	void respawnPlayer();
 
 	void setWandRef(class cWand* _wand);
+
+	int getPlayerOneOrTwo();
 private:
 
 	// character name, used for setting different controls for player 1 and player 2

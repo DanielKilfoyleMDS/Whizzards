@@ -60,6 +60,10 @@ public:
 
 	sf::Sprite* getSprite();
 
+	int framesPassed(float _deltaTime);
+	int getFrame();
+	void setFrame(int _Frame);
+
 protected:
 
 	// maxHealth and currentHealth  of characters, will be overriden by child classes, so was not set to const. 
@@ -73,6 +77,11 @@ protected:
 		
 	CharacterType m_characterType;
 
+
+	//Animation Code
+	int m_iCurrentFrame = 0.0f;
+	float m_fAnimationTime = 0.0f;
+	float m_fSecondsPerFrame = 1.0f;
 
 	sf::Sprite* m_characterSprite;
 	sf::Texture m_characterTexture;

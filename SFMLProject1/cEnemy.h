@@ -67,14 +67,11 @@ public:
 	void otherCollide(cCharacter* _Character);
 	void setDamageStrength(float _Damage);
 
-	int getFrame();
-	void setFrame(int _Frame);
 
 	void setEnemyType(EnemyType _enemyType);
 	EnemyType getEnemyType();
 
 	//Move This Function To Character
-	int FramesPassed(float _deltaTime);
 
 private:
 
@@ -100,9 +97,5 @@ private:
 
 	//Follow Behaviour
 	sf::Vector2f m_targetPosition = sf::Vector2f(0, 0);
-
-	int m_iFrame = 0;
-	float m_fTime;
-
 
 };

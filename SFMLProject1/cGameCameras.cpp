@@ -13,6 +13,7 @@ Mail : JaydenBurns@mds.ac.nz
 #include <iostream>
 #include "cCharacter.h"
 #include "cEnemy.h"
+#include "cPlayer.h"
 #include "cProjectile.h"
 #include "MathLibrary.h"
 #include "cWandPickup.h"
@@ -186,8 +187,29 @@ void cGameCameras::Render(cEnemy* _Enemy, sf::RenderWindow* _window)
 
 	if (RenderSprite != nullptr)
 	{
-		RenderSprite->setPosition(_Enemy->getPosition());
+		RenderSprite->setPosition(_Enemy->getPosition()); //TODO: ACCOUNT FOR IMAGE ORIGIN
 		RenderSprite->setRotation(_Enemy->getRotation());
+		_window->draw(*RenderSprite);
+	}
+}
+
+void cGameCameras::Render(cPlayer* _Player, sf::RenderWindow* _window)
+{
+	sf::Sprite* RenderSprite = nullptr;
+
+	if (_Player->getPlayerOneOrTwo() == 1)
+	{
+		RenderSprite = m_currentGameManager->getFirstPlayerSprite(_Player->getFrame());
+	}
+	else if (_Player->getPlayerOneOrTwo() == 2)
+	{
+		RenderSprite = m_currentGameManager->getSecondPlayerSprite(_Player->getFrame());
+	}
+
+	if (RenderSprite != nullptr)
+	{
+		RenderSprite->setPosition(_Player->getPosition()); //TODO: ACCOUNT FOR IMAGE ORIGIN
+		RenderSprite->setRotation(_Player->getRotation());
 		_window->draw(*RenderSprite);
 	}
 }

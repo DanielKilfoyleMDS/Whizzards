@@ -47,8 +47,7 @@ bool cRandomBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 {
 	enemyMove(_parent);
 
-
-	_parent->setFrame(_parent->getFrame() + _parent->FramesPassed(_deltaTime));
+	_parent->setFrame(_parent->getFrame() + _parent->framesPassed(_deltaTime));
 	if (_parent->getFrame() > 3)
 	{
 		_parent->setFrame(0);
