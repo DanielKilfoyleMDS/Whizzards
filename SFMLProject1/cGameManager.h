@@ -24,6 +24,7 @@ public:
 	sf::Sprite* getEnemyRandomSprite();
 	sf::Sprite* getEnemyDefaultSprite();
 	sf::Sprite* getEnemyChaseSprite();
+	sf::Sprite* getEnemyTestSprite(int _Frame);
 
 
 	sf::Sprite* getFirstPlayerSprite();
@@ -39,6 +40,8 @@ public:
 	std::vector<cCharacter*>* getCollisionList();
 	std::vector<cProjectile*>* getProjectilesList();
 
+	void SetupEnemySprites();
+
 private:
 	//Collision
 	std::vector<cCharacter*>* m_CollisionList;
@@ -51,12 +54,20 @@ private:
 	sf::Texture m_asteroidTexture;
 	sf::Texture m_randomEnemyTexture;
 	sf::Texture m_chaseEnemyTexture;
+	sf::Texture m_testEnemy1Texture;
+	sf::Texture m_testEnemy2Texture;
+	sf::Texture m_testEnemy3Texture;
+	sf::Texture m_testEnemy4Texture;
 
 	// Enemy Sprites
 	sf::Sprite m_asteroidEnemySprite;
 	sf::Sprite m_defaultEnemySprite;
 	sf::Sprite m_randomEnemySprite;
 	sf::Sprite m_chaseEnemySprite;
+	sf::Sprite m_TestSprite1;
+	sf::Sprite m_TestSprite2;
+	sf::Sprite m_TestSprite3;
+	sf::Sprite m_TestSprite4;
 
 	// Player Sprites
 	sf::Sprite m_firstPlayerSprite;

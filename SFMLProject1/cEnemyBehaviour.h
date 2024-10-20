@@ -67,7 +67,6 @@ public:
 
 	void setBehaviourSprite(sf::Sprite* _reference);
 
-	void setEnemySprite(class cEnemy* _parent);
 
 protected:
 	sf::Sprite* m_behaviourSprite = nullptr;

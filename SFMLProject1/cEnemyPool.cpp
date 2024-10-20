@@ -76,8 +76,8 @@ bool cEnemyPool::loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movemen
 		Asteroid->setState(Idle);
 		Asteroid->setAwake(true);
 		Asteroid->setBehaviour(&m_AsteroidBehaviour);
+		Asteroid->setEnemyType(Type_Asteroid);
 		m_AsteroidBehaviour.pickDirection(Asteroid);
-		m_AsteroidBehaviour.setEnemySprite(Asteroid);
 		Asteroid->setDamageStrength(1);
 		return true;
 	} 
@@ -101,12 +101,11 @@ bool cEnemyPool::loadRandomEnemy(sf::Vector2f _position)
 
 		Random->setPosition(_position);
 		Random->setHealth(10);
-
+		Random->setEnemyType(Type_Random);
 		Random->setState(Idle);
 		Random->setAwake(true);
 		Random->setBehaviour(&m_RandomBehaviour);
 		Random->setDamageStrength(2);
-		m_RandomBehaviour.setEnemySprite(Random);
 		return true;
 	}
 
@@ -130,12 +129,12 @@ bool cEnemyPool::loadChaseEnemy(sf::Vector2f _position)
 
 		Chase->setPosition(_position);
 		Chase->setHealth(10);
+		Chase->setEnemyType(Type_Chase);
 
 		Chase->setState(Idle);
 		Chase->setAwake(true);
 		Chase->setBehaviour(&m_ChaseBehaviour);
 		Chase->setDamageStrength(2);
-		m_ChaseBehaviour.setEnemySprite(Chase);
 		return true;
 	}
 	return false;

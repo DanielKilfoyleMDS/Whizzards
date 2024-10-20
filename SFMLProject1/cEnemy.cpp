@@ -216,3 +216,23 @@ void cEnemy::setDamageStrength(float _Damage)
 {
 	m_fdamage = _Damage;
 }
+
+int cEnemy::getFrame()
+{
+	return m_iFrame;
+}
+
+void cEnemy::setFrame(int _Frame)
+{
+	m_iFrame = _Frame;
+}
+
+void cEnemy::setEnemyType(EnemyType _enemyType)
+{
+	m_enemyType = _enemyType;
+}
+
+EnemyType cEnemy::getEnemyType()
+{
+	return m_enemyType;
+}

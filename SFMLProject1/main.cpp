@@ -170,9 +170,8 @@ int main()
     std::vector<cProjectile*> activeProjectiles;
 
     // Initialize game camera
-    cGameCameras m_Cameras(&window, 3000, 3000);
+    cGameCameras m_Cameras(&window, 3000, 3000, &Manager);
     cEnemyPool Pool(200, Manager.getEnemyDefaultSprite(), Manager.getCollisionList());
-    Pool.setBehaviourSprites(Manager.getEnemyAsteroidSprite(), Manager.getEnemyRandomSprite(), Manager.getEnemyChaseSprite());
     Pool.setPlayers(Player1,Player2);
 
     // Load enemy spawn points from level

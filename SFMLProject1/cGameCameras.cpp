@@ -12,9 +12,11 @@ Mail : JaydenBurns@mds.ac.nz
 #include "cGameCameras.h"
 #include <iostream>
 #include "cCharacter.h"
+#include "cEnemy.h"
 #include "cProjectile.h"
 #include "MathLibrary.h"
 #include "cWandPickup.h"
+
 
 /************************************************************************
 Name: cGameCameras
@@ -23,7 +25,7 @@ Parameters: sf::RenderWindow* _window, int _levelXSize, int _levelYSize
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-cGameCameras::cGameCameras(sf::RenderWindow* _window, int _levelXSize, int _levelYSize)
+cGameCameras::cGameCameras(sf::RenderWindow* _window, int _levelXSize, int _levelYSize, cGameManager* _GameManager)
 {
 	m_iWindowHeight = (int)_window->getSize().y;
 	m_iWindowWidth = (int)_window->getSize().x;
@@ -45,11 +47,11 @@ cGameCameras::cGameCameras(sf::RenderWindow* _window, int _levelXSize, int _leve
 	m_fcameraJoinDistance = 600;
 
 	m_windowRef = _window;
-	m_firstPlayerView->setViewport(sf::FloatRect(0.0f, 0.0f, 0.5f, 1.0f)); //Looks wonky due to scaling
+	m_firstPlayerView->setViewport(sf::FloatRect(0.0f, 0.0f, 0.5f, 1.0f)); 
     m_secondPlayerView->setViewport(sf::FloatRect(0.5f, 0.0f, 0.5f, 1.0f));
 	m_playerCameraRelativeVector = sf::Vector2f(0, 0);
 
-	
+	m_currentGameManager = _GameManager;
 
 }
 
@@ -149,6 +151,42 @@ void cGameCameras::Render(cCharacter* _Character, sf::RenderWindow* _window)
 	sf::Sprite* RenderSprite = _Character->getSprite();
 	RenderSprite->setPosition(_Character->getPosition());
 	RenderSprite->setRotation(_Character->getRotation());
+	_window->draw(*RenderSprite);
+}
+
+/*************************************************************************
+Name: Render
+Description : Renders cEnemy to current view
+Parameters: cEnemy* _Enemy, sf::RenderWindow* _window
+Returns: None
+Author : Jayden Burns
+**************************************************************************/
+void cGameCameras::Render(cEnemy* _Enemy, sf::RenderWindow* _window)
+{
+	sf::Sprite* RenderSprite = nullptr;
+
+	switch (_Enemy->getEnemyType())
+	{
+	case Type_Asteroid:
+		RenderSprite = m_currentGameManager->getEnemyAsteroidSprite();
+		break;
+	case Type_Random:
+		RenderSprite = m_currentGameManager->getEnemyRandomSprite();
+		break;
+	case Type_Chase:
+		RenderSprite = m_currentGameManager->getEnemyChaseSprite();
+		break;
+	case Type_Projectile:
+		RenderSprite = m_currentGameManager->getEnemyDefaultSprite();
+		break;
+	default:
+		RenderSprite = m_currentGameManager->getEnemyDefaultSprite();
+		break;
+	}
+
+	//sf::Sprite* RenderSprite = _Enemy->getSprite();
+	RenderSprite->setPosition(_Enemy->getPosition());
+	RenderSprite->setRotation(_Enemy->getRotation());
 	_window->draw(*RenderSprite);
 }
 

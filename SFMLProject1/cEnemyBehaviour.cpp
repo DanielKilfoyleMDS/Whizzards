@@ -36,17 +36,3 @@ void cEnemyBehaviour::setBehaviourSprite(sf::Sprite* _reference)
 	m_behaviourSprite = _reference;
 }
 
-/************************************************************************
-Name: setBehaviourSprite
-Description : sets enemy sprite to behaviour sprite
-Parameters: cEnemy* _parent
-Returns: None
-Author : Jayden Burns
-**************************************************************************/
-void cEnemyBehaviour::setEnemySprite(cEnemy* _parent)
-{
-	if (m_behaviourSprite != nullptr)
-	{
-		_parent->setSprite(m_behaviourSprite);
-	}
-}

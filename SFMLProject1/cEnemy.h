@@ -26,6 +26,20 @@ enum EnemyState
 	Seek
 };
 
+/************************************************************************
+Name: EnemyType
+Description : Struct that determines which type of Enemy it is (Set by Behaviour)
+Values: Type_Asteroid, Type_Random, Type_Chase, Type_Projectile
+Author : Jayden Burns
+**************************************************************************/
+enum EnemyType
+{
+	Type_Asteroid,
+	Type_Random,
+	Type_Chase,
+	Type_Projectile
+};
+
 
 class cEnemy : public cCharacter
 {
@@ -53,9 +67,16 @@ public:
 	void otherCollide(cCharacter* _Character);
 	void setDamageStrength(float _Damage);
 
+	int getFrame();
+	void setFrame(int _Frame);
+
+	void setEnemyType(EnemyType _enemyType);
+	EnemyType getEnemyType();
+
 private:
 
 	EnemyState m_enemyState;
+	EnemyType m_enemyType;
 
 	std::vector<cEnemy*> m_ActiveEnemies;   // Active enemies
 	std::vector<cEnemy*> m_InactiveEnemies; // Inactive enemies (not used)
@@ -76,5 +97,7 @@ private:
 
 	//Follow Behaviour
 	sf::Vector2f m_targetPosition = sf::Vector2f(0, 0);
+
+	int m_iFrame = 0;
 
 };

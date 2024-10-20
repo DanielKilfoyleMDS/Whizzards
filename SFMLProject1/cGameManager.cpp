@@ -15,19 +15,7 @@ cGameManager::cGameManager()
 
 	// Loading all relevant sprites
 
-
-	// Enemy Sprites
-	m_asteroidTexture.loadFromFile("Resources/Textures/Sprites/EnemyAsteroid.png");
-	m_asteroidEnemySprite.setTexture(m_asteroidTexture);
-
-	m_randomEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyRandom.png");
-	m_randomEnemySprite.setTexture(m_randomEnemyTexture);
-
-	m_chaseEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyChase.png");
-	m_chaseEnemySprite.setTexture(m_chaseEnemyTexture);
-
-	m_defaultEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyDefault.png");
-	m_defaultEnemySprite.setTexture(m_defaultEnemyTexture);
+	SetupEnemySprites();
 
 
 	// Player Sprites
@@ -95,6 +83,25 @@ Author : Daniel Kilfoyle
 sf::Sprite* cGameManager::getEnemyChaseSprite()
 {
 	return  &m_chaseEnemySprite;
+}
+
+sf::Sprite* cGameManager::getEnemyTestSprite(int _Frame)
+{
+	if (_Frame == 0)
+	{
+		return &m_TestSprite1;
+	}else if (_Frame == 1)
+	{
+		return &m_TestSprite2;
+	}else if (_Frame == 2)
+	{
+		return &m_TestSprite3;
+	}else if (_Frame == 3)
+	{
+		return &m_TestSprite4;
+	}
+
+	return nullptr;
 }
 
 /*************************************************************************
@@ -203,4 +210,32 @@ Author : Daniel Kilfoyle
 std::vector<cProjectile*>* cGameManager::getProjectilesList()
 {
 	return m_ProjectileList;
+}
+
+void cGameManager::SetupEnemySprites()
+{
+	// Enemy Sprites
+	m_asteroidTexture.loadFromFile("Resources/Textures/Sprites/EnemyAsteroid.png");
+	m_asteroidEnemySprite.setTexture(m_asteroidTexture);
+
+	m_randomEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyRandom.png");
+	m_randomEnemySprite.setTexture(m_randomEnemyTexture);
+
+	m_chaseEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyChase.png");
+	m_chaseEnemySprite.setTexture(m_chaseEnemyTexture);
+
+	m_defaultEnemyTexture.loadFromFile("Resources/Textures/Sprites/EnemyDefault.png");
+	m_defaultEnemySprite.setTexture(m_defaultEnemyTexture);
+
+	m_testEnemy1Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_1.png");
+	m_TestSprite1.setTexture(m_testEnemy1Texture);
+
+	m_testEnemy2Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_2.png");
+	m_TestSprite2.setTexture(m_testEnemy2Texture);	
+
+	m_testEnemy1Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_3.png");
+	m_TestSprite1.setTexture(m_testEnemy1Texture);	
+
+	m_testEnemy4Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_4.png");
+	m_TestSprite4.setTexture(m_testEnemy4Texture);
 }
