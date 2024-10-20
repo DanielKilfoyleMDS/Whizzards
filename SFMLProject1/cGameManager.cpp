@@ -233,8 +233,8 @@ void cGameManager::SetupEnemySprites()
 	m_testEnemy2Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_2.png");
 	m_TestSprite2.setTexture(m_testEnemy2Texture);	
 
-	m_testEnemy1Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_3.png");
-	m_TestSprite1.setTexture(m_testEnemy1Texture);	
+	m_testEnemy3Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_3.png");
+	m_TestSprite3.setTexture(m_testEnemy3Texture);	
 
 	m_testEnemy4Texture.loadFromFile("Resources/Textures/Enemy/AnimTest_4.png");
 	m_TestSprite4.setTexture(m_testEnemy4Texture);

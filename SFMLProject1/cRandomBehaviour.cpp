@@ -47,6 +47,15 @@ bool cRandomBehaviour::tickEnemy(cEnemy* _parent)
 {
 	enemyMove(_parent);
 
+	if (_parent->getFrame() < 3)
+	{
+		_parent->setFrame(_parent->getFrame() + 1);
+	}
+	else
+	{
+		_parent->setFrame(0);
+	}
+
 	if (checkDeath(_parent))
 	{
 		return false;

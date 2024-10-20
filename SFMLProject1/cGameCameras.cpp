@@ -171,7 +171,7 @@ void cGameCameras::Render(cEnemy* _Enemy, sf::RenderWindow* _window)
 		RenderSprite = m_currentGameManager->getEnemyAsteroidSprite();
 		break;
 	case Type_Random:
-		RenderSprite = m_currentGameManager->getEnemyRandomSprite();
+		RenderSprite = m_currentGameManager->getEnemyTestSprite(_Enemy->getFrame());
 		break;
 	case Type_Chase:
 		RenderSprite = m_currentGameManager->getEnemyChaseSprite();
@@ -184,10 +184,12 @@ void cGameCameras::Render(cEnemy* _Enemy, sf::RenderWindow* _window)
 		break;
 	}
 
-	//sf::Sprite* RenderSprite = _Enemy->getSprite();
-	RenderSprite->setPosition(_Enemy->getPosition());
-	RenderSprite->setRotation(_Enemy->getRotation());
-	_window->draw(*RenderSprite);
+	if (RenderSprite != nullptr)
+	{
+		RenderSprite->setPosition(_Enemy->getPosition());
+		RenderSprite->setRotation(_Enemy->getRotation());
+		_window->draw(*RenderSprite);
+	}
 }
 
 /*************************************************************************
