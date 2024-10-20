@@ -38,6 +38,6 @@ private:
 
 	bool b_enemyOwned;
 
-	float m_fDamage;
+	float m_fDamage = -1;
 };
 
