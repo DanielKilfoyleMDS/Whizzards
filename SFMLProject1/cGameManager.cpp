@@ -149,8 +149,9 @@ Parameters: None
 Returns: sf::Sprite pointer
 Author : Daniel Kilfoyle
 **************************************************************************/
-sf::Sprite* cGameManager::getFirstPlayerProjectile()
+sf::Sprite* cGameManager::getFirstPlayerProjectile(int _frame)
 {
+	//Code To Choose Sprite Based on Frame Here!
 	return &m_blueProjectileSprite;
 }
 
@@ -161,10 +162,12 @@ Parameters: None
 Returns: sf::Sprite pointer
 Author : Daniel Kilfoyle
 **************************************************************************/
-sf::Sprite* cGameManager::getSecondPlayerProjectile()
+sf::Sprite* cGameManager::getSecondPlayerProjectile(int _frame)
 {
+	//Code To Choose Sprite Based on Frame Here!
 	return &m_redProjectileSprite;
 }
+
 
 /*************************************************************************
 Name: getWandPickupSprite()
@@ -173,8 +176,9 @@ Parameters: None
 Returns: sf::Sprite pointer
 Author : Jayden Burns
 **************************************************************************/
-sf::Sprite* cGameManager::getWandPickupSprite()
+sf::Sprite* cGameManager::getWandPickupSprite(int _frame)
 {
+	//Code To Choose Sprite Based on Frame Here!
 	return &m_wandPickupSprite;
 }
 

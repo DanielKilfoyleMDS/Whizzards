@@ -32,10 +32,10 @@ public:
 	sf::Sprite* getFirstPlayerSprite(int _frame);
 	sf::Sprite* getSecondPlayerSprite(int _frame);
 
-	sf::Sprite* getFirstPlayerProjectile();
-	sf::Sprite* getSecondPlayerProjectile();
+	sf::Sprite* getFirstPlayerProjectile(int _frame);
+	sf::Sprite* getSecondPlayerProjectile(int _frame);
 
-	sf::Sprite* getWandPickupSprite();
+	sf::Sprite* getWandPickupSprite(int _frame);
 
 
 	void AddToCollisionList(cCharacter* _Character);

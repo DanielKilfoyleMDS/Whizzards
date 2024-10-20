@@ -223,10 +223,17 @@ Author : Jayden Burns
 **************************************************************************/
 void cGameCameras::Render(cProjectile* _Projectile, sf::RenderWindow* _window)
 {
-	sf::Sprite* RenderSprite = _Projectile->getSprite(); //TODO - Getter
-	RenderSprite->setPosition(_Projectile->getPosition());
-	RenderSprite->setRotation(_Projectile->getRotation());
-	_window->draw(*RenderSprite);
+	sf::Sprite* RenderSprite = nullptr;
+
+	//Pick the player.
+	RenderSprite = m_currentGameManager->getFirstPlayerProjectile(_Projectile->getFrame());
+	
+	if (RenderSprite != nullptr)
+	{
+		RenderSprite->setPosition(_Projectile->getPosition());
+		RenderSprite->setRotation(_Projectile->getRotation());
+		_window->draw(*RenderSprite);
+	}
 }
 
 /*************************************************************************
@@ -250,9 +257,15 @@ Author : Jayden Burns
 **************************************************************************/
 void cGameCameras::Render(cWandPickup* _WandDrop, sf::RenderWindow* _window)
 {
-	sf::Sprite* RenderSprite = _WandDrop->getSprite();
-	RenderSprite->setPosition(_WandDrop->getPosition());
-	_window->draw(*RenderSprite);
+	sf::Sprite* RenderSprite = nullptr;
+
+	RenderSprite = m_currentGameManager->getWandPickupSprite(_WandDrop->getFrame());
+
+	if (RenderSprite != nullptr)
+	{
+		RenderSprite->setPosition(_WandDrop->getPosition());
+		_window->draw(*RenderSprite);
+	}
 }
 
 /*************************************************************************

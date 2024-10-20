@@ -21,14 +21,9 @@ Author : Daniel Kilfoyle
 **************************************************************************/
 cProjectile::cProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rotation, bool _enemy)
 {
-	m_sprite = _sprite;
-	m_sprite.setOrigin(_sprite.getTexture()->getSize().x / 2, _sprite.getTexture()->getSize().y / 2);
 
 	m_position = _pos;
 
-	m_sprite.setPosition(_pos);
-
-	m_sprite.setRotation(_rotation);
 	
 	m_velocity.x = 10.0f * sin(DegreesToRadians(_rotation));
 	m_velocity.y = 10.0f * -cos(DegreesToRadians(_rotation));
@@ -37,6 +32,7 @@ cProjectile::cProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rotation,
 
 }
 
+
 /*************************************************************************
 Name: tick
 Description : tick function for moving the projectile when tick is called
@@ -44,9 +40,10 @@ Parameters: None
 Returns: None
 Author : Daniel Kilfoyle
 **************************************************************************/
-void cProjectile::tick()
+void cProjectile::tick(float _deltaTime)
 {
-	m_sprite.move(m_velocity);
+	m_position += m_velocity;
+	//TO DO - Rotation
 }
 
 void cProjectile::setDamage(float _damage)
@@ -57,11 +54,6 @@ void cProjectile::setDamage(float _damage)
 float cProjectile::getDamage()
 {
 	return m_fDamage;
-}
-
-sf::Sprite* cProjectile::getSprite()
-{
-	return &m_sprite;
 }
 
 float cProjectile::getRotation()
@@ -77,4 +69,33 @@ sf::Vector2f cProjectile::getPosition()
 bool cProjectile::getOwned()
 {
 	return b_enemyOwned;
+}
+
+/*************************************************************************
+Name: framesPassed
+Description : returns how many frames have passed due to deltaTime
+Parameters: float _deltaTime
+Returns: int Frames Passed
+Author : Jayden Burns
+**************************************************************************/
+int cProjectile::framesPassed(float _deltaTime)
+{
+	int FramesPassed = 0;
+	m_fAnimationTime += _deltaTime;
+	while (m_fAnimationTime > m_fSecondsPerFrame)
+	{
+		m_fAnimationTime -= 1;
+		FramesPassed++;
+	}
+	return FramesPassed;
+}
+
+int cProjectile::getFrame()
+{
+	return m_iCurrentFrame;
+}
+
+void cProjectile::setFrame(int _Frame)
+{
+	m_iCurrentFrame = _Frame;
 }

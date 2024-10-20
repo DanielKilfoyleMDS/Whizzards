@@ -18,18 +18,20 @@ class cProjectile
 {
 public:
 	cProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rotation, bool _enemy);
-	void tick();
+	void tick(float _deltaTime);
 	void setDamage(float _damage);
 	float getDamage();
 	
 
-	sf::Sprite* getSprite();
 	float getRotation();
 	sf::Vector2f getPosition();
 	bool getOwned();
 
+	int framesPassed(float _deltaTime);
+	int getFrame();
+	void setFrame(int _Frame);
+
 private:
-	sf::Sprite m_sprite;
 	sf::Vector2f m_position;
 
 	float m_fRotation;
@@ -39,5 +41,10 @@ private:
 	bool b_enemyOwned;
 
 	float m_fDamage = -1;
+
+	//Animation Code
+	int m_iCurrentFrame = 0.0f;
+	float m_fAnimationTime = 0.0f;
+	float m_fSecondsPerFrame = 1.0f;
 };
 

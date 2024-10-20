@@ -138,13 +138,13 @@ int main()
     }
 
     // Create the Wand manager
-    cWandManager wandManager(Manager.getWandPickupSprite(), level.getWandSpawnPoints());
+    cWandManager wandManager(Manager.getWandPickupSprite(0), level.getWandSpawnPoints());
 
     // Create player instances
     cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(0), "Player 1", sf::Vector2f(1000, 800), Manager.getCollisionList(), level);
     cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(0), "Player 2", sf::Vector2f(1050, 800), Manager.getCollisionList(), level);
-    Player1->setProjectileSprite(Manager.getFirstPlayerProjectile());
-    Player2->setProjectileSprite(Manager.getSecondPlayerProjectile());
+    Player1->setProjectileSprite(Manager.getFirstPlayerProjectile(0));
+    Player2->setProjectileSprite(Manager.getSecondPlayerProjectile(0));
     Player1->setProjectileList(Manager.getProjectilesList());
     Player2->setProjectileList(Manager.getProjectilesList());
 
@@ -202,7 +202,7 @@ int main()
         // Update projectiles
         for (auto projectile : *Manager.getProjectilesList())
         {
-            projectile->tick();
+            projectile->tick(deltaTime);
         }
 
         // Update camera positions based on player movements
@@ -236,7 +236,7 @@ int main()
             }
             for (auto iter : *Manager.getProjectilesList())
             {
-                window.draw(*iter->getSprite());
+                m_Cameras.Render(iter, &window);
             }        
             for (auto& wandPickup : wandManager.getWandPickups())
             {
@@ -257,7 +257,7 @@ int main()
             }
             for (auto iter : *Manager.getProjectilesList())
             {
-                window.draw(*iter->getSprite());
+                m_Cameras.Render(iter, &window);
             }
             for (auto& wandPickup : wandManager.getWandPickups())
             {
@@ -274,7 +274,7 @@ int main()
             }
             for (auto iter : *Manager.getProjectilesList())
             {
-                window.draw(*iter->getSprite());
+                m_Cameras.Render(iter,&window);
             }
             for (auto& wandPickup : wandManager.getWandPickups())
             {
@@ -320,7 +320,7 @@ void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player
         cameras.Render(enemy, &window);
     }
     for (auto projectile : projectiles) {
-        window.draw(*projectile->getSprite());
+        cameras.Render(projectile, &window);
     }
 }
 
@@ -333,6 +333,6 @@ void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer*
         cameras.Render(enemy, &window);
     }
     for (auto projectile : projectiles) {
-        window.draw(*projectile->getSprite());
+        cameras.Render(projectile, &window);
     }
 }
