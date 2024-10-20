@@ -47,7 +47,7 @@ public:
 	cEnemy(sf::Sprite* sprite, sf::Vector2f position);
 	~cEnemy();
 
-	void tick();
+	void tick(float _deltaTime);
 
 
 	bool getAwake();
@@ -72,6 +72,9 @@ public:
 
 	void setEnemyType(EnemyType _enemyType);
 	EnemyType getEnemyType();
+
+	//Move This Function To Character
+	int FramesPassed(float _deltaTime);
 
 private:
 
@@ -99,5 +102,7 @@ private:
 	sf::Vector2f m_targetPosition = sf::Vector2f(0, 0);
 
 	int m_iFrame = 0;
+	float m_fTime;
+
 
 };

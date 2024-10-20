@@ -4,7 +4,7 @@ cFollowBehaviour::~cFollowBehaviour()
 {
 }
 
-bool cFollowBehaviour::tickEnemy(cEnemy* _parent)
+bool cFollowBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 {
 	return false;
 }

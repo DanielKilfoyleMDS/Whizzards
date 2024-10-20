@@ -7,7 +7,7 @@ class cFollowBehaviour : public cEnemyBehaviour
 
 
 	//Handles Logic
-	bool tickEnemy(class cEnemy* _parent) override;
+	bool tickEnemy(class cEnemy* _parent, float _deltaTime) override;
 
 	bool checkDeath(cEnemy* _parent) override;
 

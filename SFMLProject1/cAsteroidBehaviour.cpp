@@ -42,7 +42,7 @@ Parameters: cEnemy* _parent
 Returns: bool - false if unsuccessful.
 Author : Jayden Burns
 **************************************************************************/
-bool cAsteroidBehaviour::tickEnemy(cEnemy* _parent)
+bool cAsteroidBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 {
 	if (_parent != nullptr)
 	{

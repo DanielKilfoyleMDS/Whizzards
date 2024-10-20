@@ -27,7 +27,7 @@ public:
 
 	void setPlayers(cCharacter* _player1, cCharacter* _player2);
 
-	void tickEnemies();
+	void tickEnemies(float _deltaTime);
 
 	std::vector<cEnemy*> getActiveEnemies();
 	std::vector<cEnemy*> getInactiveEnemies();

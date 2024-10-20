@@ -10,7 +10,7 @@ cChaseBehaviour::~cChaseBehaviour()
 {
 }
 
-bool cChaseBehaviour::tickEnemy(cEnemy* _parent)
+bool cChaseBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 {
 	//Attack(Chase) if available
 	canAttack(_parent);

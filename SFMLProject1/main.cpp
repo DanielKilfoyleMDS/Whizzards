@@ -150,12 +150,6 @@ int main()
 
 
 
-    //cBurstWand* burster = new cBurstWand();
-    //Player1->setCurrentWand(burster);
-    //burster->applyEffect(Player1);
-    //Player1->setFireRate(0.5);
-    //Player1->setProjectileCount(3);
-
     //Player1->setWandRef(wand);
 
     // Load projectile texture
@@ -215,7 +209,7 @@ int main()
         m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
 
         // Manage enemy waves
-        Spawner.WaveManager();
+        Spawner.WaveManager(deltaTime);
 
         // Update the wand manager
         wandManager.update(deltaTime);

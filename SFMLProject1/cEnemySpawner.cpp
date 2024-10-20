@@ -82,9 +82,9 @@ Parameters: None
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cEnemySpawner::WaveManager()
+void cEnemySpawner::WaveManager(float _deltaTime)
 {
-	m_EnemyPoolRef->tickEnemies();
+	m_EnemyPoolRef->tickEnemies(_deltaTime);
 
 	//Check if there are no enemies left on screen
 	if (m_EnemyPoolRef->getActiveEnemies().size() == 0)

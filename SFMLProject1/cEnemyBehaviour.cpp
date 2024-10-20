@@ -36,3 +36,4 @@ void cEnemyBehaviour::setBehaviourSprite(sf::Sprite* _reference)
 	m_behaviourSprite = _reference;
 }
 
+

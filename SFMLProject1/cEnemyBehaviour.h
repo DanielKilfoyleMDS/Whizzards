@@ -26,7 +26,7 @@ public:
 	Returns: bool - false if unsuccessful.
 	Author : Jayden Burns
 	**************************************************************************/
-	virtual bool tickEnemy(class cEnemy* _parent) = 0;
+	virtual bool tickEnemy(class cEnemy* _parent, float _deltaTime) = 0;
 
 	/************************************************************************
 	Name: checkDeath

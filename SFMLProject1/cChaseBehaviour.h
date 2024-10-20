@@ -7,7 +7,7 @@ public:
 	cChaseBehaviour();
 	~cChaseBehaviour();
 
-	bool tickEnemy(cEnemy* _parent) override;
+	bool tickEnemy(cEnemy* _parent, float _deltaTime) override;
 
 	bool checkDeath(cEnemy* _parent) override;
 
@@ -31,6 +31,5 @@ private:
 	class cCharacter* m_FirstPlayer = nullptr;
 	class cCharacter* m_SecondPlayer = nullptr;
 	float maxChaseRange = 300;
-
 };
 

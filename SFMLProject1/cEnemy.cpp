@@ -41,6 +41,7 @@ cEnemy::~cEnemy()
 	m_Behaviour = nullptr;
 }
 
+
 /************************************************************************
 Name: tick
 Description : Tick Behaviour for Enemy Class.
@@ -48,11 +49,11 @@ Parameters: None
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cEnemy::tick()
+void cEnemy::tick(float _deltaTime)
 {
 	if(m_Behaviour != nullptr && getAwake())
 	{
-		if (m_Behaviour->tickEnemy(this));
+		if (m_Behaviour->tickEnemy(this, _deltaTime));
 		{
 			if (m_fmoveTime > 0)
 			{
@@ -235,4 +236,16 @@ void cEnemy::setEnemyType(EnemyType _enemyType)
 EnemyType cEnemy::getEnemyType()
 {
 	return m_enemyType;
+}
+
+int cEnemy::FramesPassed(float _deltaTime)
+{
+	int FramesPassed = 0;
+	m_fTime += _deltaTime;
+	while (m_fTime > 1)
+	{
+		m_fTime -= 1;
+		FramesPassed++;
+	}
+	return FramesPassed;
 }

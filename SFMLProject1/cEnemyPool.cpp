@@ -166,12 +166,12 @@ Parameters: None
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cEnemyPool::tickEnemies()
+void cEnemyPool::tickEnemies(float _deltaTime)
 {
 	for (int EnemyCount = 0; EnemyCount < m_enemiesActive.size(); EnemyCount++)
 	{
 		cEnemy* Enemy = m_enemiesActive[EnemyCount];
-		Enemy->tick();
+		Enemy->tick(_deltaTime);
 
 		if (Enemy->getAwake() != true)
 		{

@@ -43,15 +43,13 @@ Parameters: cEnemy* _parent
 Returns: bool - false if unsuccessful.
 Author : Jayden Burns
 **************************************************************************/
-bool cRandomBehaviour::tickEnemy(cEnemy* _parent)
+bool cRandomBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 {
 	enemyMove(_parent);
 
-	if (_parent->getFrame() < 3)
-	{
-		_parent->setFrame(_parent->getFrame() + 1);
-	}
-	else
+
+	_parent->setFrame(_parent->getFrame() + _parent->FramesPassed(_deltaTime));
+	if (_parent->getFrame() > 3)
 	{
 		_parent->setFrame(0);
 	}

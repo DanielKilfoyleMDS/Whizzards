@@ -19,7 +19,7 @@ public:
 	cAsteroidBehaviour();
 	~cAsteroidBehaviour();
 
-	bool tickEnemy(cEnemy* _parent) override;
+	bool tickEnemy(cEnemy* _parent, float _deltaTime) override;
 
 	bool checkDeath(cEnemy* _parent) override;
 
