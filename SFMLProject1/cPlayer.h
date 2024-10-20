@@ -27,7 +27,6 @@ public:
 	void rotateCharacter(sf::Keyboard::Key _key, int _scalar);
 	void processInput();
 	void movePlayer();
-	void draw();
 
 	void castSpell();
 
@@ -36,9 +35,11 @@ public:
 	sf::Keyboard::Key forwardMovementKey;
 	sf::Keyboard::Key castSpellKey;
 
-	sf::FloatRect getBounds() {
-		return m_characterSprite->getGlobalBounds();
-	}
+	//Disabled while broken
+	
+	//sf::FloatRect getBounds() {
+		//return m_characterSprite->getGlobalBounds();
+	//}
 	
 	void setProjectileSprite(sf::Sprite* _projectile);
 	void setProjectileList(std::vector<cProjectile*>* _projectiles);

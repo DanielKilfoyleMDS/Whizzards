@@ -39,11 +39,6 @@ public:
 	// will check the character's health against its max and min, and runs necessary functions depending on the health value
 	virtual void healthCheck();
 
-	
-	virtual void setSprite(const std::string& _FilePath);
-	virtual void setSprite(sf::Sprite* _Sprite);
-
-	
 	virtual void setPosition(sf::Vector2f _Pos) { m_characterPosition = _Pos;}
 	virtual sf::Vector2f getPosition() { return m_characterPosition; };
 
@@ -58,7 +53,6 @@ public:
 	// DONE - Make virtual or move into child classes as needed
 	virtual void moveCharacter();
 
-	sf::Sprite* getSprite();
 
 	int framesPassed(float _deltaTime);
 	int getFrame();
@@ -83,7 +77,6 @@ protected:
 	float m_fAnimationTime = 0.0f;
 	float m_fSecondsPerFrame = 1.0f;
 
-	sf::Sprite* m_characterSprite;
 	sf::Texture m_characterTexture;
 
 	sf::Vector2f m_characterPosition;

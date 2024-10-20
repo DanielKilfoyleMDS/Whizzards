@@ -23,27 +23,15 @@ Author : Daniel Kilfoyle
 **************************************************************************/
 cCharacter::cCharacter(sf::Sprite* _sprite, sf::Vector2f _StartPosition)
 {
-	m_characterSprite = _sprite;
-
-	// Ensure the texture is loaded before setting the origin
-	if (m_characterSprite->getTexture() != nullptr) {
-		auto textureSize = m_characterSprite->getTexture()->getSize();
-		m_characterSprite->setOrigin(textureSize.x / 2.f, textureSize.y / 2.f);
-	}
-	else {
-		std::cerr << "Texture not set for sprite, cannot set origin." << std::endl;
-		return; // Handle the error accordingly
-	}
+	//TODO - Set Size From Sprite
 
 	m_characterPosition = _StartPosition;
-	m_characterSprite->setPosition(m_characterPosition);
 
 	m_fmaxHealth = 100;
 
 	m_fcurrentHealth = m_fmaxHealth;
 	m_fcharacterRotation = 0.0f;
 	m_fradiansRotation = 0.0f;
-
 
 }
 
@@ -115,39 +103,6 @@ void cCharacter::healthCheck()
 		return;
 }
 
-/*************************************************************************
-Name: setSprite
-Description : takes a string file path, and loads the texture from the file, then sets the character's sprite to that texture
-Parameters: string pointer - file path 
-Returns: None
-Author : Jayden Burns
-**************************************************************************/
-void cCharacter::setSprite(const std::string& _FilePath)
-{
-	if (!m_characterTexture.loadFromFile(_FilePath)) {
-		std::cerr << "Failed to load texture from " << _FilePath << std::endl;
-		return; // Handle the error
-	}
-
-	m_characterSprite->setTexture(m_characterTexture);
-
-	// Now that the texture is set, we can safely set the origin
-	auto textureSize = m_characterSprite->getTexture()->getSize();
-	m_characterSprite->setOrigin(textureSize.x / 2.f, textureSize.y / 2.f);
-}
-
-/*************************************************************************
-Name: setSprite
-Description : takes a sprite pointer and sets the character sprite to that sprite
-Parameters: sf::sprite * - sprite
-Returns: None
-Author : Jayden Burns
-**************************************************************************/
-void cCharacter::setSprite(sf::Sprite* _Sprite)
-{
-	m_characterSprite = _Sprite;
-}
-
 
 /*************************************************************************
 Name: setCharacterType
@@ -206,21 +161,11 @@ Author : Daniel Kilfoyle
 **************************************************************************/
 void cCharacter::moveCharacter()
 {
-	m_characterSprite->move(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
+	//m_characterSprite->move(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
+	m_characterPosition += sf::Vector2f(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
 }
 
 
-/*************************************************************************
-Name: getSprite
-Description : returns the pointer of the character's sprite
-Parameters: None
-Returns: sf::Sprite* - character sprite
-Author : Daniel Kilfoyle
-**************************************************************************/
-sf::Sprite* cCharacter::getSprite()
-{
-	return m_characterSprite;
-}
 
 
 /*************************************************************************

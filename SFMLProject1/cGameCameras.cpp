@@ -149,10 +149,10 @@ Author : Jayden Burns
 **************************************************************************/
 void cGameCameras::Render(cCharacter* _Character, sf::RenderWindow* _window)
 {
-	sf::Sprite* RenderSprite = _Character->getSprite();
-	RenderSprite->setPosition(_Character->getPosition());
-	RenderSprite->setRotation(_Character->getRotation());
-	_window->draw(*RenderSprite);
+	//sf::Sprite* RenderSprite = _Character->getSprite();
+	//RenderSprite->setPosition(_Character->getPosition());
+	//RenderSprite->setRotation(_Character->getRotation());
+	//_window->draw(*RenderSprite);
 }
 
 /*************************************************************************

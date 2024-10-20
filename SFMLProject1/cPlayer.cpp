@@ -71,7 +71,7 @@ void cPlayer::rotateCharacter(sf::Keyboard::Key _key, int _scalar)
 		return;
 
 	m_fcharacterRotation += irotationDirection * _scalar * 1.0f;
-	m_characterSprite->setRotation(m_fcharacterRotation);
+	//m_characterSprite->setRotation(m_fcharacterRotation);
 	m_fradiansRotation = DegreesToRadians(m_fcharacterRotation);
 
 }
@@ -157,13 +157,6 @@ void cPlayer::movePlayer()
 }
 
 
-void cPlayer::draw()
-{
-	
-	m_characterSprite->setOrigin(m_characterSprite->getTexture()->getSize().x / 2, m_characterSprite->getTexture()->getSize().y / 2);
-
-	//p_windowRef->draw(m_characterSprite);
-}
 
 /*************************************************************************
 Name: castSpell
