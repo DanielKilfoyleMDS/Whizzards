@@ -181,7 +181,7 @@ int cCharacter::framesPassed(float _deltaTime)
 	m_fAnimationTime += _deltaTime;
 	while (m_fAnimationTime > m_fSecondsPerFrame)
 	{
-		m_fAnimationTime -= 1;
+		m_fAnimationTime -= m_fSecondsPerFrame;
 		FramesPassed++;
 	}
 	return FramesPassed;
