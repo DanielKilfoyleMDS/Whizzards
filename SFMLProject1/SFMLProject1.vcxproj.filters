@@ -59,6 +59,7 @@
     <ClCompile Include="cBurstWand.cpp">
       <Filter>Pickups</Filter>
     </ClCompile>
+    <ClCompile Include="cMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -121,6 +122,7 @@
     <ClInclude Include="cBurstWand.h">
       <Filter>Pickups</Filter>
     </ClInclude>
+    <ClInclude Include="cMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

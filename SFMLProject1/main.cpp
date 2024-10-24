@@ -26,8 +26,7 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 #include "cEnemySpawner.h"
 #include "cCollisionManager.h"
 #include "cLevelLoader.h"
-#include "cWandManager.h"
-
+#include "cMenu.h"  
 
 // Load textures for Grass and Sand tiles
 void LoadTileTextures(std::map<int, sf::Texture> textures) {
@@ -85,22 +84,22 @@ void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer*
 
 void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& tileTextures, int tileWidth, int tileHeight, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles, bool firstPlayerView);
 
-
-int main()
-{
-
+int main() {
     float deltaTime = gameClock.restart().asSeconds();
 
     srand(static_cast<unsigned>(time(0)));
     cGameManager Manager;
     cCollisionManager Collision;
-    
-    cBurstWand* wand = new cBurstWand();
 
+    cBurstWand* wand = new cBurstWand();
 
     // Create the window with a set resolution
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
     window.setFramerateLimit(60);
+
+    // Load the menu
+    cMenu menu(window.getSize().x, window.getSize().y);
+    bool isMenuActive = true;
 
     // Loading the font for UI
     sf::Font WizardFont;
@@ -111,6 +110,7 @@ int main()
     firstPlayerHealthText.setFillColor(sf::Color::Red);
     firstPlayerHealthText.setCharacterSize(36);
     firstPlayerHealthText.setPosition(sf::Vector2f(100, 50));
+
     sf::Text secondPlayerHealthText;
     secondPlayerHealthText.setFont(WizardFont);
     secondPlayerHealthText.setFillColor(sf::Color::Red);
@@ -120,20 +120,17 @@ int main()
     // View for UI drawing only
     sf::View uiViewPort(sf::Vector2f(640, 360), sf::Vector2f(1280, 720));
 
-
     // Initialize level and load textures internally
     cLevel level(3000, 3000);
     std::vector<std::vector<int>> tileMap;
     std::vector<sf::Vector2f> enemySpawnPoints;
     sf::Vector2f player1Pos, player2Pos;
 
-
     // Load tile textures into a map (texture ID mapped to sf::Texture)
     const std::map<int, sf::Texture>& tileTextures = level.getTileTextures();  // Use the getter directly
 
     // Load the level data
-    if (!level.LoadLevel("Resources/Levels/Level1.txt", level.getTileTextures(), tileMap,
-        "Resources/Levels/spawn_points.txt", player1Pos, player2Pos, "Resources/Levels/wand_spawn_points.txt")) {
+    if (!level.LoadLevel("Resources/Levels/Level1.txt", level.getTileTextures(), tileMap, "Resources/Levels/spawn_points.txt", player1Pos, player2Pos, "Resources/Levels/wand_spawn_points.txt")) {
         std::cerr << "Failed to load level!" << std::endl;
     }
 
@@ -148,11 +145,6 @@ int main()
     Player1->setProjectileList(Manager.getProjectilesList());
     Player2->setProjectileList(Manager.getProjectilesList());
 
-
-
-    //Player1->setWandRef(wand);
-
-    // Load projectile texture
     sf::Texture blueProjectileTexture;
     if (!blueProjectileTexture.loadFromFile("Resources/Textures/Sprites/Projectile Blue.png")) {
         std::cerr << "Failed to load blue projectile texture!" << std::endl;
@@ -166,7 +158,7 @@ int main()
     // Initialize game camera
     cGameCameras m_Cameras(&window, 3000, 3000, &Manager);
     cEnemyPool Pool(200, Manager.getEnemyDefaultSprite(), Manager.getCollisionList());
-    Pool.setPlayers(Player1,Player2);
+    Pool.setPlayers(Player1, Player2);
 
     // Load enemy spawn points from level
     cEnemySpawner Spawner(10, 5, &Pool, 20, 30);
@@ -175,131 +167,98 @@ int main()
     // Load tile textures
     LoadTileTextures(tileTextures);
 
-
-
     // Tile dimensions
     int tileWidth = 64;
     int tileHeight = 64;
 
-
     // Main loop
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            if (isMenuActive) {
+                // Menu navigation
+                if (event.type == sf::Event::KeyReleased) {
+                    if (event.key.code == sf::Keyboard::Up) {
+                        menu.MoveUp();
+                    }
+                    else if (event.key.code == sf::Keyboard::Down) {
+                        menu.MoveDown();
+                    }
+                    else if (event.key.code == sf::Keyboard::Return) {
+                        int selected = menu.GetPressedItem();
+                        if (selected == 0) {
+                            isMenuActive = false;  // Start game
+                        }
+                        else if (selected == 1) {
+                            window.close();  // Quit game
+                        }
+                    }
+                }
+            }
         }
-
-        // Calculate deltaTime
-        float deltaTime = gameClock.restart().asSeconds(); // Calculate deltaTime
-
-        Player1->processInput();
-        Player2->processInput();
-        
-
-        // Update projectiles
-        for (auto projectile : *Manager.getProjectilesList())
-        {
-            projectile->tick(deltaTime);
-        }
-
-        // Update camera positions based on player movements
-        m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
-
-        // Manage enemy waves
-        Spawner.WaveManager(deltaTime);
-
-        // Update the wand manager
-        wandManager.update(deltaTime);
 
         window.clear();
 
-
-
-        // Checking the collisions for all characters (Enemies and players) and then checking the projectiles
-        Collision.collisionCheck(*Manager.getCollisionList());
-        Collision.projectileCheck(*Manager.getCollisionList(), *Manager.getProjectilesList());
-        Collision.wandCheck(*Manager.getCollisionList(), wandManager.getWandPickups());
-
-        if (m_Cameras.UseCombinedView())
-        {
-            m_Cameras.SetViewBothPlayers();
-            RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
-            m_Cameras.Render(Player1, &window);
-            m_Cameras.Render(Player2, &window);
-
-            for (auto iter : Pool.getActiveEnemies())
-            {
-                m_Cameras.Render(iter, &window);
-            }
-            for (auto iter : *Manager.getProjectilesList())
-            {
-                m_Cameras.Render(iter, &window);
-            }        
-            for (auto& wandPickup : wandManager.getWandPickups())
-            {
-                m_Cameras.Render(wandPickup, &window);
-                
-            }
+        if (isMenuActive) {
+            // Render the menu
+            menu.draw(window);
+            window.display();
         }
-        else
-        {
-            // Render everything twice for individual views
-            m_Cameras.setViewFirstPlayer();
-            RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
-            m_Cameras.Render(Player1, &window);
-            m_Cameras.Render(Player2, &window);
-            for (auto iter : Pool.getActiveEnemies())
-            {
-                m_Cameras.Render(iter, &window);
-            }
-            for (auto iter : *Manager.getProjectilesList())
-            {
-                m_Cameras.Render(iter, &window);
-            }
-            for (auto& wandPickup : wandManager.getWandPickups())
-            {
-                m_Cameras.Render(wandPickup, &window);
+        else {
+            // Calculate deltaTime
+            float deltaTime = gameClock.restart().asSeconds(); // Calculate deltaTime
+
+            Player1->processInput();
+            Player2->processInput();
+
+            // Update projectiles
+            for (auto projectile : *Manager.getProjectilesList()) {
+                projectile->tick(deltaTime);
             }
 
-            m_Cameras.setViewSecondPlayer();
+            // Update camera positions based on player movements
+            m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
+
+            // Manage enemy waves
+            Spawner.WaveManager(deltaTime);
+
+            // Update the wand manager
+            wandManager.update(deltaTime);
+
+            // Render game objects
             RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
             m_Cameras.Render(Player1, &window);
             m_Cameras.Render(Player2, &window);
-            for (auto iter : Pool.getActiveEnemies())
-            {
+
+            for (auto iter : Pool.getActiveEnemies()) {
                 m_Cameras.Render(iter, &window);
             }
-            for (auto iter : *Manager.getProjectilesList())
-            {
-                m_Cameras.Render(iter,&window);
+            for (auto iter : *Manager.getProjectilesList()) {
+                m_Cameras.Render(iter, &window);
             }
-            for (auto& wandPickup : wandManager.getWandPickups())
-            {
-                m_Cameras.Render(wandPickup, &window);
-            }
+
+            // Checking the collisions for all characters (Enemies and players) and then checking the projectiles
+            Collision.collisionCheck(*Manager.getCollisionList());
+            Collision.projectileCheck(*Manager.getCollisionList(), *Manager.getProjectilesList());
+            Collision.wandCheck(*Manager.getCollisionList(), wandManager.getWandPickups());
+
+            window.setView(uiViewPort);
+
+            firstPlayerHealthText.setString("Wizard 1 Health: " + std::to_string(int(Player1->getHealth())));
+            secondPlayerHealthText.setString("Wizard 2 Health: " + std::to_string(int(Player2->getHealth())));
+
+            window.draw(firstPlayerHealthText);
+            window.draw(secondPlayerHealthText);
+
+            window.display();
         }
-
-        
-        window.setView(uiViewPort);
-
-        firstPlayerHealthText.setString("Wizard 1 Health: " + std::to_string(int(Player1->getHealth())));
-        secondPlayerHealthText.setString("Wizard 2 Health: " + std::to_string(int(Player2->getHealth())));
-
-        window.draw(firstPlayerHealthText);
-        window.draw(secondPlayerHealthText);
-
-        //// Draw the wand
-        //wand.draw(window);
-
-        window.display();
     }
 
     return 0;
 }
-
 
 // Helper function to render a single view
 void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& tileTextures, int tileWidth, int tileHeight, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles, bool firstPlayerView) {
@@ -325,8 +284,7 @@ void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player
 }
 
 // Helper function to render game objects
-void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles)
-{
+void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles) {
     cameras.Render(Player1, &window);
     cameras.Render(Player2, &window);
     for (auto enemy : enemies) {
