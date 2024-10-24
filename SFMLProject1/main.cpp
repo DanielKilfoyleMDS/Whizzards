@@ -263,15 +263,63 @@ int main() {
             wandManager.update(deltaTime);
 
             // Render game objects
-            RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
-            m_Cameras.Render(Player1, &window);
-            m_Cameras.Render(Player2, &window);
+            if (m_Cameras.UseCombinedView())
+            {
+                m_Cameras.SetViewBothPlayers();
+                RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
+                m_Cameras.Render(Player1, &window);
+                m_Cameras.Render(Player2, &window);
 
-            for (auto iter : Pool.getActiveEnemies()) {
-                m_Cameras.Render(iter, &window);
+                for (auto iter : Pool.getActiveEnemies())
+                {
+                    m_Cameras.Render(iter, &window);
+                }
+                for (auto iter : *Manager.getProjectilesList())
+                {
+                    m_Cameras.Render(iter, &window);
+                }
+                for (auto& wandPickup : wandManager.getWandPickups())
+                {
+                    m_Cameras.Render(wandPickup, &window);
+
+                }
             }
-            for (auto iter : *Manager.getProjectilesList()) {
-                m_Cameras.Render(iter, &window);
+            else
+            {
+                // Render everything twice for individual views
+                m_Cameras.setViewFirstPlayer();
+                RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
+                m_Cameras.Render(Player1, &window);
+                m_Cameras.Render(Player2, &window);
+                for (auto iter : Pool.getActiveEnemies())
+                {
+                    m_Cameras.Render(iter, &window);
+                }
+                for (auto iter : *Manager.getProjectilesList())
+                {
+                    m_Cameras.Render(iter, &window);
+                }
+                for (auto& wandPickup : wandManager.getWandPickups())
+                {
+                    m_Cameras.Render(wandPickup, &window);
+                }
+
+                m_Cameras.setViewSecondPlayer();
+                RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
+                m_Cameras.Render(Player1, &window);
+                m_Cameras.Render(Player2, &window);
+                for (auto iter : Pool.getActiveEnemies())
+                {
+                    m_Cameras.Render(iter, &window);
+                }
+                for (auto iter : *Manager.getProjectilesList())
+                {
+                    m_Cameras.Render(iter, &window);
+                }
+                for (auto& wandPickup : wandManager.getWandPickups())
+                {
+                    m_Cameras.Render(wandPickup, &window);
+                }
             }
 
             // Checking the collisions for all characters (Enemies and players) and then checking the projectiles
