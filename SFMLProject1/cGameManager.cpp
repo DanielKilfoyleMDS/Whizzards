@@ -85,6 +85,7 @@ sf::Sprite* cGameManager::getEnemyDefaultSprite()
 	return &m_defaultEnemySprite;
 }
 
+
 /*************************************************************************
 Name: getEnemyChaseSprite
 Description : gets the sprite for the chase enemy type
@@ -92,9 +93,20 @@ Parameters: None
 Returns: sf::Sprite pointer
 Author : Daniel Kilfoyle
 **************************************************************************/
-sf::Sprite* cGameManager::getEnemyChaseSprite()
+sf::Sprite* cGameManager::getEnemyChaseSprite(int _Frame)
 {
-	return  &m_chaseEnemySprite;
+	if (_Frame == 0)
+	{
+		return  &m_chaseEnemySprite;
+	}
+	else if (_Frame == 1)
+	{
+		return  &m_chaseEnemySprite2;
+	}
+	else
+	{
+		return  &m_chaseEnemySprite3;
+	}
 }
 
 sf::Sprite* cGameManager::getEnemyTestSprite(int _Frame)
@@ -235,7 +247,9 @@ void cGameManager::SetupEnemySprites()
 
 	LoadSprite(&m_asteroidEnemySprite, &m_asteroidTexture, "Resources/Textures/Sprites/EnemyAsteroid.png");
 	LoadSprite(&m_randomEnemySprite, &m_randomEnemyTexture, "Resources/Textures/Sprites/EnemyRandom.png");
-	LoadSprite(&m_chaseEnemySprite, &m_chaseEnemyTexture, "Resources/Textures/Sprites/EnemyChase.png");
+	LoadSprite(&m_chaseEnemySprite, &m_chaseEnemyTexture1, "Resources/Textures/Sprites/EnemyChase.png");
+	LoadSprite(&m_chaseEnemySprite2, &m_chaseEnemyTexture2, "Resources/Textures/Sprites/EnemyChase2.png");
+	LoadSprite(&m_chaseEnemySprite3, &m_chaseEnemyTexture3, "Resources/Textures/Sprites/EnemyChase3.png");
 
 	LoadSprite(&m_defaultEnemySprite, &m_defaultEnemyTexture, "Resources/Textures/Sprites/EnemyDefault.png");
 

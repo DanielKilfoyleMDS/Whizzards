@@ -25,7 +25,7 @@ public:
 	sf::Sprite* getEnemyAsteroidSprite();
 	sf::Sprite* getEnemyRandomSprite();
 	sf::Sprite* getEnemyDefaultSprite();
-	sf::Sprite* getEnemyChaseSprite();
+	sf::Sprite* getEnemyChaseSprite(int _Frame);
 	sf::Sprite* getEnemyTestSprite(int _Frame);
 
 
@@ -56,7 +56,9 @@ private:
 	sf::Texture m_defaultEnemyTexture;
 	sf::Texture m_asteroidTexture;
 	sf::Texture m_randomEnemyTexture;
-	sf::Texture m_chaseEnemyTexture;
+	sf::Texture m_chaseEnemyTexture1;
+	sf::Texture m_chaseEnemyTexture2;
+	sf::Texture m_chaseEnemyTexture3;
 	sf::Texture m_testEnemy1Texture;
 	sf::Texture m_testEnemy2Texture;
 	sf::Texture m_testEnemy3Texture;
@@ -67,6 +69,8 @@ private:
 	sf::Sprite m_defaultEnemySprite;
 	sf::Sprite m_randomEnemySprite;
 	sf::Sprite m_chaseEnemySprite;
+	sf::Sprite m_chaseEnemySprite2;
+	sf::Sprite m_chaseEnemySprite3;
 	sf::Sprite m_TestSprite1;
 	sf::Sprite m_TestSprite2;
 	sf::Sprite m_TestSprite3;

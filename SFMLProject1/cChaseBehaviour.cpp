@@ -16,6 +16,12 @@ bool cChaseBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 	canAttack(_parent);
 	enemyMove(_parent); //Otherwise move random style
 
+	_parent->setFrame(_parent->getFrame() + _parent->framesPassed(_deltaTime));
+	if (_parent->getFrame() > 2)
+	{
+		_parent->setFrame(0);
+	}
+
 	if (checkDeath(_parent))
 	{
 		return false;

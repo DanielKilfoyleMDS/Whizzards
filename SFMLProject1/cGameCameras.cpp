@@ -42,9 +42,9 @@ cGameCameras::cGameCameras(sf::RenderWindow* _window, int _levelXSize, int _leve
 	
 	
 	//Double The size
-	m_firstPlayerView->setSize(m_iWindowWidth,m_iWindowHeight * 2);
-	m_secondPlayerView->setSize(m_iWindowWidth,m_iWindowHeight * 2);
-	m_playerCombinedView->setSize(m_iWindowWidth * 2,m_iWindowHeight * 2);
+	m_firstPlayerView->setSize(m_iWindowWidth/1.5,(m_iWindowHeight * 2)/1.5);
+	m_secondPlayerView->setSize(m_iWindowWidth / 1.5, (m_iWindowHeight * 2) / 1.5);
+	m_playerCombinedView->setSize((m_iWindowWidth * 2)/1.5,(m_iWindowHeight * 2)/1.5);
 	m_fcameraJoinDistance = 600;
 
 	m_windowRef = _window;
@@ -175,7 +175,7 @@ void cGameCameras::Render(cEnemy* _Enemy, sf::RenderWindow* _window)
 		RenderSprite = m_currentGameManager->getEnemyTestSprite(_Enemy->getFrame());
 		break;
 	case Type_Chase:
-		RenderSprite = m_currentGameManager->getEnemyChaseSprite();
+		RenderSprite = m_currentGameManager->getEnemyChaseSprite(_Enemy->getFrame());
 		break;
 	case Type_Projectile:
 		RenderSprite = m_currentGameManager->getEnemyDefaultSprite();
