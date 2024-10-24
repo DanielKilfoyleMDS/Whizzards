@@ -60,6 +60,7 @@ void cChaseBehaviour::enemyMove(cEnemy* _parent)
 	if (_parent->getMoveTime() > 0)
 	{
 		sf::Vector2f NewPosition = _parent->getPosition() + _parent->getMovement();
+		_parent->setRotation(vectorRotationAngle(_parent->getMovement()));
 		_parent->setPosition(NewPosition);
 	}
 	else

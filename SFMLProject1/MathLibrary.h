@@ -70,3 +70,17 @@ inline float randRangeInt(int _min, int _max)
 {
 	return _min + fmod(rand(), (_max + 1) - _min);
 }
+
+inline float vectorRotationAngle(sf::Vector2f _Movement)
+{
+	float dotProduct = _Movement.x;
+
+	float Magnitude = VectorLength(_Movement);
+
+	float angle = std::atan2(_Movement.y, dotProduct);
+
+	// Convert the angle to degrees (SFML uses degrees for rotation)
+	float rotationAngle = angle * 180.0f / M_PI;
+
+	return rotationAngle;
+}
