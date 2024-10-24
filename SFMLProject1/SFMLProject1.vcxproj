@@ -161,6 +161,7 @@
     <ClCompile Include="cLevel.cpp" />
     <ClCompile Include="cLevelLoader.cpp" />
     <ClCompile Include="cMenu.cpp" />
+    <ClCompile Include="cPauseMenu.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cProjectile.cpp" />
     <ClCompile Include="cRandomBehaviour.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="cLevel.h" />
     <ClInclude Include="cLevelLoader.h" />
     <ClInclude Include="cMenu.h" />
+    <ClInclude Include="cPauseMenu.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cProjectile.h" />
     <ClInclude Include="cRandomBehaviour.h" />

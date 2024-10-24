@@ -18,7 +18,7 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 #include <sstream>
 #include <filesystem>
 #include "cGameCameras.h"
-#include "cLevel.h" 
+#include "cLevel.h"
 #include "cPlayer.h"
 #include "cProjectile.h"
 #include <SFML/System/Clock.hpp>
@@ -26,7 +26,8 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 #include "cEnemySpawner.h"
 #include "cCollisionManager.h"
 #include "cLevelLoader.h"
-#include "cMenu.h"  
+#include "cMenu.h"
+#include "cPauseMenu.h"
 
 // Load textures for Grass and Sand tiles
 void LoadTileTextures(std::map<int, sf::Texture> textures) {
@@ -99,7 +100,9 @@ int main() {
 
     // Load the menu
     cMenu menu(window.getSize().x, window.getSize().y);
+    cPauseMenu pauseMenu(window.getSize().x, window.getSize().y);  // Pause menu
     bool isMenuActive = true;
+    bool isPaused = false;  // Track if the game is paused
 
     // Loading the font for UI
     sf::Font WizardFont;
@@ -198,6 +201,34 @@ int main() {
                     }
                 }
             }
+            else if (isPaused) {
+                // Pause menu navigation
+                if (event.type == sf::Event::KeyReleased) {
+                    if (event.key.code == sf::Keyboard::Up) {
+                        pauseMenu.MoveUp();
+                    }
+                    else if (event.key.code == sf::Keyboard::Down) {
+                        pauseMenu.MoveDown();
+                    }
+                    else if (event.key.code == sf::Keyboard::Return) {
+                        int selected = pauseMenu.GetPressedItem();
+                        if (selected == 0) {
+                            isPaused = false;  // Resume game
+                        }
+                        else if (selected == 1) {
+                            window.close();  // Quit game
+                        }
+                    }
+                }
+            }
+            else {
+                // Game logic
+                if (event.type == sf::Event::KeyReleased) {
+                    if (event.key.code == sf::Keyboard::P || event.key.code == sf::Keyboard::Escape) {
+                        isPaused = !isPaused;  // Toggle pause
+                    }
+                }
+            }
         }
 
         window.clear();
@@ -205,7 +236,10 @@ int main() {
         if (isMenuActive) {
             // Render the menu
             menu.draw(window);
-            window.display();
+        }
+        else if (isPaused) {
+            // Render the pause menu
+            pauseMenu.draw(window);
         }
         else {
             // Calculate deltaTime
@@ -245,16 +279,16 @@ int main() {
             Collision.projectileCheck(*Manager.getCollisionList(), *Manager.getProjectilesList());
             Collision.wandCheck(*Manager.getCollisionList(), wandManager.getWandPickups());
 
-            window.setView(uiViewPort);
+            window.setView(uiViewPort);  // Switch to UI viewport for health and UI rendering
 
             firstPlayerHealthText.setString("Wizard 1 Health: " + std::to_string(int(Player1->getHealth())));
             secondPlayerHealthText.setString("Wizard 2 Health: " + std::to_string(int(Player2->getHealth())));
 
             window.draw(firstPlayerHealthText);
             window.draw(secondPlayerHealthText);
-
-            window.display();
         }
+
+        window.display();  // Always display after rendering
     }
 
     return 0;
