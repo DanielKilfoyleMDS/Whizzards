@@ -55,26 +55,22 @@ private:
 	//Enemy Textures
 	sf::Texture m_defaultEnemyTexture;
 	sf::Texture m_asteroidTexture;
-	sf::Texture m_randomEnemyTexture;
+	sf::Texture m_randomEnemyTexture1;
+	sf::Texture m_randomEnemyTexture2;
+	sf::Texture m_randomEnemyTexture3;
 	sf::Texture m_chaseEnemyTexture1;
 	sf::Texture m_chaseEnemyTexture2;
 	sf::Texture m_chaseEnemyTexture3;
-	sf::Texture m_testEnemy1Texture;
-	sf::Texture m_testEnemy2Texture;
-	sf::Texture m_testEnemy3Texture;
-	sf::Texture m_testEnemy4Texture;
 
 	// Enemy Sprites
 	sf::Sprite m_asteroidEnemySprite;
 	sf::Sprite m_defaultEnemySprite;
-	sf::Sprite m_randomEnemySprite;
-	sf::Sprite m_chaseEnemySprite;
+	sf::Sprite m_randomEnemySprite1;
+	sf::Sprite m_randomEnemySprite2;
+	sf::Sprite m_randomEnemySprite3;
+	sf::Sprite m_chaseEnemySprite1;
 	sf::Sprite m_chaseEnemySprite2;
 	sf::Sprite m_chaseEnemySprite3;
-	sf::Sprite m_TestSprite1;
-	sf::Sprite m_TestSprite2;
-	sf::Sprite m_TestSprite3;
-	sf::Sprite m_TestSprite4;
 
 	// Player Sprites
 	sf::Sprite m_firstPlayerSprite;

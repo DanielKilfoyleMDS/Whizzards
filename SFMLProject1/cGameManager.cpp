@@ -70,7 +70,7 @@ Author : Daniel Kilfoyle
 **************************************************************************/
 sf::Sprite* cGameManager::getEnemyRandomSprite()
 {
-	return &m_randomEnemySprite;
+	return &m_randomEnemySprite1;
 }
 
 /*************************************************************************
@@ -97,7 +97,7 @@ sf::Sprite* cGameManager::getEnemyChaseSprite(int _Frame)
 {
 	if (_Frame == 0)
 	{
-		return  &m_chaseEnemySprite;
+		return  &m_chaseEnemySprite1;
 	}
 	else if (_Frame == 1)
 	{
@@ -113,16 +113,13 @@ sf::Sprite* cGameManager::getEnemyTestSprite(int _Frame)
 {
 	if (_Frame == 0)
 	{
-		return &m_TestSprite1;
+		return &m_randomEnemySprite1;
 	}else if (_Frame == 1)
 	{
-		return &m_TestSprite2;
-	}else if (_Frame == 2)
+			return &m_randomEnemySprite2;
+	}else
 	{
-		return &m_TestSprite3;
-	}else if (_Frame == 3)
-	{
-		return &m_TestSprite4;
+		return &m_randomEnemySprite3;
 	}
 
 	return nullptr;
@@ -246,16 +243,13 @@ void cGameManager::SetupEnemySprites()
 {
 
 	LoadSprite(&m_asteroidEnemySprite, &m_asteroidTexture, "Resources/Textures/Sprites/EnemyAsteroid.png");
-	LoadSprite(&m_randomEnemySprite, &m_randomEnemyTexture, "Resources/Textures/Sprites/EnemyRandom.png");
-	LoadSprite(&m_chaseEnemySprite, &m_chaseEnemyTexture1, "Resources/Textures/Sprites/EnemyChase.png");
+	LoadSprite(&m_randomEnemySprite1, &m_randomEnemyTexture1, "Resources/Textures/Sprites/EnemyRandom1.png");
+	LoadSprite(&m_randomEnemySprite2, &m_randomEnemyTexture2, "Resources/Textures/Sprites/EnemyRandom2.png");
+	LoadSprite(&m_randomEnemySprite3, &m_randomEnemyTexture3, "Resources/Textures/Sprites/EnemyRandom3.png");
+	LoadSprite(&m_chaseEnemySprite1, &m_chaseEnemyTexture1, "Resources/Textures/Sprites/EnemyChase.png");
 	LoadSprite(&m_chaseEnemySprite2, &m_chaseEnemyTexture2, "Resources/Textures/Sprites/EnemyChase2.png");
 	LoadSprite(&m_chaseEnemySprite3, &m_chaseEnemyTexture3, "Resources/Textures/Sprites/EnemyChase3.png");
 
 	LoadSprite(&m_defaultEnemySprite, &m_defaultEnemyTexture, "Resources/Textures/Sprites/EnemyDefault.png");
-
-	LoadSprite(&m_TestSprite1, &m_testEnemy1Texture, "Resources/Textures/Enemy/AnimTest_1.png");
-	LoadSprite(&m_TestSprite2, &m_testEnemy2Texture, "Resources/Textures/Enemy/AnimTest_2.png");
-	LoadSprite(&m_TestSprite3, &m_testEnemy3Texture, "Resources/Textures/Enemy/AnimTest_3.png");
-	LoadSprite(&m_TestSprite4, &m_testEnemy4Texture, "Resources/Textures/Enemy/AnimTest_4.png");
 
 }
