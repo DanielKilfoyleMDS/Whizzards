@@ -44,6 +44,13 @@ void cProjectile::tick(float _deltaTime)
 {
 	m_position += m_velocity;
 	//TO DO - Rotation
+
+	setFrame(getFrame() + framesPassed(_deltaTime));
+	if (m_iCurrentFrame > 4)
+	{
+		m_iCurrentFrame = 0;
+	}
+
 }
 
 void cProjectile::setDamage(float _damage)
@@ -84,7 +91,7 @@ int cProjectile::framesPassed(float _deltaTime)
 	m_fAnimationTime += _deltaTime;
 	while (m_fAnimationTime > m_fSecondsPerFrame)
 	{
-		m_fAnimationTime -= 1;
+		m_fAnimationTime -= m_fSecondsPerFrame;
 		FramesPassed++;
 	}
 	return FramesPassed;

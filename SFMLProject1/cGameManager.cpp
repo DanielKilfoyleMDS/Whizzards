@@ -16,11 +16,12 @@ cGameManager::cGameManager()
 	// Loading all relevant sprites
 
 	SetupEnemySprites();
-
+	SetupProjectileSprites();
 
 	// Player Sprites
 	LoadSprite(&m_firstPlayerSprite,&m_firstPlayerTexture,"Resources/Textures/Sprites/Blue Player.png");
 	LoadSprite(&m_secondPlayerSprite,&m_secondPlayerTexture,"Resources/Textures/Sprites/Red Player.png");
+	LoadSprite(&m_playerInvincibleSprite,&m_playerInvincibleTexture,"Resources/Textures/Sprites/Shield.png");
 
 	//Player Projectiles
 	LoadSprite(&m_blueProjectileSprite,&m_blueProjectileTexture,"Resources/Textures/Sprites/Projectile Blue.png");
@@ -151,6 +152,11 @@ sf::Sprite* cGameManager::getSecondPlayerSprite(int _frame)
 	return &m_secondPlayerSprite;
 }
 
+sf::Sprite* cGameManager::getPlayerInvincSprite()
+{
+	return &m_playerInvincibleSprite;
+}
+
 /*************************************************************************
 Name: getFirstPlayerProjectile
 Description : gets the sprite for the first player's projectiles
@@ -175,6 +181,37 @@ sf::Sprite* cGameManager::getSecondPlayerProjectile(int _frame)
 {
 	//Code To Choose Sprite Based on Frame Here!
 	return &m_redProjectileSprite;
+}
+
+/*************************************************************************
+Name: getFireProjectile
+Description : gets the sprite for the Fire Type projectiles
+Parameters: None
+Returns: sf::Sprite pointer
+Author : JaydenBurns
+**************************************************************************/
+sf::Sprite* cGameManager::getFireProjectile(int _frame)
+{
+	if (_frame == 0)
+	{
+		return &m_FireProjSprite1;
+	}
+	else if (_frame == 1)
+	{
+		return &m_FireProjSprite2;
+	}
+	else if (_frame == 2)
+	{
+		return &m_FireProjSprite3;
+	}
+	else if (_frame == 3)
+	{
+		return &m_FireProjSprite4;
+	}
+	else
+	{
+		return &m_FireProjSprite5;
+	}
 }
 
 
@@ -252,4 +289,13 @@ void cGameManager::SetupEnemySprites()
 
 	LoadSprite(&m_defaultEnemySprite, &m_defaultEnemyTexture, "Resources/Textures/Sprites/EnemyDefault.png");
 
+}
+
+void cGameManager::SetupProjectileSprites()
+{
+	LoadSprite(&m_FireProjSprite1, &m_FireProjTex1, "Resources/Textures/Sprites/FProjA.png");
+	LoadSprite(&m_FireProjSprite2, &m_FireProjTex2, "Resources/Textures/Sprites/FProjB.png");
+	LoadSprite(&m_FireProjSprite3, &m_FireProjTex3, "Resources/Textures/Sprites/FProjC.png");
+	LoadSprite(&m_FireProjSprite4, &m_FireProjTex4, "Resources/Textures/Sprites/FProjD.png");
+	LoadSprite(&m_FireProjSprite5, &m_FireProjTex5, "Resources/Textures/Sprites/FProjE.png");
 }

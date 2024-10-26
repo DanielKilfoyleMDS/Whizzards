@@ -31,9 +31,11 @@ public:
 
 	sf::Sprite* getFirstPlayerSprite(int _frame);
 	sf::Sprite* getSecondPlayerSprite(int _frame);
+	sf::Sprite* getPlayerInvincSprite();
 
 	sf::Sprite* getFirstPlayerProjectile(int _frame);
 	sf::Sprite* getSecondPlayerProjectile(int _frame);
+	sf::Sprite* getFireProjectile(int _frame);
 
 	sf::Sprite* getWandPickupSprite(int _frame);
 
@@ -44,6 +46,7 @@ public:
 	std::vector<cProjectile*>* getProjectilesList();
 
 	void SetupEnemySprites();
+	void SetupProjectileSprites();
 
 private:
 	//Collision
@@ -72,15 +75,31 @@ private:
 	sf::Sprite m_chaseEnemySprite2;
 	sf::Sprite m_chaseEnemySprite3;
 
+	//Projectile Textures
+	sf::Texture m_FireProjTex1;
+	sf::Texture m_FireProjTex2;
+	sf::Texture m_FireProjTex3;
+	sf::Texture m_FireProjTex4;
+	sf::Texture m_FireProjTex5;
+
+	//Projectile Sprites
+	sf::Sprite m_FireProjSprite1;
+	sf::Sprite m_FireProjSprite2;
+	sf::Sprite m_FireProjSprite3;
+	sf::Sprite m_FireProjSprite4;
+	sf::Sprite m_FireProjSprite5;
+
 	// Player Sprites
 	sf::Sprite m_firstPlayerSprite;
 	sf::Sprite m_secondPlayerSprite;
+	sf::Sprite m_playerInvincibleSprite;
 	sf::Sprite m_blueProjectileSprite;
 	sf::Sprite m_redProjectileSprite;
 
 	// Player Textures
 	sf::Texture m_firstPlayerTexture;
 	sf::Texture m_secondPlayerTexture;
+	sf::Texture m_playerInvincibleTexture;
 	sf::Texture m_blueProjectileTexture;
 	sf::Texture m_redProjectileTexture;
 

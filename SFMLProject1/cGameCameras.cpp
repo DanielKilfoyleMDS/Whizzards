@@ -187,7 +187,7 @@ void cGameCameras::Render(cEnemy* _Enemy, sf::RenderWindow* _window)
 
 	if (RenderSprite != nullptr)
 	{
-		RenderSprite->setPosition(_Enemy->getPosition()); //TODO: ACCOUNT FOR IMAGE ORIGIN
+		RenderSprite->setPosition(_Enemy->getPosition());
 		RenderSprite->setRotation(_Enemy->getRotation());
 		_window->draw(*RenderSprite);
 	}
@@ -196,6 +196,15 @@ void cGameCameras::Render(cEnemy* _Enemy, sf::RenderWindow* _window)
 void cGameCameras::Render(cPlayer* _Player, sf::RenderWindow* _window)
 {
 	sf::Sprite* RenderSprite = nullptr;
+
+	if (true) //Replace with a currently Invincible check
+	{
+		sf::Sprite* Shield = m_currentGameManager->getPlayerInvincSprite();
+		Shield->setPosition(_Player->getPosition());
+		Shield->setRotation(_Player->getRotation());
+		_window->draw(*Shield);
+
+	}
 
 	if (_Player->getPlayerOneOrTwo() == 1)
 	{
@@ -208,7 +217,7 @@ void cGameCameras::Render(cPlayer* _Player, sf::RenderWindow* _window)
 
 	if (RenderSprite != nullptr)
 	{
-		RenderSprite->setPosition(_Player->getPosition()); //TODO: ACCOUNT FOR IMAGE ORIGIN
+		RenderSprite->setPosition(_Player->getPosition()); 
 		RenderSprite->setRotation(_Player->getRotation());
 		_window->draw(*RenderSprite);
 	}
@@ -226,7 +235,7 @@ void cGameCameras::Render(cProjectile* _Projectile, sf::RenderWindow* _window)
 	sf::Sprite* RenderSprite = nullptr;
 
 	//Pick the player.
-	RenderSprite = m_currentGameManager->getFirstPlayerProjectile(_Projectile->getFrame());
+	RenderSprite = m_currentGameManager->getFireProjectile(_Projectile->getFrame());
 	
 	if (RenderSprite != nullptr)
 	{

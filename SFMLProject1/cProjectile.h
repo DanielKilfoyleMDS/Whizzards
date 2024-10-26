@@ -45,6 +45,6 @@ private:
 	//Animation Code
 	int m_iCurrentFrame = 0.0f;
 	float m_fAnimationTime = 0.0f;
-	float m_fSecondsPerFrame = 1.0f;
+	float m_fSecondsPerFrame = 0.4f;
 };
 
