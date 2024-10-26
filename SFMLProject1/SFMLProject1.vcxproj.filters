@@ -60,6 +60,10 @@
       <Filter>Pickups</Filter>
     </ClCompile>
     <ClCompile Include="cMenu.cpp" />
+    <ClCompile Include="cPauseMenu.cpp" />
+    <ClCompile Include="cShootBehaviour.cpp">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -123,6 +127,10 @@
       <Filter>Pickups</Filter>
     </ClInclude>
     <ClInclude Include="cMenu.h" />
+    <ClInclude Include="cPauseMenu.h" />
+    <ClInclude Include="cShootBehaviour.h">
+      <Filter>Enemy\Behaviour</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

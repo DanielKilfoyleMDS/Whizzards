@@ -16,7 +16,11 @@ public:
 
 	void enemyMove(cEnemy* _parent) override;
 
+	void setupEnemy(cEnemy* _parent, sf::Vector2f _position) override;
+
 	void pickDirection(cEnemy* _parent);
+
+
 
 	//Sets either first player or both players when run
 	void setPlayers(class cCharacter* _FirstPlayer);

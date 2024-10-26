@@ -121,6 +121,17 @@ void cRandomBehaviour::enemyMove(cEnemy* _parent)
 	}
 }
 
+void cRandomBehaviour::setupEnemy(cEnemy* _parent, sf::Vector2f _position)
+{
+	_parent->setPosition(_position);
+	_parent->setHealth(10);
+	_parent->setEnemyType(Type_Random);
+	_parent->setState(Idle);
+	_parent->setAwake(true);
+	_parent->setBehaviour(this);
+	_parent->setDamageStrength(2);
+}
+
 /************************************************************************
 Name: pickDirection
 Description : picks which direction to move towards

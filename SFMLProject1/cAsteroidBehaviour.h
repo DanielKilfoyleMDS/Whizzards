@@ -28,6 +28,8 @@ public:
 
 	void enemyMove(cEnemy* _parent) override;
 
+	void setupEnemy(cEnemy* _parent, sf::Vector2f _position) override;
+
 	void pickDirection(cEnemy* _parent);
 
 	//TODO - Asteroid Split logic, Size variables

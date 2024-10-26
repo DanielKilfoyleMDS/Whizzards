@@ -75,6 +75,18 @@ void cChaseBehaviour::enemyMove(cEnemy* _parent)
 	}
 }
 
+void cChaseBehaviour::setupEnemy(cEnemy* _parent, sf::Vector2f _position)
+{
+	_parent->setPosition(_position);
+	_parent->setHealth(10);
+	_parent->setEnemyType(Type_Chase);
+
+	_parent->setState(Idle);
+	_parent->setAwake(true);
+	_parent->setBehaviour(this);
+	_parent->setDamageStrength(2);
+}
+
 void cChaseBehaviour::pickDirection(cEnemy* _parent)
 {
 	float RandXDirection = randRangeFloat(-1, 1);

@@ -64,6 +64,15 @@ public:
 	**************************************************************************/
 	virtual void enemyMove(class cEnemy* _parent) = 0;
 
+	/************************************************************************
+	Name: enemyMove
+	Description : sets initial values of enemy. Overwritten by Subclasses
+	Parameters: cEnemy* _parent
+	Returns: None
+	Author : Jayden Burns
+	**************************************************************************/
+	virtual void setupEnemy(class cEnemy* _parent, sf::Vector2f _position) = 0;
+
 
 	void setBehaviourSprite(sf::Sprite* _reference);
 

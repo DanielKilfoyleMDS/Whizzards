@@ -69,16 +69,7 @@ bool cEnemyPool::loadAsteroidEnemy(sf::Vector2f _position, sf::Vector2f _movemen
 		m_enemiesActive.push_back(Asteroid);
 		m_enemiesInactive.erase(m_enemiesInactive.begin());
 
-		Asteroid->setPosition(_position);
-		//Asteroid->setSprite();
-		Asteroid->setMovement(_movement);
-		Asteroid->setHealth(10); //TODO get variables from gamemanager not hardcoded
-		Asteroid->setState(Idle);
-		Asteroid->setAwake(true);
-		Asteroid->setBehaviour(&m_AsteroidBehaviour);
-		Asteroid->setEnemyType(Type_Asteroid);
-		m_AsteroidBehaviour.pickDirection(Asteroid);
-		Asteroid->setDamageStrength(1);
+		m_AsteroidBehaviour.setupEnemy(Asteroid, _position);
 		return true;
 	} 
 	return false;
@@ -99,13 +90,7 @@ bool cEnemyPool::loadRandomEnemy(sf::Vector2f _position)
 		m_enemiesActive.push_back(Random);
 		m_enemiesInactive.erase(m_enemiesInactive.begin());
 
-		Random->setPosition(_position);
-		Random->setHealth(10);
-		Random->setEnemyType(Type_Random);
-		Random->setState(Idle);
-		Random->setAwake(true);
-		Random->setBehaviour(&m_RandomBehaviour);
-		Random->setDamageStrength(2);
+		m_RandomBehaviour.setupEnemy(Random, _position);
 		return true;
 	}
 
@@ -127,14 +112,7 @@ bool cEnemyPool::loadChaseEnemy(sf::Vector2f _position)
 		m_enemiesActive.push_back(Chase);
 		m_enemiesInactive.erase(m_enemiesInactive.begin());
 
-		Chase->setPosition(_position);
-		Chase->setHealth(10);
-		Chase->setEnemyType(Type_Chase);
-
-		Chase->setState(Idle);
-		Chase->setAwake(true);
-		Chase->setBehaviour(&m_ChaseBehaviour);
-		Chase->setDamageStrength(2);
+		m_ChaseBehaviour.setupEnemy(Chase, _position);
 		return true;
 	}
 	return false;

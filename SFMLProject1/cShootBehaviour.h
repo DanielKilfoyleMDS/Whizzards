@@ -4,19 +4,18 @@ Media Design School
 Auckland
 New Zealand
 (c) 2024 Media Design School
-File Name : cRandomBehaviour.h
-Description : Behaviour class for Random wander enemy
+File Name : cShootBehaviour.h
+Description : Behaviour class for Projectile Shooting enemy
 Author : Jayden Burns
 Mail : JaydenBurns@mds.ac.nz
 **************************************************************************/
 #pragma once
 #include "cEnemyBehaviour.h"
-
-class cRandomBehaviour : public cEnemyBehaviour
+class cShootBehaviour : public cEnemyBehaviour
 {
 public:
-	cRandomBehaviour();
-	~cRandomBehaviour();
+	cShootBehaviour();
+	~cShootBehaviour();
 
 	bool tickEnemy(cEnemy* _parent, float _deltaTime) override;
 
@@ -26,8 +25,5 @@ public:
 	void enemyAttack(cEnemy* _parent) override;
 
 	void enemyMove(cEnemy* _parent) override;
-
-	void setupEnemy(cEnemy* _parent, sf::Vector2f _position) override;
-
-	void pickDirection(cEnemy* _parent);
 };
+
