@@ -47,6 +47,7 @@ public:
 
 	void SetupEnemySprites();
 	void SetupProjectileSprites();
+	void SetupPlayerSprites();
 
 private:
 	//Collision
@@ -90,15 +91,23 @@ private:
 	sf::Sprite m_FireProjSprite5;
 
 	// Player Sprites
-	sf::Sprite m_firstPlayerSprite;
-	sf::Sprite m_secondPlayerSprite;
+	sf::Sprite m_firstPlayerForwardSprite;
+	sf::Sprite m_firstPlayerRightSprite;
+	sf::Sprite m_firstPlayerLeftSprite;
+	sf::Sprite m_secondPlayerForwardSprite;
+	sf::Sprite m_secondPlayerRightSprite;
+	sf::Sprite m_secondPlayerLeftSprite;
 	sf::Sprite m_playerInvincibleSprite;
 	sf::Sprite m_blueProjectileSprite;
 	sf::Sprite m_redProjectileSprite;
 
 	// Player Textures
-	sf::Texture m_firstPlayerTexture;
-	sf::Texture m_secondPlayerTexture;
+	sf::Texture m_firstPlayerForwardTexture;
+	sf::Texture m_firstPlayerRightTexture;
+	sf::Texture m_firstPlayerLeftTexture;
+	sf::Texture m_secondPlayerForwardTexture;
+	sf::Texture m_secondPlayerRightTexture;
+	sf::Texture m_secondPlayerLeftTexture;
 	sf::Texture m_playerInvincibleTexture;
 	sf::Texture m_blueProjectileTexture;
 	sf::Texture m_redProjectileTexture;

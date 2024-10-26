@@ -18,10 +18,7 @@ cGameManager::cGameManager()
 	SetupEnemySprites();
 	SetupProjectileSprites();
 
-	// Player Sprites
-	LoadSprite(&m_firstPlayerSprite,&m_firstPlayerTexture,"Resources/Textures/Sprites/Blue Player.png");
-	LoadSprite(&m_secondPlayerSprite,&m_secondPlayerTexture,"Resources/Textures/Sprites/Red Player.png");
-	LoadSprite(&m_playerInvincibleSprite,&m_playerInvincibleTexture,"Resources/Textures/Sprites/Shield.png");
+	SetupPlayerSprites();
 
 	//Player Projectiles
 	LoadSprite(&m_blueProjectileSprite,&m_blueProjectileTexture,"Resources/Textures/Sprites/Projectile Blue.png");
@@ -136,7 +133,7 @@ Author : Daniel Kilfoyle
 sf::Sprite* cGameManager::getFirstPlayerSprite(int _frame)
 {
 	//Code To Choose Sprite Based on Frame Here!
-	return &m_firstPlayerSprite;
+	return &m_firstPlayerForwardSprite;
 }
 
 /*************************************************************************
@@ -149,7 +146,7 @@ Author : Daniel Kilfoyle
 sf::Sprite* cGameManager::getSecondPlayerSprite(int _frame)
 {
 	//Code To Choose Sprite Based on Frame Here!
-	return &m_secondPlayerSprite;
+	return &m_secondPlayerForwardSprite;
 }
 
 sf::Sprite* cGameManager::getPlayerInvincSprite()
@@ -298,4 +295,16 @@ void cGameManager::SetupProjectileSprites()
 	LoadSprite(&m_FireProjSprite3, &m_FireProjTex3, "Resources/Textures/Sprites/FProjC.png");
 	LoadSprite(&m_FireProjSprite4, &m_FireProjTex4, "Resources/Textures/Sprites/FProjD.png");
 	LoadSprite(&m_FireProjSprite5, &m_FireProjTex5, "Resources/Textures/Sprites/FProjE.png");
+}
+
+void cGameManager::SetupPlayerSprites()
+{
+	// Player Sprites
+	LoadSprite(&m_firstPlayerForwardSprite, &m_firstPlayerForwardTexture, "Resources/Textures/Sprites/whizzardAF.png");
+	LoadSprite(&m_firstPlayerRightSprite, &m_firstPlayerRightTexture, "Resources/Textures/Sprites/whizzardAR.png");
+	LoadSprite(&m_firstPlayerLeftSprite, &m_firstPlayerLeftTexture, "Resources/Textures/Sprites/whizzardAL.png");
+	LoadSprite(&m_secondPlayerForwardSprite, &m_secondPlayerForwardTexture, "Resources/Textures/Sprites/whizzardBF.png");
+	LoadSprite(&m_secondPlayerRightSprite, &m_secondPlayerRightTexture, "Resources/Textures/Sprites/whizzardBR.png");
+	LoadSprite(&m_secondPlayerLeftSprite, &m_secondPlayerLeftTexture, "Resources/Textures/Sprites/whizzardBL.png");
+	LoadSprite(&m_playerInvincibleSprite, &m_playerInvincibleTexture, "Resources/Textures/Sprites/Shield.png");
 }
