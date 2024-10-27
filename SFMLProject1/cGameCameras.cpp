@@ -36,20 +36,20 @@ cGameCameras::cGameCameras(sf::RenderWindow* _window, int _levelXSize, int _leve
 	m_iMapXSize = (48 * 64);
 	m_iMapYSize = (47 * 64);
 	
-	m_firstPlayerView = new sf::View(sf::Vector2f(m_iWindowWidth/2, m_iWindowHeight), sf::Vector2f(m_iWindowWidth/4, m_iWindowHeight/2));
-	m_secondPlayerView = new sf::View(sf::Vector2f(m_iWindowWidth/2, m_iWindowHeight), sf::Vector2f(m_iWindowWidth/4, m_iWindowHeight/2));
+	m_leftSideView = new sf::View(sf::Vector2f(m_iWindowWidth/2, m_iWindowHeight), sf::Vector2f(m_iWindowWidth/4, m_iWindowHeight/2));
+	m_rightSideView = new sf::View(sf::Vector2f(m_iWindowWidth/2, m_iWindowHeight), sf::Vector2f(m_iWindowWidth/4, m_iWindowHeight/2));
 	m_playerCombinedView = new sf::View(sf::Vector2f(m_iWindowWidth, m_iWindowHeight), sf::Vector2f(m_iWindowWidth / 2, m_iWindowHeight / 2));
 	
 	
 	//Double The size
-	m_firstPlayerView->setSize(m_iWindowWidth/1.5,(m_iWindowHeight * 2)/1.5);
-	m_secondPlayerView->setSize(m_iWindowWidth / 1.5, (m_iWindowHeight * 2) / 1.5);
+	m_leftSideView->setSize(m_iWindowWidth/1.5,(m_iWindowHeight * 2)/1.5);
+	m_rightSideView->setSize(m_iWindowWidth / 1.5, (m_iWindowHeight * 2) / 1.5);
 	m_playerCombinedView->setSize((m_iWindowWidth * 2)/1.5,(m_iWindowHeight * 2)/1.5);
 	m_fcameraJoinDistance = 600;
 
 	m_windowRef = _window;
-	m_firstPlayerView->setViewport(sf::FloatRect(0.0f, 0.0f, 0.5f, 1.0f)); 
-    m_secondPlayerView->setViewport(sf::FloatRect(0.5f, 0.0f, 0.5f, 1.0f));
+	m_leftSideView->setViewport(sf::FloatRect(0.0f, 0.0f, 0.5f, 1.0f)); 
+    m_rightSideView->setViewport(sf::FloatRect(0.5f, 0.0f, 0.5f, 1.0f));
 	m_playerCameraRelativeVector = sf::Vector2f(0, 0);
 
 	m_currentGameManager = _GameManager;
@@ -65,10 +65,10 @@ Author : Jayden Burns
 **************************************************************************/
 cGameCameras::~cGameCameras()
 {
-	delete m_firstPlayerView;
-	m_firstPlayerView = nullptr;
-	delete m_secondPlayerView;
-	m_secondPlayerView = nullptr;
+	delete m_leftSideView;
+	m_leftSideView = nullptr;
+	delete m_rightSideView;
+	m_rightSideView = nullptr;
 	delete m_playerCombinedView;
 	m_playerCombinedView = nullptr;
 	m_windowRef = nullptr; //Window is not owned by Camera so is not Deleted;
@@ -82,9 +82,9 @@ Parameters: None
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cGameCameras::setViewFirstPlayer()
+void cGameCameras::setViewLeftSide()
 {
-	m_windowRef->setView(*m_firstPlayerView);
+	m_windowRef->setView(*m_leftSideView);
 }
 
 /*************************************************************************
@@ -94,9 +94,9 @@ Parameters: None
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cGameCameras::setViewSecondPlayer()
+void cGameCameras::setViewRightSide()
 {
-	m_windowRef->setView(*m_secondPlayerView);
+	m_windowRef->setView(*m_rightSideView);
 }
 
 /*************************************************************************
@@ -109,8 +109,8 @@ Author : Jayden Burns
 void cGameCameras::UpdatePositions(sf::Vector2f _cameraOnePosition, sf::Vector2f _cameraTwoPosition)
 {
 	//Smoothing Should be applied here!
-	m_firstPlayerView->setCenter(RestrictCameraToBounds(_cameraOnePosition, true));
-	m_secondPlayerView->setCenter(RestrictCameraToBounds(_cameraTwoPosition, true));
+	m_leftSideView->setCenter(RestrictCameraToBounds(_cameraOnePosition, true));
+	m_rightSideView->setCenter(RestrictCameraToBounds(_cameraTwoPosition, true));
 	UpdateCameraRelative(_cameraOnePosition, _cameraTwoPosition);
 }
 
@@ -135,7 +135,7 @@ Author : Jayden Burns
 **************************************************************************/
 void cGameCameras::SetViewBothPlayers()
 {
-	m_playerCombinedView->setCenter(m_secondPlayerView->getCenter() + Normalize(m_playerCameraRelativeVector) * (m_fcameraCurrentDistance/2));
+	m_playerCombinedView->setCenter(m_rightSideView->getCenter() + Normalize(m_playerCameraRelativeVector) * (m_fcameraCurrentDistance/2));
 
 	m_windowRef->setView(*m_playerCombinedView);
 }
@@ -172,7 +172,7 @@ void cGameCameras::Render(cEnemy* _Enemy, sf::RenderWindow* _window)
 		RenderSprite = m_currentGameManager->getEnemyAsteroidSprite();
 		break;
 	case Type_Random:
-		RenderSprite = m_currentGameManager->getEnemyTestSprite(_Enemy->getFrame());
+		RenderSprite = m_currentGameManager->getEnemyRandomSprite(_Enemy->getFrame());
 		break;
 	case Type_Chase:
 		RenderSprite = m_currentGameManager->getEnemyChaseSprite(_Enemy->getFrame());
@@ -280,6 +280,8 @@ void cGameCameras::Render(cWandPickup* _WandDrop, sf::RenderWindow* _window)
 	}
 }
 
+
+
 /*************************************************************************
 Name: UpdateCameraRelative
 Description : Updates Position of Unsplit camera relative to player distance
@@ -342,4 +344,38 @@ sf::Vector2f cGameCameras::RestrictCameraToBounds(sf::Vector2f _cameraPosition, 
 	}
 
 	return sf::Vector2f(NewPositionX,NewPositionY);
+}
+
+void cGameCameras::renderSplitViews(cPlayer* _Player1, cPlayer* _Player2, std::vector<class cEnemy*> _activeEnemies, std::vector<cProjectile*> _Projectiles, std::vector<class cWandPickup*> _wandPickups)
+{
+	
+	setViewLeftSide();
+	renderToView(_Player1, _Player2, _activeEnemies, _Projectiles, _wandPickups);
+	setViewRightSide();
+	renderToView(_Player1, _Player2, _activeEnemies, _Projectiles, _wandPickups);
+}
+
+void cGameCameras::renderFullView(cPlayer* _Player1, cPlayer* _Player2, std::vector<class cEnemy*> _activeEnemies, std::vector<cProjectile*> _Projectiles, std::vector<class cWandPickup*> _wandPickups)
+{
+	SetViewBothPlayers();
+	renderToView(_Player1, _Player2, _activeEnemies, _Projectiles, _wandPickups);
+}
+
+void cGameCameras::renderToView(cPlayer* _Player1, cPlayer* _Player2, std::vector<class cEnemy*> _activeEnemies, std::vector<cProjectile*> _Projectiles, std::vector<class cWandPickup*> _wandPickups)
+{
+	Render(_Player1, m_windowRef);
+	Render(_Player2, m_windowRef);
+
+	for (auto iter : _activeEnemies)
+	{
+		Render(iter, m_windowRef);
+	}
+	for (auto iter : _Projectiles)
+	{
+		Render(iter, m_windowRef);
+	}
+	for (auto& wandPickup : _wandPickups)
+	{
+		Render(wandPickup, m_windowRef);
+	}
 }

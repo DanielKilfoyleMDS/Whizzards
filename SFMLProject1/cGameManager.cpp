@@ -59,17 +59,7 @@ sf::Sprite* cGameManager::getEnemyAsteroidSprite()
 	return &m_asteroidEnemySprite;
 }
 
-/*************************************************************************
-Name: getEnemyRandomSprite
-Description : gets the sprite for the random enemy type
-Parameters: None
-Returns: sf::Sprite pointer
-Author : Daniel Kilfoyle
-**************************************************************************/
-sf::Sprite* cGameManager::getEnemyRandomSprite()
-{
-	return &m_randomEnemySprite1;
-}
+
 
 /*************************************************************************
 Name: getEnemyDefaultSprite
@@ -107,7 +97,14 @@ sf::Sprite* cGameManager::getEnemyChaseSprite(int _Frame)
 	}
 }
 
-sf::Sprite* cGameManager::getEnemyTestSprite(int _Frame)
+/*************************************************************************
+Name: getEnemyRandomSprite
+Description : gets the sprite for the random enemy type
+Parameters: None
+Returns: sf::Sprite pointer
+Author : Daniel Kilfoyle
+**************************************************************************/
+sf::Sprite* cGameManager::getEnemyRandomSprite(int _Frame)
 {
 	if (_Frame == 0)
 	{
@@ -128,7 +125,7 @@ Name: getFirstPlayerSprite
 Description : gets the sprite for the first player
 Parameters: int _frame
 Returns: sf::Sprite pointer
-Author : Daniel Kilfoyle
+Author : Daniel Kilfoyle & Jayden Burns
 **************************************************************************/
 sf::Sprite* cGameManager::getFirstPlayerSprite(int _frame)
 {
@@ -154,7 +151,7 @@ Name: getSecondPlayerSprite
 Description : gets the sprite for the second player
 Parameters: int _frame
 Returns: sf::Sprite pointer
-Author : Daniel Kilfoyle
+Author : Daniel Kilfoyle & Jayden Burns
 **************************************************************************/
 sf::Sprite* cGameManager::getSecondPlayerSprite(int _frame)
 {

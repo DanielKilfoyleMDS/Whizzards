@@ -268,59 +268,16 @@ int main() {
             {
                 m_Cameras.SetViewBothPlayers();
                 RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
-                m_Cameras.Render(Player1, &window);
-                m_Cameras.Render(Player2, &window);
-
-                for (auto iter : Pool.getActiveEnemies())
-                {
-                    m_Cameras.Render(iter, &window);
-                }
-                for (auto iter : *Manager.getProjectilesList())
-                {
-                    m_Cameras.Render(iter, &window);
-                }
-                for (auto& wandPickup : wandManager.getWandPickups())
-                {
-                    m_Cameras.Render(wandPickup, &window);
-
-                }
+                m_Cameras.renderFullView(Player1,Player2,Pool.getActiveEnemies(),*Manager.getProjectilesList(),wandManager.getWandPickups());
             }
             else
             {
                 // Render everything twice for individual views
-                m_Cameras.setViewFirstPlayer();
+                m_Cameras.setViewLeftSide();
                 RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
-                m_Cameras.Render(Player1, &window);
-                m_Cameras.Render(Player2, &window);
-                for (auto iter : Pool.getActiveEnemies())
-                {
-                    m_Cameras.Render(iter, &window);
-                }
-                for (auto iter : *Manager.getProjectilesList())
-                {
-                    m_Cameras.Render(iter, &window);
-                }
-                for (auto& wandPickup : wandManager.getWandPickups())
-                {
-                    m_Cameras.Render(wandPickup, &window);
-                }
-
-                m_Cameras.setViewSecondPlayer();
-                RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight); // Render the tile map
-                m_Cameras.Render(Player1, &window);
-                m_Cameras.Render(Player2, &window);
-                for (auto iter : Pool.getActiveEnemies())
-                {
-                    m_Cameras.Render(iter, &window);
-                }
-                for (auto iter : *Manager.getProjectilesList())
-                {
-                    m_Cameras.Render(iter, &window);
-                }
-                for (auto& wandPickup : wandManager.getWandPickups())
-                {
-                    m_Cameras.Render(wandPickup, &window);
-                }
+                m_Cameras.setViewRightSide();
+                RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight);
+                m_Cameras.renderSplitViews(Player1, Player2, Pool.getActiveEnemies(), *Manager.getProjectilesList(), wandManager.getWandPickups());
             }
 
             // Checking the collisions for all characters (Enemies and players) and then checking the projectiles
@@ -346,10 +303,10 @@ int main() {
 // Helper function to render a single view
 void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& tileTextures, int tileWidth, int tileHeight, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles, bool firstPlayerView) {
     if (firstPlayerView) {
-        cameras.setViewFirstPlayer();
+        cameras.setViewLeftSide();
     }
     else {
-        cameras.setViewSecondPlayer();
+        cameras.setViewRightSide();
     }
 
     // Render the tile map

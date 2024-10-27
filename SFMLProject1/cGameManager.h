@@ -23,10 +23,9 @@ public:
 	void LoadSprite(sf::Sprite* _Sprite, sf::Texture* _Texture, const std::string& _FilePath);
 
 	sf::Sprite* getEnemyAsteroidSprite();
-	sf::Sprite* getEnemyRandomSprite();
+	sf::Sprite* getEnemyRandomSprite(int _Frame);
 	sf::Sprite* getEnemyDefaultSprite();
 	sf::Sprite* getEnemyChaseSprite(int _Frame);
-	sf::Sprite* getEnemyTestSprite(int _Frame);
 
 
 	sf::Sprite* getFirstPlayerSprite(int _frame);
