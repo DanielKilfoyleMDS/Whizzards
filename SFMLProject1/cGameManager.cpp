@@ -133,6 +133,19 @@ Author : Daniel Kilfoyle
 sf::Sprite* cGameManager::getFirstPlayerSprite(int _frame)
 {
 	//Code To Choose Sprite Based on Frame Here!
+	if (_frame == 0)
+	{
+		return &m_firstPlayerForwardSprite;
+	}
+	else if (_frame == 1)
+	{
+		return &m_firstPlayerLeftSprite;
+	}
+	else if (_frame == 2)
+	{
+		return &m_firstPlayerRightSprite;
+	}
+
 	return &m_firstPlayerForwardSprite;
 }
 
@@ -145,7 +158,19 @@ Author : Daniel Kilfoyle
 **************************************************************************/
 sf::Sprite* cGameManager::getSecondPlayerSprite(int _frame)
 {
-	//Code To Choose Sprite Based on Frame Here!
+	if (_frame == 0)
+	{
+		return &m_secondPlayerForwardSprite;
+	}
+	else if (_frame == 1)
+	{
+		return &m_secondPlayerLeftSprite;
+	}
+	else if (_frame == 2)
+	{
+		return &m_secondPlayerRightSprite;
+	}
+
 	return &m_secondPlayerForwardSprite;
 }
 

@@ -200,3 +200,22 @@ void cCharacter::setFrame(int _Frame)
 	m_iCurrentFrame = _Frame;
 }
 
+bool cCharacter::applyDamage(float _Damage)
+{
+	if (m_fHurtTime > 0)	return false;
+	else
+	{
+		m_fcurrentHealth -= _Damage;
+		m_fHurtTime = m_fHurtMaxTime;
+		return true;
+	}
+}
+
+void cCharacter::handleHurt(float deltaTime)
+{
+	if (m_fHurtTime > 0)
+	{
+		m_fHurtTime -= deltaTime;
+	}
+}
+

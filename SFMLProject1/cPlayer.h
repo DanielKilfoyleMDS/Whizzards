@@ -30,6 +30,8 @@ public:
 
 	void castSpell();
 
+	void playerUpdate(float _deltaTime);
+
 	sf::Keyboard::Key leftRotateKey;
 	sf::Keyboard::Key rightRotateKey;
 	sf::Keyboard::Key forwardMovementKey;

@@ -202,6 +202,26 @@ void cPlayer::castSpell()
 	
 }
 
+void cPlayer::playerUpdate(float _deltaTime)
+{
+	//Any Over-Time Effects here
+
+	if (sf::Keyboard::isKeyPressed(leftRotateKey))
+	{
+		m_iCurrentFrame = 1;
+	}
+	else if (sf::Keyboard::isKeyPressed(rightRotateKey))
+	{
+		m_iCurrentFrame = 2;
+	}
+	else
+	{
+		m_iCurrentFrame = 0;
+	}
+
+	handleHurt(_deltaTime);
+}
+
 /*************************************************************************
 Name: setProjectileSprite
 Description : sets the sprite used for the player projectile 

@@ -247,6 +247,8 @@ int main() {
 
             Player1->processInput();
             Player2->processInput();
+            Player1->playerUpdate(deltaTime);
+            Player2->playerUpdate(deltaTime);
 
             // Update projectiles
             for (auto projectile : *Manager.getProjectilesList()) {
@@ -258,7 +260,6 @@ int main() {
 
             // Manage enemy waves
             Spawner.WaveManager(deltaTime);
-
             // Update the wand manager
             wandManager.update(deltaTime);
 

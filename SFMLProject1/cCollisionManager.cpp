@@ -66,7 +66,6 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 				if (firstcollider.intersects(secondcollider))
 				{
 
-					// _activeCharacters[j]->getSprite()_activeCharacters[j]->getSprite()->getGlobalBounds()
 					// Checks for specific character types 
 
 					if (_activeCharacters[i]->getCharacterType() == Player)

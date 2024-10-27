@@ -59,7 +59,9 @@ public:
 	void setFrame(int _Frame);
 
 	sf::Vector2f getHitbox() { return m_hitboxSize; };
-
+	
+	bool applyDamage(float _Damage);
+	void handleHurt(float deltaTime);
 
 protected:
 
@@ -74,6 +76,9 @@ protected:
 		
 	CharacterType m_characterType;
 
+	//HurtCode
+	float m_fHurtTime = 0.0f;
+	float m_fHurtMaxTime = 0.5f;
 
 	//Animation Code
 	int m_iCurrentFrame = 0.0f;
