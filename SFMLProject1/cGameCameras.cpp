@@ -197,14 +197,7 @@ void cGameCameras::Render(cPlayer* _Player, sf::RenderWindow* _window)
 {
 	sf::Sprite* RenderSprite = nullptr;
 
-	if (_window->getView().getCenter() == m_firstPlayerView->getCenter())
-	{
-		std::cout << "View 1 : " << _Player->getPlayerOneOrTwo() << std::endl;
-	}
-	else if (_window->getView().getCenter() == m_secondPlayerView->getCenter())
-	{
-		std::cout << "View 2 : " << _Player->getPlayerOneOrTwo() << std::endl;
-	}
+
 
 	if (true) //Replace with a currently Invincible check
 	{
@@ -215,16 +208,15 @@ void cGameCameras::Render(cPlayer* _Player, sf::RenderWindow* _window)
 
 	}
 
-	//Currently 1 always renders 1 and vice versa
 
-	//if (_Player->getPlayerOneOrTwo() == 1)
-	//{
-	//	RenderSprite = m_currentGameManager->getFirstPlayerSprite(_Player->getFrame());
-	//}
-	//else if (_Player->getPlayerOneOrTwo() == 2)
-	//{
-	//	RenderSprite = m_currentGameManager->getSecondPlayerSprite(_Player->getFrame());
-	//}
+	if (_Player->getPlayerOneOrTwo() == 1)
+	{
+		RenderSprite = m_currentGameManager->getFirstPlayerSprite(_Player->getFrame());
+	}
+	else if (_Player->getPlayerOneOrTwo() == 2)
+	{
+		RenderSprite = m_currentGameManager->getSecondPlayerSprite(_Player->getFrame());
+	}
 
 	if (RenderSprite != nullptr)
 	{

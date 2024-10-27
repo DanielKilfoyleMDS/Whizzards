@@ -18,6 +18,7 @@ public:
 	int framesPassed(float _deltaTime);
 	int getFrame();
 	void setFrame(int _Frame);
+	sf::Vector2f getHitbox() { return m_hitboxSize; };
 
 private:
 
@@ -30,5 +31,7 @@ private:
 	int m_iCurrentFrame = 0.0f;
 	float m_fAnimationTime = 0.0f;
 	float m_fSecondsPerFrame = 1.0f;
+
+	sf::Vector2f m_hitboxSize;
 };
 

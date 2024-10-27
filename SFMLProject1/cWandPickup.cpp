@@ -5,6 +5,9 @@ cWandPickup::cWandPickup(cWand* _wand, sf::Vector2f _position, sf::Sprite* _Spri
 {
 	m_wand = _wand;
 	m_position = _position;
+
+	m_hitboxSize.x = _Sprite->getTexture()->getSize().x;
+	m_hitboxSize.y = _Sprite->getTexture()->getSize().y;
 }
 
 cWandPickup::~cWandPickup()

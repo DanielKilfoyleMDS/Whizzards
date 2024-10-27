@@ -58,6 +58,9 @@ public:
 	int getFrame();
 	void setFrame(int _Frame);
 
+	sf::Vector2f getHitbox() { return m_hitboxSize; };
+
+
 protected:
 
 	// maxHealth and currentHealth  of characters, will be overriden by child classes, so was not set to const. 
@@ -85,6 +88,8 @@ protected:
 	float m_fcharacterRotation;
 	// radians rotations to be used for moving, as c++ trigonometry functions use radians instead of degrees
 	float m_fradiansRotation;
+
+	sf::Vector2f m_hitboxSize;
 	
 };
 

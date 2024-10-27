@@ -33,6 +33,12 @@ cCharacter::cCharacter(sf::Sprite* _sprite, sf::Vector2f _StartPosition)
 	m_fcharacterRotation = 0.0f;
 	m_fradiansRotation = 0.0f;
 
+	float xBounds = _sprite->getTexture()->getSize().x;
+	float yBounds = _sprite->getTexture()->getSize().y;
+
+	m_hitboxSize.x = xBounds;
+	m_hitboxSize.y = yBounds;
+
 }
 
 /*************************************************************************
@@ -165,9 +171,6 @@ void cCharacter::moveCharacter()
 	m_characterPosition += sf::Vector2f(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
 }
 
-
-
-
 /*************************************************************************
 Name: framesPassed
 Description : returns how many frames have passed due to deltaTime
@@ -196,3 +199,4 @@ void cCharacter::setFrame(int _Frame)
 {
 	m_iCurrentFrame = _Frame;
 }
+
