@@ -34,6 +34,7 @@ public:
 	float getDistanceToPlayer(cEnemy* _parent, class cCharacter* _player);
 
 	void shootPlayer(cEnemy* _parent, class cCharacter* _target);
+	void pickDirection(cEnemy* _parent);
 
 private:
 	//Player Tracking - tracks nearest of these two To Shoot

@@ -197,6 +197,15 @@ void cGameCameras::Render(cPlayer* _Player, sf::RenderWindow* _window)
 {
 	sf::Sprite* RenderSprite = nullptr;
 
+	if (_window->getView().getCenter() == m_firstPlayerView->getCenter())
+	{
+		std::cout << "View 1 : " << _Player->getPlayerOneOrTwo() << std::endl;
+	}
+	else if (_window->getView().getCenter() == m_secondPlayerView->getCenter())
+	{
+		std::cout << "View 2 : " << _Player->getPlayerOneOrTwo() << std::endl;
+	}
+
 	if (true) //Replace with a currently Invincible check
 	{
 		sf::Sprite* Shield = m_currentGameManager->getPlayerInvincSprite();
@@ -206,14 +215,16 @@ void cGameCameras::Render(cPlayer* _Player, sf::RenderWindow* _window)
 
 	}
 
-	if (_Player->getPlayerOneOrTwo() == 1)
-	{
-		RenderSprite = m_currentGameManager->getFirstPlayerSprite(_Player->getFrame());
-	}
-	else if (_Player->getPlayerOneOrTwo() == 2)
-	{
-		RenderSprite = m_currentGameManager->getSecondPlayerSprite(_Player->getFrame());
-	}
+	//Currently 1 always renders 1 and vice versa
+
+	//if (_Player->getPlayerOneOrTwo() == 1)
+	//{
+	//	RenderSprite = m_currentGameManager->getFirstPlayerSprite(_Player->getFrame());
+	//}
+	//else if (_Player->getPlayerOneOrTwo() == 2)
+	//{
+	//	RenderSprite = m_currentGameManager->getSecondPlayerSprite(_Player->getFrame());
+	//}
 
 	if (RenderSprite != nullptr)
 	{
@@ -288,6 +299,10 @@ void cGameCameras::UpdateCameraRelative(sf::Vector2f _playerOnePosition, sf::Vec
 {
 	m_playerCameraRelativeVector = (_playerOnePosition - _playerTwoPosition);
 	m_fcameraCurrentDistance = VectorLength(m_playerCameraRelativeVector);
+	//if (m_playerCameraRelativeVector.x > 0)
+	//{
+	//	std::cout << "P1 to the right" << std::endl;
+	//}
 	m_playerCombinedView->setCenter(RestrictCameraToBounds(m_playerCombinedView->getCenter(), false));
 }
 

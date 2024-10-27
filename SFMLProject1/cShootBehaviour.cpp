@@ -12,7 +12,9 @@ cShootBehaviour::~cShootBehaviour()
 
 bool cShootBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 {
+	enemyMove(_parent);
 	canAttack(_parent);
+	
 
 	_parent->setFrame(_parent->getFrame() + _parent->framesPassed(_deltaTime));
 	if (_parent->getFrame() > 2)
@@ -63,6 +65,26 @@ void cShootBehaviour::enemyAttack(cEnemy* _parent)
 
 void cShootBehaviour::enemyMove(cEnemy* _parent)
 {
+	if (_parent->getMoveTime() > 0)
+	{
+		sf::Vector2f NewPosition = _parent->getPosition() + _parent->getMovement();
+		_parent->setRotation(vectorRotationAngle(_parent->getMovement()));
+		_parent->setPosition(NewPosition);
+	}
+	else
+	{
+		pickDirection(_parent);
+	}
+}
+
+void cShootBehaviour::pickDirection(cEnemy* _parent)
+{
+	float RandXDirection = randRangeFloat(-1, 1);
+	float RandYDirection = randRangeFloat(-1, 1);
+
+	float Movetime = 5 * randRangeFloat(20, 40);
+	_parent->setMoveTime(Movetime);
+	_parent->setMovement(sf::Vector2f(RandXDirection, RandYDirection));
 }
 
 void cShootBehaviour::setupEnemy(cEnemy* _parent, sf::Vector2f _position)
