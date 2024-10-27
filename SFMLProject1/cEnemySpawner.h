@@ -43,6 +43,7 @@ private:
 	bool spawnRandomEnemy(sf::Vector2f _position);
 	bool spawnAsteroidEnemy(sf::Vector2f _position);
 	bool spawnChaseEnemy(sf::Vector2f _position);
+	bool spawnShootEnemy(sf::Vector2f _position);
 	
 
 };

@@ -25,5 +25,21 @@ public:
 	void enemyAttack(cEnemy* _parent) override;
 
 	void enemyMove(cEnemy* _parent) override;
+	void setupEnemy(cEnemy* _parent, sf::Vector2f _position) override;
+
+	//Sets either first player or both players when run
+	void setPlayers(class cCharacter* _FirstPlayer);
+	void setPlayers(class cCharacter* _FirstPlayer, class cCharacter* _SecondPlayer);
+
+	float getDistanceToPlayer(cEnemy* _parent, class cCharacter* _player);
+
+	void shootPlayer(cEnemy* _parent, class cCharacter* _target);
+
+private:
+	//Player Tracking - tracks nearest of these two To Shoot
+	class cCharacter* m_FirstPlayer = nullptr;
+	class cCharacter* m_SecondPlayer = nullptr;
+
+	float AttackRange = 300.0f;
 };
 

@@ -151,7 +151,7 @@ Author : Jayden Burns
 **************************************************************************/
 bool cEnemySpawner::spawnEnemy()
 {
-	int iEnemyChoice = randRangeInt(0, 3);
+	int iEnemyChoice = randRangeInt(0, 4);
 	sf::Vector2f SpawnPosition = sf::Vector2f(0,0);
 	if (m_spawnPoints != nullptr && m_spawnPoints->size() > 0)
 	{
@@ -177,6 +177,11 @@ bool cEnemySpawner::spawnEnemy()
 	else if (iEnemyChoice == 2 && m_icurrentPoints >= 2)
 	{
 		return spawnChaseEnemy(SpawnPosition);
+	}
+	else if (iEnemyChoice == 3 && m_icurrentPoints >= 5)
+	{
+		std::cout << "ShootSpawn" << std::endl;
+		return spawnShootEnemy(SpawnPosition);
 	}
 	else if (m_icurrentPoints <= 0)
 	{
@@ -222,4 +227,9 @@ Author : Jayden Burns
 bool cEnemySpawner::spawnChaseEnemy(sf::Vector2f _position)
 {
 	return m_EnemyPoolRef->loadChaseEnemy(_position);
+}
+
+bool cEnemySpawner::spawnShootEnemy(sf::Vector2f _position)
+{
+	return m_EnemyPoolRef->loadShootEnemy(_position);
 }

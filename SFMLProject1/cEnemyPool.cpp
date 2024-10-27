@@ -119,6 +119,27 @@ bool cEnemyPool::loadChaseEnemy(sf::Vector2f _position)
 }
 
 /************************************************************************
+Name: loadShootEnemy
+Description : Loads first available enemy as a Shoot Type Enemy
+Parameters: sf::Vector2f _position
+Returns: bool - false if unsuccessful
+Author : Jayden Burns
+**************************************************************************/
+bool cEnemyPool::loadShootEnemy(sf::Vector2f _position)
+{
+	if (m_enemiesInactive.size() > 0)
+	{
+		cEnemy* Shoot = m_enemiesInactive[0];
+		m_enemiesActive.push_back(Shoot);
+		m_enemiesInactive.erase(m_enemiesInactive.begin());
+
+		m_ShootBehaviour.setupEnemy(Shoot, _position);
+		return true;
+	}
+	return false;
+}
+
+/************************************************************************
 Name: setPlayers
 Description : Passes Players into all behaviours that require player references
 Parameters: cCharacter* _player1, cCharacter* _player2
