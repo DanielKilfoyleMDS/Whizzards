@@ -73,6 +73,9 @@ public:
 
 	void applyDamage(float _Damage);
 
+	bool canShoot(float _dt);
+	void resetShootTime();
+
 private:
 
 	EnemyState m_enemyState;
@@ -97,5 +100,9 @@ private:
 
 	//Follow Behaviour
 	sf::Vector2f m_targetPosition = sf::Vector2f(0, 0);
+
+	//Shoot Behaviour
+	float m_fShootTime = 0;
+	float m_fMaxShootTime = 1.0f;
 
 };

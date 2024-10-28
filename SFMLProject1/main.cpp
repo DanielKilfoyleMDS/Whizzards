@@ -152,13 +152,12 @@ int main() {
     sf::Sprite blueProjectileSprite;
     blueProjectileSprite.setTexture(blueProjectileTexture);
 
-    std::vector<cProjectile*> activeProjectiles;
 
     // Initialize game camera
     cGameCameras m_Cameras(&window, 3000, 3000, &Manager);
     cEnemyPool Pool(200, Manager.getEnemyDefaultSprite(), Manager.getCollisionList());
     Pool.setPlayers(Player1, Player2);
-    Pool.setProjectiles(Manager.getFireProjectile(0), &activeProjectiles);
+    Pool.setProjectiles(Manager.getFireProjectile(0), Manager.getProjectilesList());
 
     // Load enemy spawn points from level
     cEnemySpawner Spawner(10, 5, &Pool, 20, 30);

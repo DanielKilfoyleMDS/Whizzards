@@ -13,8 +13,11 @@ cShootBehaviour::~cShootBehaviour()
 
 bool cShootBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 {
-	//If can't attack, move (otherwise attacks)
-	if (!canAttack(_parent)) enemyMove(_parent);
+	//If it's not reloading, and player is in range, shoots. Otherwise, moves.
+	if (_parent->canShoot(_deltaTime))
+	{
+		if (!canAttack(_parent)) enemyMove(_parent);
+	}
 
 	_parent->setFrame(_parent->getFrame() + _parent->framesPassed(_deltaTime));
 	if (_parent->getFrame() > 2)
@@ -70,14 +73,12 @@ void cShootBehaviour::enemyMove(cEnemy* _parent)
 	if (DistanceFirstPlayer < DistanceSecondPlayer && DistanceFirstPlayer < m_fDetectRange)
 	{
 		//Move Towards
-		std::cout << "CHASE" << std::endl;
 		sf::Vector2f Direction = m_FirstPlayer->getPosition() - _parent->getPosition();
 		Direction = Normalize(Direction);
 		_parent->setMovement(sf::Vector2f(Direction.x * m_fmovespeed, Direction.y * m_fmovespeed));
 	}
 	else if (DistanceSecondPlayer < DistanceFirstPlayer && DistanceSecondPlayer < m_fDetectRange)
 	{
-		std::cout << "CHASE" << std::endl;
 		sf::Vector2f Direction = m_FirstPlayer->getPosition() - _parent->getPosition();
 		Direction = Normalize(Direction);
 		_parent->setMovement(sf::Vector2f(Direction.x * m_fmovespeed, Direction.y * m_fmovespeed));
@@ -149,7 +150,7 @@ float cShootBehaviour::getDistanceToPlayer(cEnemy* _parent, cCharacter* _player)
 
 void cShootBehaviour::shootPlayer(cEnemy* _parent, cCharacter* _target)
 {
-	std::cout << "SHOOT" << std::endl;
+	_parent->resetShootTime();
 	//Projectile Time
 	cProjectile* newProjectile = new cProjectile(*m_projSprite, _parent->getPosition(), _parent->getRotation(), true);
 	m_projList->push_back(newProjectile);

@@ -243,4 +243,24 @@ void cEnemy::applyDamage(float _Damage)
 	m_fHurtTime = m_fHurtMaxTime;
 }
 
+bool cEnemy::canShoot(float _dt)
+{
+	if (m_fShootTime > 0)
+	{
+		m_fShootTime -= _dt;
+		return false;
+	}
+	else
+	{
+
+		return true;
+	}
+	
+}
+
+void cEnemy::resetShootTime()
+{
+	m_fShootTime = m_fMaxShootTime;
+}
+
 
