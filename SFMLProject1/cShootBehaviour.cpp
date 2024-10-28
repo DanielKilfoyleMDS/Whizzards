@@ -152,6 +152,6 @@ void cShootBehaviour::shootPlayer(cEnemy* _parent, cCharacter* _target)
 {
 	_parent->resetShootTime();
 	//Projectile Time
-	cProjectile* newProjectile = new cProjectile(*m_projSprite, _parent->getPosition(), _parent->getRotation(), true);
+	cProjectile* newProjectile = new cProjectile(*m_projSprite, _parent->getPosition(), _parent->getRotation() + 90, true);
 	m_projList->push_back(newProjectile);
 }
