@@ -137,23 +137,8 @@ void cPlayer::movePlayer()
 	sf::Vector2f NewPos(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
 	setPosition(getPosition() + NewPos);
 
-	// Screen wrapping logic
-	sf::Vector2f position = getPosition();
-	if (position.x < 0) {
-		position.x += level.getLevelWidth();
-	}
-	else if (position.x > level.getLevelWidth()) {
-		position.x -= level.getLevelWidth();
-	}
+	checkScreenWrap(level);
 
-	if (position.y < 0) {
-		position.y += level.getLevelHeight();
-	}
-	else if (position.y > level.getLevelHeight()) {
-		position.y -= level.getLevelHeight();
-	}
-
-	setPosition(position); // Update the player position after wrapping
 }
 
 

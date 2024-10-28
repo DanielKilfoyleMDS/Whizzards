@@ -15,6 +15,7 @@ Mail : DanielKilfoyle@mds.ac.nz & JaydenBurns@mds.ac.nz
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
+#include "cLevel.h"
 #include "MathLibrary.h"
 
 enum CharacterType
@@ -63,6 +64,8 @@ public:
 	bool applyDamage(float _Damage);
 	void handleHurt(float deltaTime);
 
+	void checkScreenWrap(class cLevel _Level);
+
 protected:
 
 	// maxHealth and currentHealth  of characters, will be overriden by child classes, so was not set to const. 
@@ -96,5 +99,11 @@ protected:
 
 	sf::Vector2f m_hitboxSize;
 	
+
+	//LevelWrap
+	float m_maxXPos;
+	float m_minXPos;
+	float m_maxYPos;
+	float m_minYPos;
 };
 

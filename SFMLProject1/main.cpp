@@ -81,10 +81,6 @@ void RenderTileMap(sf::RenderWindow& window, const std::vector<std::vector<int>>
 sf::Clock castTimer;
 sf::Clock gameClock;
 
-void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles);
-
-void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& tileTextures, int tileWidth, int tileHeight, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles, bool firstPlayerView);
-
 int main() {
     float deltaTime = gameClock.restart().asSeconds();
 
@@ -259,7 +255,7 @@ int main() {
             m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
 
             // Manage enemy waves
-            Spawner.WaveManager(deltaTime);
+            Spawner.WaveManager(deltaTime, level);
             // Update the wand manager
             wandManager.update(deltaTime);
 
@@ -300,37 +296,4 @@ int main() {
     return 0;
 }
 
-// Helper function to render a single view
-void RenderView(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<std::vector<int>>& tileMap, const std::map<int, sf::Texture>& tileTextures, int tileWidth, int tileHeight, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles, bool firstPlayerView) {
-    if (firstPlayerView) {
-        cameras.setViewLeftSide();
-    }
-    else {
-        cameras.setViewRightSide();
-    }
 
-    // Render the tile map
-    RenderTileMap(window, tileMap, tileTextures, tileWidth, tileHeight);
-
-    // Render game objects
-    cameras.Render(Player1, &window);
-    cameras.Render(Player2, &window);
-    for (auto enemy : enemies) {
-        cameras.Render(enemy, &window);
-    }
-    for (auto projectile : projectiles) {
-        cameras.Render(projectile, &window);
-    }
-}
-
-// Helper function to render game objects
-void RenderGameObjects(sf::RenderWindow& window, cGameCameras& cameras, cPlayer* Player1, cPlayer* Player2, const std::vector<cEnemy*>& enemies, const std::vector<cProjectile*>& projectiles) {
-    cameras.Render(Player1, &window);
-    cameras.Render(Player2, &window);
-    for (auto enemy : enemies) {
-        cameras.Render(enemy, &window);
-    }
-    for (auto projectile : projectiles) {
-        cameras.Render(projectile, &window);
-    }
-}

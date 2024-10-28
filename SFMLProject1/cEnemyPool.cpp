@@ -158,6 +158,7 @@ void cEnemyPool::setPlayers(cCharacter* _player1, cCharacter* _player2)
 	}
 }
 
+
 /************************************************************************
 Name: tickEnemies
 Description : iterates through all active enemies, runs their tick behaviour, and unloads inactive enemies
@@ -165,12 +166,13 @@ Parameters: None
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cEnemyPool::tickEnemies(float _deltaTime)
+void cEnemyPool::tickEnemies(float _deltaTime, cLevel _level)
 {
 	for (int EnemyCount = 0; EnemyCount < m_enemiesActive.size(); EnemyCount++)
 	{
 		cEnemy* Enemy = m_enemiesActive[EnemyCount];
 		Enemy->tick(_deltaTime);
+		Enemy->checkScreenWrap(_level);
 
 		if (Enemy->getAwake() != true)
 		{

@@ -219,3 +219,24 @@ void cCharacter::handleHurt(float deltaTime)
 	}
 }
 
+void cCharacter::checkScreenWrap(cLevel _level)
+{
+	// Screen wrapping logic
+	sf::Vector2f position = getPosition();
+	if (position.x < 0) {
+		position.x += _level.getLevelWidth();
+	}
+	else if (position.x > _level.getLevelWidth()) {
+		position.x -= _level.getLevelWidth();
+	}
+
+	if (position.y < 0) {
+		position.y += _level.getLevelHeight();
+	}
+	else if (position.y > _level.getLevelHeight()) {
+		position.y -= _level.getLevelHeight();
+	}
+
+	setPosition(position);
+}
+

@@ -21,7 +21,7 @@ public:
 
 	void setSpawnPoints(std::vector<sf::Vector2f>* _spawnpoints);
 
-	void WaveManager(float _deltaTime);
+	void WaveManager(float _deltaTime, cLevel _level);
 
 private:
 
