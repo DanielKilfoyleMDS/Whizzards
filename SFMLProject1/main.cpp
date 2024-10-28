@@ -94,6 +94,21 @@ int main() {
 
     cBurstWand* wand = new cBurstWand();
 
+    // Initialize level and load textures internally
+    cLevel level(3000, 3000);
+    std::vector<std::vector<int>> tileMap;
+    std::vector<sf::Vector2f> enemySpawnPoints;
+    sf::Vector2f player1Pos, player2Pos;
+
+    // Create player instances
+    cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(0), "Player 1", sf::Vector2f(1000, 800), Manager.getCollisionList(), level);
+    cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(0), "Player 2", sf::Vector2f(1050, 800), Manager.getCollisionList(), level);
+    Player1->setProjectileSprite(Manager.getFirstPlayerProjectile(0));
+    Player2->setProjectileSprite(Manager.getSecondPlayerProjectile(0));
+    Player1->setProjectileList(Manager.getProjectilesList());
+    Player2->setProjectileList(Manager.getProjectilesList());
+
+
     // Create the window with a set resolution
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
     window.setFramerateLimit(60);
@@ -104,30 +119,73 @@ int main() {
     bool isMenuActive = true;
     bool isPaused = false;  // Track if the game is paused
 
+    // Health bar dimensions and positioning
+    const float healthBarWidth = 200.f;  // Full width of the health bar
+    const float healthBarHeight = 20.f;  // Height of the health bar
+
     // Loading the font for UI
     sf::Font WizardFont;
     WizardFont.loadFromFile("Resources/Fonts/Wizard.ttf");
 
+    // Render wand names for Player 1
+    sf::Text player1WandText(Player1->getCurrentWandName(), WizardFont, 20);
+    player1WandText.setPosition(50, 100);  // Adjust this to your UI layout
+    player1WandText.setFillColor(sf::Color::Blue);
+    player1WandText.setCharacterSize(24);
+
+    // Render wand names for Player 2
+    sf::Text player2WandText(Player2->getCurrentWandName(), WizardFont, 20);
+    player2WandText.setPosition(950, 100);  // Adjust this to your UI layout
+    player2WandText.setFillColor(sf::Color::Red);
+    player2WandText.setCharacterSize(24);
+
     sf::Text firstPlayerHealthText;
     firstPlayerHealthText.setFont(WizardFont);
-    firstPlayerHealthText.setFillColor(sf::Color::Red);
+    firstPlayerHealthText.setFillColor(sf::Color::Blue);
     firstPlayerHealthText.setCharacterSize(36);
-    firstPlayerHealthText.setPosition(sf::Vector2f(100, 50));
+    firstPlayerHealthText.setPosition(sf::Vector2f(50, 25));
 
     sf::Text secondPlayerHealthText;
     secondPlayerHealthText.setFont(WizardFont);
     secondPlayerHealthText.setFillColor(sf::Color::Red);
     secondPlayerHealthText.setCharacterSize(36);
-    secondPlayerHealthText.setPosition(sf::Vector2f(100, 100));
+    secondPlayerHealthText.setPosition(sf::Vector2f(950, 25));
 
-    // View for UI drawing only
+    // Set up health bars for each player
+    sf::RectangleShape firstPlayerHealthBarBackground(sf::Vector2f(healthBarWidth, healthBarHeight));
+    firstPlayerHealthBarBackground.setPosition(50, 75);  // Position on screen
+    firstPlayerHealthBarBackground.setFillColor(sf::Color(50, 50, 50));  // Background color (dark gray)
+
+    sf::RectangleShape firstPlayerHealthBar(sf::Vector2f(healthBarWidth, healthBarHeight));
+    firstPlayerHealthBar.setPosition(50, 75);  // Same position as background
+    firstPlayerHealthBar.setFillColor(sf::Color::Blue);  // Health bar color
+
+    sf::RectangleShape secondPlayerHealthBarBackground(sf::Vector2f(healthBarWidth, healthBarHeight));
+    secondPlayerHealthBarBackground.setPosition(950, 75);
+    secondPlayerHealthBarBackground.setFillColor(sf::Color(50, 50, 50));
+
+    sf::RectangleShape secondPlayerHealthBar(sf::Vector2f(healthBarWidth, healthBarHeight));
+    secondPlayerHealthBar.setPosition(950, 75);
+    secondPlayerHealthBar.setFillColor(sf::Color::Red);
+
+    sf::Text Player1scoreText;
+    Player1scoreText.setFont(WizardFont);
+    Player1scoreText.setFillColor(sf::Color::White);
+    Player1scoreText.setCharacterSize(24);
+    Player1scoreText.setPosition(50, 130);  // Position below the health bar
+    Player1scoreText.setString("Score: 0");  // Initial score
+
+    sf::Text Player2scoreText;
+    Player2scoreText.setFont(WizardFont);
+    Player2scoreText.setFillColor(sf::Color::White);
+    Player2scoreText.setCharacterSize(24);
+    Player2scoreText.setPosition(950, 130);  // Position below the health bar
+    Player2scoreText.setString("Score: 0");  // Initial score
+
+    // Set up the UI view for drawing
     sf::View uiViewPort(sf::Vector2f(640, 360), sf::Vector2f(1280, 720));
 
-    // Initialize level and load textures internally
-    cLevel level(3000, 3000);
-    std::vector<std::vector<int>> tileMap;
-    std::vector<sf::Vector2f> enemySpawnPoints;
-    sf::Vector2f player1Pos, player2Pos;
+
 
     // Load tile textures into a map (texture ID mapped to sf::Texture)
     const std::map<int, sf::Texture>& tileTextures = level.getTileTextures();  // Use the getter directly
@@ -140,13 +198,7 @@ int main() {
     // Create the Wand manager
     cWandManager wandManager(Manager.getWandPickupSprite(0), level.getWandSpawnPoints());
 
-    // Create player instances
-    cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(0), "Player 1", sf::Vector2f(1000, 800), Manager.getCollisionList(), level);
-    cPlayer* Player2 = new cPlayer(Manager.getSecondPlayerSprite(0), "Player 2", sf::Vector2f(1050, 800), Manager.getCollisionList(), level);
-    Player1->setProjectileSprite(Manager.getFirstPlayerProjectile(0));
-    Player2->setProjectileSprite(Manager.getSecondPlayerProjectile(0));
-    Player1->setProjectileList(Manager.getProjectilesList());
-    Player2->setProjectileList(Manager.getProjectilesList());
+
 
     sf::Texture blueProjectileTexture;
     if (!blueProjectileTexture.loadFromFile("Resources/Textures/Sprites/Projectile Blue.png")) {
@@ -329,11 +381,42 @@ int main() {
 
             window.setView(uiViewPort);  // Switch to UI viewport for health and UI rendering
 
-            firstPlayerHealthText.setString("Wizard 1 Health: " + std::to_string(int(Player1->getHealth())));
-            secondPlayerHealthText.setString("Wizard 2 Health: " + std::to_string(int(Player2->getHealth())));
+            firstPlayerHealthText.setString("Wizard 1 Health: ");
+            secondPlayerHealthText.setString("Wizard 2 Health: ");
+
+            player1WandText.setString("Wand: ");
+            player2WandText.setString("Wand: ");
+
+            // Update the score
+            int score = 100;  // Example score, update this based on game logic
+            Player1scoreText.setString("Score: " + std::to_string(score));
+            Player2scoreText.setString("Score: " + std::to_string(score));
 
             window.draw(firstPlayerHealthText);
             window.draw(secondPlayerHealthText);
+
+            window.draw(Player1scoreText);
+            window.draw(Player2scoreText);
+
+
+            window.draw(player1WandText);
+            window.draw(player2WandText);
+
+
+
+            // Update health bar sizes based on player health
+            float player1HealthPercentage = Player1->getHealth() / Player1->getHealth();
+            firstPlayerHealthBar.setSize(sf::Vector2f(healthBarWidth* player1HealthPercentage, healthBarHeight));
+
+            float player2HealthPercentage = Player2->getHealth() / Player2->getHealth();
+            secondPlayerHealthBar.setSize(sf::Vector2f(healthBarWidth* player2HealthPercentage, healthBarHeight));
+
+            // Draw health bars
+            window.draw(firstPlayerHealthBarBackground);
+            window.draw(firstPlayerHealthBar);
+
+            window.draw(secondPlayerHealthBarBackground);
+            window.draw(secondPlayerHealthBar);
         }
 
         window.display();  // Always display after rendering

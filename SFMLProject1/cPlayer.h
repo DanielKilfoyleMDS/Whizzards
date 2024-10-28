@@ -15,15 +15,14 @@ Mail : DanielKilfoyle@mds.ac.nz
 #include "MathLibrary.h"
 #include "cLevel.h"
 #include "cProjectile.h"
-#include "cWand.h"
-
+#include "cWand.h" 
+#include <string>
 
 class cPlayer : public cCharacter
 {
 public:
 	cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position, std::vector<cCharacter*>* _activeCharacters, cLevel& _level);
-	
-	
+
 	void rotateCharacter(sf::Keyboard::Key _key, int _scalar);
 	void processInput();
 	void movePlayer();
@@ -35,12 +34,6 @@ public:
 	sf::Keyboard::Key forwardMovementKey;
 	sf::Keyboard::Key castSpellKey;
 
-	//Disabled while broken
-	
-	//sf::FloatRect getBounds() {
-		//return m_characterSprite->getGlobalBounds();
-	//}
-	
 	void setProjectileSprite(sf::Sprite* _projectile);
 	void setProjectileList(std::vector<cProjectile*>* _projectiles);
 
@@ -54,12 +47,11 @@ public:
 
 	void respawnPlayer();
 
-	void setWandRef(class cWand* _wand);
+	void setWandRef(class cWand* _wand);  // Set wand reference
+	std::string getCurrentWandName() const;  // Get wand name
 
 	int getPlayerOneOrTwo();
 private:
-
-	// character name, used for setting different controls for player 1 and player 2
 	std::string m_playerName;
 
 	cLevel& level; // Reference to the level for boundary checks
@@ -76,6 +68,5 @@ private:
 	float m_fFireRate;
 	float m_fDamage;
 
-	class cWand* m_currentWandRef = nullptr;
+	cWand* m_currentWandRef = nullptr;  // Pointer to current wand
 };
-
