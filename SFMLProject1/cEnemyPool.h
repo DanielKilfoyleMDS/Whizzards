@@ -36,6 +36,7 @@ public:
 
 	void setBehaviourSprites(sf::Sprite* _asteroidSprite, sf::Sprite* _randomSprite, sf::Sprite* _chaseSprite);
 
+	void setProjectiles(sf::Sprite* _projSprite, std::vector<cProjectile*>* _projList);
 
 private:
 	std::vector<cEnemy*> m_enemiesInactive;

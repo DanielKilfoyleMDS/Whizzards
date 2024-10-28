@@ -1,6 +1,7 @@
 #include "cShootBehaviour.h"
 #include "cEnemy.h"
 #include "MathLibrary.h"
+#include "cProjectile.h"
 
 cShootBehaviour::cShootBehaviour()
 {
@@ -12,9 +13,8 @@ cShootBehaviour::~cShootBehaviour()
 
 bool cShootBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 {
-	enemyMove(_parent);
-	canAttack(_parent);
-	
+	//If can't attack, move (otherwise attacks)
+	if (!canAttack(_parent)) enemyMove(_parent);
 
 	_parent->setFrame(_parent->getFrame() + _parent->framesPassed(_deltaTime));
 	if (_parent->getFrame() > 2)
@@ -41,13 +41,13 @@ bool cShootBehaviour::canAttack(cEnemy* _parent)
 
 	float DistanceFirstPlayer = getDistanceToPlayer(_parent,m_FirstPlayer);
 	float DistanceSecondPlayer = getDistanceToPlayer(_parent,m_SecondPlayer);
-	if (DistanceFirstPlayer < DistanceSecondPlayer && DistanceFirstPlayer < AttackRange)
+	if (DistanceFirstPlayer < DistanceSecondPlayer && DistanceFirstPlayer < m_fAttackRange)
 	{
 		//Shoot at player
 		shootPlayer(_parent, m_FirstPlayer);
 		return true;
 	}
-	else if (DistanceSecondPlayer < DistanceFirstPlayer && DistanceSecondPlayer < AttackRange)
+	else if (DistanceSecondPlayer < DistanceFirstPlayer && DistanceSecondPlayer < m_fAttackRange)
 	{
 		//Shoot at player
 		shootPlayer(_parent, m_SecondPlayer);
@@ -65,15 +65,34 @@ void cShootBehaviour::enemyAttack(cEnemy* _parent)
 
 void cShootBehaviour::enemyMove(cEnemy* _parent)
 {
+	float DistanceFirstPlayer = getDistanceToPlayer(_parent, m_FirstPlayer);
+	float DistanceSecondPlayer = getDistanceToPlayer(_parent, m_SecondPlayer);
+	if (DistanceFirstPlayer < DistanceSecondPlayer && DistanceFirstPlayer < m_fDetectRange)
+	{
+		//Move Towards
+		std::cout << "CHASE" << std::endl;
+		sf::Vector2f Direction = m_FirstPlayer->getPosition() - _parent->getPosition();
+		Direction = Normalize(Direction);
+		_parent->setMovement(sf::Vector2f(Direction.x * m_fmovespeed, Direction.y * m_fmovespeed));
+	}
+	else if (DistanceSecondPlayer < DistanceFirstPlayer && DistanceSecondPlayer < m_fDetectRange)
+	{
+		std::cout << "CHASE" << std::endl;
+		sf::Vector2f Direction = m_FirstPlayer->getPosition() - _parent->getPosition();
+		Direction = Normalize(Direction);
+		_parent->setMovement(sf::Vector2f(Direction.x * m_fmovespeed, Direction.y * m_fmovespeed));
+	}
+
+
 	if (_parent->getMoveTime() > 0)
 	{
-		sf::Vector2f NewPosition = _parent->getPosition() + _parent->getMovement();
-		_parent->setRotation(vectorRotationAngle(_parent->getMovement()));
-		_parent->setPosition(NewPosition);
+			sf::Vector2f NewPosition = _parent->getPosition() + _parent->getMovement();
+			_parent->setRotation(vectorRotationAngle(_parent->getMovement()));
+			_parent->setPosition(NewPosition);
 	}
 	else
 	{
-		pickDirection(_parent);
+			pickDirection(_parent);
 	}
 }
 
@@ -85,6 +104,12 @@ void cShootBehaviour::pickDirection(cEnemy* _parent)
 	float Movetime = 5 * randRangeFloat(20, 40);
 	_parent->setMoveTime(Movetime);
 	_parent->setMovement(sf::Vector2f(RandXDirection, RandYDirection));
+}
+
+void cShootBehaviour::setProjectiles(sf::Sprite* _projSprite, std::vector<cProjectile*>* _projList)
+{
+	m_projSprite = _projSprite;
+	m_projList = _projList;
 }
 
 void cShootBehaviour::setupEnemy(cEnemy* _parent, sf::Vector2f _position)
@@ -114,7 +139,7 @@ void cShootBehaviour::setPlayers(cCharacter* _FirstPlayer, cCharacter* _SecondPl
 float cShootBehaviour::getDistanceToPlayer(cEnemy* _parent, cCharacter* _player)
 {
 		//returns value larger than chase range so we can't chase non-existent player
-	if (_player == nullptr) return AttackRange + 1;
+	if (_player == nullptr) return m_fDetectRange + 1;
 	else
 	{
 		sf::Vector2f Distance = _parent->getPosition() - _player->getPosition();
@@ -125,4 +150,7 @@ float cShootBehaviour::getDistanceToPlayer(cEnemy* _parent, cCharacter* _player)
 void cShootBehaviour::shootPlayer(cEnemy* _parent, cCharacter* _target)
 {
 	std::cout << "SHOOT" << std::endl;
+	//Projectile Time
+	cProjectile* newProjectile = new cProjectile(*m_projSprite, _parent->getPosition(), _parent->getRotation(), true);
+	m_projList->push_back(newProjectile);
 }

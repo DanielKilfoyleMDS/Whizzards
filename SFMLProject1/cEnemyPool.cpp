@@ -10,6 +10,7 @@ Author : Jayden Burns
 Mail : JaydenBurns@mds.ac.nz
 **************************************************************************/
 #include "cEnemyPool.h"
+#include "cProjectile.h"
 
 /************************************************************************
 Name: cEnemyPool
@@ -127,6 +128,7 @@ Author : Jayden Burns
 **************************************************************************/
 bool cEnemyPool::loadShootEnemy(sf::Vector2f _position)
 {
+	std::cout << "Shoot Enemy at" << _position.x << " " << _position.y << std::endl;
 	if (m_enemiesInactive.size() > 0)
 	{
 		cEnemy* Shoot = m_enemiesInactive[0];
@@ -151,10 +153,12 @@ void cEnemyPool::setPlayers(cCharacter* _player1, cCharacter* _player2)
 	if (_player2 == nullptr)
 	{
 		m_ChaseBehaviour.setPlayers(_player1);
+		m_ShootBehaviour.setPlayers(_player1);
 	}
 	else
 	{
 		m_ChaseBehaviour.setPlayers(_player1, _player2);
+		m_ShootBehaviour.setPlayers(_player1, _player2);
 	}
 }
 
@@ -221,5 +225,10 @@ void cEnemyPool::setBehaviourSprites(sf::Sprite* _asteroidSprite, sf::Sprite* _r
 	m_AsteroidBehaviour.setBehaviourSprite(_asteroidSprite);
 	m_RandomBehaviour.setBehaviourSprite(_randomSprite);
 	m_ChaseBehaviour.setBehaviourSprite(_chaseSprite);
+}
+
+void cEnemyPool::setProjectiles(sf::Sprite* _projSprite, std::vector<cProjectile*>* _projList)
+{
+	m_ShootBehaviour.setProjectiles(_projSprite,_projList);
 }
 

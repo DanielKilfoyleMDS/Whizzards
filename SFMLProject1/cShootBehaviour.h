@@ -11,6 +11,7 @@ Mail : JaydenBurns@mds.ac.nz
 **************************************************************************/
 #pragma once
 #include "cEnemyBehaviour.h"
+
 class cShootBehaviour : public cEnemyBehaviour
 {
 public:
@@ -36,11 +37,19 @@ public:
 	void shootPlayer(cEnemy* _parent, class cCharacter* _target);
 	void pickDirection(cEnemy* _parent);
 
+	void setProjectiles(sf::Sprite* _projSprite, std::vector<class cProjectile*>* _projList);
+
 private:
 	//Player Tracking - tracks nearest of these two To Shoot
 	class cCharacter* m_FirstPlayer = nullptr;
 	class cCharacter* m_SecondPlayer = nullptr;
 
-	float AttackRange = 300.0f;
+	float m_fmovespeed = 3;
+	float m_fAttackRange = 300.0f;
+	float m_fDetectRange = 900.0f;
+
+	//Projectile Stuff
+	sf::Sprite* m_projSprite;
+	std::vector<cProjectile*>* m_projList;
 };
 
