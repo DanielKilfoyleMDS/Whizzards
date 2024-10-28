@@ -71,7 +71,7 @@ public:
 	void setEnemyType(EnemyType _enemyType);
 	EnemyType getEnemyType();
 
-	//Move This Function To Character
+	void applyDamage(float _Damage);
 
 private:
 

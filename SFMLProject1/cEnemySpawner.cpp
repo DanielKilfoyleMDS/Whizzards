@@ -90,7 +90,7 @@ void cEnemySpawner::WaveManager(float _deltaTime)
 	if (m_EnemyPoolRef->getActiveEnemies().size() == 0)
 	{
 		m_icurrentWave++;
-		std::cout << "StartingWave" << std::endl;
+		std::cout << "StartingWave" << m_icurrentWave << std::endl;
 		startWave();
 	}
 	
@@ -130,12 +130,14 @@ Author : Jayden Burns
 void cEnemySpawner::startWave()
 {
 	m_icurrentPoints = calculateWavePoints();
+	std::cout << "Starting Points" << m_icurrentPoints << std::endl;
 	int EnemiesSpawned = 0;
 	bool CanSpawn = true;
 	while (CanSpawn)
 	{
 		if (m_icurrentPoints > 0 && m_EnemyPoolRef->getActiveEnemies().size() < m_imaxEnemiesAtOnce)
 		{
+			std::cout << "Current Points" << m_icurrentPoints << std::endl;
 			CanSpawn = spawnEnemy(); //Returns false if enemy spawning fails
 		}
 		else CanSpawn = false;
@@ -169,19 +171,36 @@ bool cEnemySpawner::spawnEnemy()
 	
 	if (iEnemyChoice == 0 && m_icurrentPoints >= 1)
 	{
-		return spawnAsteroidEnemy(SpawnPosition);
+		if (spawnAsteroidEnemy(SpawnPosition))
+		{
+			m_icurrentPoints -= 1;
+			return true;
+		}
+		else return false;
 	} else if (iEnemyChoice == 1 && m_icurrentPoints >= 2)
 	{
-		return spawnRandomEnemy(SpawnPosition);
+		if (spawnRandomEnemy(SpawnPosition))
+		{
+			m_icurrentPoints -= 2;
+			return true;
+		}
+		else return false;
 	}
 	else if (iEnemyChoice == 2 && m_icurrentPoints >= 2)
 	{
-		return spawnChaseEnemy(SpawnPosition);
+		if (spawnChaseEnemy(SpawnPosition))
+		{
+			m_icurrentPoints -= 2;
+			return true;
+		}else return false;
 	}
 	else if (iEnemyChoice == 3 && m_icurrentPoints >= 5)
 	{
-		std::cout << "ShootSpawn" << std::endl;
-		return spawnShootEnemy(SpawnPosition);
+		if (spawnShootEnemy(SpawnPosition))
+		{
+			m_icurrentPoints -= 2;
+			return true;
+		} else return false;
 	}
 	else if (m_icurrentPoints <= 0)
 	{
@@ -202,6 +221,7 @@ Author : Jayden Burns
 **************************************************************************/
 bool cEnemySpawner::spawnRandomEnemy(sf::Vector2f _position)
 {
+
 	return m_EnemyPoolRef->loadRandomEnemy(_position);
 }
 

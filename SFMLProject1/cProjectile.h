@@ -42,7 +42,7 @@ private:
 
 	bool b_enemyOwned;
 
-	float m_fDamage = -1;
+	float m_fDamage = 1;
 
 	//Animation Code
 	int m_iCurrentFrame = 0.0f;

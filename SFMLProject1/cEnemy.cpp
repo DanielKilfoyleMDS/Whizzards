@@ -51,6 +51,8 @@ Author : Jayden Burns
 **************************************************************************/
 void cEnemy::tick(float _deltaTime)
 {
+	handleHurt(_deltaTime);
+
 	if(m_Behaviour != nullptr && getAwake())
 	{
 		if (m_Behaviour->tickEnemy(this, _deltaTime));
@@ -60,6 +62,11 @@ void cEnemy::tick(float _deltaTime)
 				m_fmoveTime--;
 			}
 		}
+	}
+
+	if (m_fHurtTime > 0)
+	{
+		m_iCurrentFrame = -1;
 	}
 	
 	if (m_fcurrentHealth <= 0)
@@ -227,6 +234,13 @@ void cEnemy::setEnemyType(EnemyType _enemyType)
 EnemyType cEnemy::getEnemyType()
 {
 	return m_enemyType;
+}
+
+void cEnemy::applyDamage(float _Damage)
+{
+	if (m_fHurtTime > 0) return;
+	m_fcurrentHealth -= _Damage;
+	m_fHurtTime = m_fHurtMaxTime;
 }
 
 

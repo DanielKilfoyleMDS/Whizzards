@@ -91,6 +91,10 @@ sf::Sprite* cGameManager::getEnemyChaseSprite(int _Frame)
 	{
 		return  &m_chaseEnemySprite2;
 	}
+	else if (_Frame == -1)
+	{
+		return &m_chaseEnemySpriteHurt;
+	}
 	else
 	{
 		return  &m_chaseEnemySprite3;
@@ -112,7 +116,10 @@ sf::Sprite* cGameManager::getEnemyRandomSprite(int _Frame)
 	}else if (_Frame == 1)
 	{
 			return &m_randomEnemySprite2;
-	}else
+	}else if (_Frame == -1)
+	{
+			return &m_randomEnemySpriteHurt;
+	} else
 	{
 		return &m_randomEnemySprite3;
 	}
@@ -305,6 +312,9 @@ void cGameManager::SetupEnemySprites()
 	LoadSprite(&m_chaseEnemySprite1, &m_chaseEnemyTexture1, "Resources/Textures/Sprites/EnemyChase.png");
 	LoadSprite(&m_chaseEnemySprite2, &m_chaseEnemyTexture2, "Resources/Textures/Sprites/EnemyChase2.png");
 	LoadSprite(&m_chaseEnemySprite3, &m_chaseEnemyTexture3, "Resources/Textures/Sprites/EnemyChase3.png");
+
+	LoadSprite(&m_chaseEnemySpriteHurt, &m_chaseEnemyTextureHurt, "Resources/Textures/Sprites/EnemyChaseHurt2.png");
+	LoadSprite(&m_randomEnemySpriteHurt, &m_randomEnemyTextureHurt, "Resources/Textures/Sprites/EnemyRandomHurt2.png");
 
 	LoadSprite(&m_defaultEnemySprite, &m_defaultEnemyTexture, "Resources/Textures/Sprites/EnemyDefault.png");
 

@@ -164,7 +164,7 @@ int main() {
     Pool.setPlayers(Player1, Player2);
 
     // Load enemy spawn points from level
-    cEnemySpawner Spawner(10, 5, &Pool, 20, 30);
+    cEnemySpawner Spawner(5, 2, &Pool, 20, 30);
     Spawner.setSpawnPoints(level.getEnemySpawnPoints());
 
     // Load tile textures

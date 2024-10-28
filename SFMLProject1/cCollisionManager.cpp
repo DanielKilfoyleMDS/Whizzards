@@ -154,7 +154,7 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 					if (_activeCharacters[i]->getCharacterType() == Enemy)
 					{
 						// If the projectile belongs to a player, and it intersects with an enemy, then deal damage to the enemy
-						_activeCharacters[i]->updateHealth(_activeProjectiles[proj]->getDamage());
+						_activeCharacters[i]->applyDamage(_activeProjectiles[proj]->getDamage());
 						std::cout << "Enemy damaged! Remaining health: " << _activeCharacters[i]->getHealth() << std:: endl;
 
 						break;
