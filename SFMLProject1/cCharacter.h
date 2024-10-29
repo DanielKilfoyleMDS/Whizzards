@@ -34,6 +34,8 @@ public:
 	void setHealth(float _Health);
 	float getHealth();
 
+	float getMaxHealth();
+
 	// Update health function, which works for positive and negative values. To be used for healing and damaging.
 	void updateHealth(float _Change);
 
@@ -73,6 +75,7 @@ public:
 	void setProjectileHitSound(sf::Sound* _sound);
 	sf::Sound* getProjectileHitSound();
 
+	bool isInvincible();
 
 
 protected:
@@ -115,6 +118,9 @@ protected:
 	float m_maxYPos;
 	float m_minYPos;
 
+	
+
+	float m_InvincibilityTimer = 0.0f;
 	sf::Sound* m_DamageSound;
 	sf::Sound* m_ProjectileHitSound;
 	

@@ -19,6 +19,7 @@ cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Pos
 	: cCharacter(_Sprite, _Position), // Call to base class constructor
 	m_playerName(_PlayerName), // Initialize player name
 	level(_level) // Initialize the level reference
+
 {
 	
 
@@ -47,6 +48,10 @@ cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Pos
 	m_fFireRate = 1.0f;
 	m_iProjectileCount = 1;
 	m_fDamage = 10.0f;
+
+	currentWandName = "Default Wand";
+
+	m_InvincibilityTimer = 5.0f;
 }
 
 /*************************************************************************
@@ -187,12 +192,6 @@ void cPlayer::castSpell()
 				cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation(), false);
 				m_projectilesList->push_back(newProjectile);
 			}
-			
-			
-
-			
-
-
 
 
 			m_castTimer.restart();
@@ -209,6 +208,10 @@ void cPlayer::castSpell()
 void cPlayer::playerUpdate(float _deltaTime)
 {
 	//Any Over-Time Effects here
+	if (m_InvincibilityTimer > 0)
+	{
+		m_InvincibilityTimer -=_deltaTime;
+	}
 
 	if (sf::Keyboard::isKeyPressed(leftRotateKey))
 	{
@@ -280,19 +283,29 @@ void cPlayer::respawnPlayer()
 	m_fcurrentHealth = m_fmaxHealth;
 	m_bActive = true;
 	setPosition(m_previousPosition);
+	m_InvincibilityTimer = 5.0f;
 }
 
-void cPlayer::setWandRef(cWand* _wand)
-{
+void cPlayer::setWandRef(cWand* _wand) {
 	m_currentWandRef = _wand;
-	_wand->applyEffect(this);
+	if (_wand != nullptr) {
+		currentWandName = _wand->getName(); // Make sure your wand class has a getName() method
+		_wand->applyEffect(this); // Apply any effects the wand may have
+	}
+	else {
+		currentWandName = "Default Wand"; // Reset to default if no wand is equipped
+	}
 }
 
 std::string cPlayer::getCurrentWandName() const
 {
-	return std::string();
+	return currentWandName;
 }
 
+void cPlayer::setCurrentWand(const std::string& wandName)
+{
+	currentWandName = wandName;
+}
 
 
 int cPlayer::getPlayerOneOrTwo()

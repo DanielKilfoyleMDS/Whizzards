@@ -7,6 +7,8 @@ public:
     cBurstWand();
     virtual ~cBurstWand();
 
+    std::string getName() const override { return "Burst Wand"; }
+
     // Apply burst effect on player
     void applyEffect(cPlayer* _player) override;
 

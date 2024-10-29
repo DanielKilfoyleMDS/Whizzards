@@ -199,7 +199,7 @@ void cGameCameras::Render(cPlayer* _Player, sf::RenderWindow* _window)
 
 
 
-	if (true) //Replace with a currently Invincible check
+	if (_Player->isInvincible()) //Replace with a currently Invincible check
 	{
 		sf::Sprite* Shield = m_currentGameManager->getPlayerInvincSprite();
 		Shield->setPosition(_Player->getPosition());

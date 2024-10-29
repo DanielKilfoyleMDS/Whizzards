@@ -329,6 +329,8 @@ int main() {
 
         window.clear();
 
+        float deltaTime = gameClock.restart().asSeconds(); // Calculate deltaTime
+
         if (isMenuActive) {
             // Render the menu
             menu.draw(window);
@@ -342,7 +344,7 @@ int main() {
         }
         else {
             // Calculate deltaTime
-            float deltaTime = gameClock.restart().asSeconds(); // Calculate deltaTime
+            
 
             Player1->processInput();
             Player2->processInput();
@@ -399,8 +401,8 @@ int main() {
             firstPlayerHealthText.setString("Wizard 1 Health: ");
             secondPlayerHealthText.setString("Wizard 2 Health: ");
 
-            player1WandText.setString("Wand: ");
-            player2WandText.setString("Wand: ");
+            player1WandText.setString("Wand: "+ Player1->getCurrentWandName());
+            player2WandText.setString("Wand: "+ Player2->getCurrentWandName());
 
             Spawner.WaveManager(deltaTime, gameScore, level); 
             PlayerscoreText.setString("Score: " + std::to_string(gameScore.getScore()));
@@ -415,13 +417,14 @@ int main() {
             window.draw(player2WandText);
 
 
+            //// Update health bar sizes based on player health
 
-            // Update health bar sizes based on player health
-            float player1HealthPercentage = Player1->getHealth() / Player1->getHealth();
+            float player1HealthPercentage = Player1->getHealth() / Player1->getMaxHealth(); // Correct calculation
             firstPlayerHealthBar.setSize(sf::Vector2f(healthBarWidth* player1HealthPercentage, healthBarHeight));
 
-            float player2HealthPercentage = Player2->getHealth() / Player2->getHealth();
+            float player2HealthPercentage = Player2->getHealth() / Player2->getMaxHealth(); // Correct calculation
             secondPlayerHealthBar.setSize(sf::Vector2f(healthBarWidth* player2HealthPercentage, healthBarHeight));
+
 
             // Draw health bars
             window.draw(firstPlayerHealthBarBackground);
