@@ -266,5 +266,10 @@ sf::Sound* cCharacter::getProjectileHitSound()
 	return &m_ProjectileHitSound;
 }
 
+bool cCharacter::isInvincible()
+{
+	return (m_InvincibilityTimer > 0);
+}
+
 
 

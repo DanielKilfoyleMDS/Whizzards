@@ -75,6 +75,7 @@ public:
 	void setProjectileHitSound(sf::Sound _sound);
 	sf::Sound* getProjectileHitSound();
 
+	bool isInvincible();
 
 
 protected:
@@ -119,6 +120,7 @@ protected:
 
 	sf::Sound m_DamageSound;
 	sf::Sound m_ProjectileHitSound;
-	
+
+	float m_InvincibilityTimer = 0.0f;
 };
 

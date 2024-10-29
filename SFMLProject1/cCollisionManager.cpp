@@ -73,8 +73,8 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 						if (_activeCharacters[j]->getCharacterType() == Player) // Checking if the players have collided
 						{
 							// Deal damage to both players
-							_activeCharacters[i]->updateHealth(-10.0f);
-							_activeCharacters[j]->updateHealth(-10.0f);
+							if(!_activeCharacters[i]->isInvincible()) _activeCharacters[i]->updateHealth(-10.0f);
+							if (!_activeCharacters[j]->isInvincible()) _activeCharacters[j]->updateHealth(-10.0f);
 				
 							// Move both players backward from the collision location. 
 							// Calculate the amount the first player will be pushed backward
@@ -101,16 +101,10 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 						else if (_activeCharacters[j]->getCharacterType() == Enemy)
 						{
 							// Deal damage to the player
-							std::cout << "Player i - enemy j - Damage" << std::endl;
-
-
 
 							// Colliding enemy
 							cEnemy* collidingEnemy = dynamic_cast<cEnemy*>(_activeCharacters[j]);
-							collidingEnemy->otherCollide(_activeCharacters[i]);
-
-
-							
+							if (!_activeCharacters[i]->isInvincible()) collidingEnemy->otherCollide(_activeCharacters[i]);
 						}
 					}
 					// If the first character type is enemy, and colliding character is a player
@@ -119,24 +113,27 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 						if (_activeCharacters[j]->getCharacterType() == Player)
 						{
 
-							// Deal damage to the player
-							std::cout << "enemy i - Player j - Damage" << std::endl;
-
 							// Colliding enemy
 							cEnemy* collidingEnemy = dynamic_cast<cEnemy*>(_activeCharacters[i]);
 							
 							if (collidingEnemy->getAwake())
 							{
-								collidingEnemy->otherCollide(_activeCharacters[j]);
-								// Colliding player
-								std::cout << "Damage sound" << std::endl;
-								if (_activeCharacters[j]->getDamageSound()->getStatus() == sf::SoundSource::Playing)
+								if (_activeCharacters[i]->isInvincible())
 								{
-									// do nothing
 								}
 								else
 								{
-									_activeCharacters[j]->getDamageSound()->play();
+									collidingEnemy->otherCollide(_activeCharacters[j]);
+									// Colliding player
+									std::cout << "Damage sound" << std::endl;
+									if (_activeCharacters[j]->getDamageSound()->getStatus() == sf::SoundSource::Playing)
+									{
+										// do nothing
+									}
+									else
+									{
+										_activeCharacters[j]->getDamageSound()->play();
+									}
 								}
 							}
 
@@ -203,9 +200,12 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 				{
 					if (_activeCharacters[i]->getCharacterType() == Player)
 					{
-						// If the projectile belongs to an enemy, and it intersects with a player then deal damage to the player
-						_activeCharacters[i]->applyDamage(_activeProjectiles[proj]->getDamage());
-						std::cout << "Player damaged! Remaining health: " << _activeCharacters[i]->getHealth() << std::endl;
+						if (!_activeCharacters[i]->isInvincible())
+						{
+							// If the projectile belongs to an enemy, and it intersects with a player then deal damage to the player
+							_activeCharacters[i]->applyDamage(_activeProjectiles[proj]->getDamage());
+							std::cout << "Player damaged! Remaining health: " << _activeCharacters[i]->getHealth() << std::endl;
+						}
 
 						// Check if the projectile hit sound is already playing
 						if (_activeCharacters[i]->getProjectileHitSound()->getStatus() == sf::SoundSource::Playing)

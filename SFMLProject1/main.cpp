@@ -309,6 +309,8 @@ int main() {
 
         window.clear();
 
+        float deltaTime = gameClock.restart().asSeconds(); // Calculate deltaTime
+
         if (isMenuActive) {
             // Render the menu
             menu.draw(window);
@@ -322,7 +324,7 @@ int main() {
         }
         else {
             // Calculate deltaTime
-            float deltaTime = gameClock.restart().asSeconds(); // Calculate deltaTime
+            
 
             Player1->processInput();
             Player2->processInput();

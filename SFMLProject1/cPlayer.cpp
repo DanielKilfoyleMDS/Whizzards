@@ -50,6 +50,8 @@ cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Pos
 	m_fDamage = 10.0f;
 
 	currentWandName = "Default Wand";
+
+	m_InvincibilityTimer = 5.0f;
 }
 
 /*************************************************************************
@@ -206,6 +208,10 @@ void cPlayer::castSpell()
 void cPlayer::playerUpdate(float _deltaTime)
 {
 	//Any Over-Time Effects here
+	if (m_InvincibilityTimer > 0)
+	{
+		m_InvincibilityTimer -=_deltaTime;
+	}
 
 	if (sf::Keyboard::isKeyPressed(leftRotateKey))
 	{
@@ -277,6 +283,7 @@ void cPlayer::respawnPlayer()
 	m_fcurrentHealth = m_fmaxHealth;
 	m_bActive = true;
 	setPosition(m_previousPosition);
+	m_InvincibilityTimer = 5.0f;
 }
 
 void cPlayer::setWandRef(cWand* _wand) {
