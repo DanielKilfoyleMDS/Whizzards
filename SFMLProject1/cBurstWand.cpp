@@ -3,7 +3,6 @@
 
 cBurstWand::cBurstWand() 
 {
-
     // Set specific attributes for burst wand
     setDamage(15); // More damage
     setFireRate(0.5f); // Faster fire rate

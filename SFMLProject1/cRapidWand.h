@@ -4,7 +4,9 @@ class cRapidWand : public cWand
 {
 public:
 	cRapidWand();
-	~cRapidWand();
+	virtual ~cRapidWand();
+
+	std::string getName() const override { return "Rapid Wand"; }
 
 	void applyEffect(cPlayer* _player) override;
 

@@ -11,6 +11,8 @@ public:
     void loadTexture(const std::string& texturePath);
     virtual void draw(sf::RenderWindow& window) = 0;
 
+    virtual std::string getName() const = 0;
+
     virtual void applyEffect(class cPlayer* _player) = 0; // Pure virtual for specific wand effects
 
     sf::Sprite getSprite() const; // Method to get the wand's sprite
@@ -25,8 +27,6 @@ public:
     void setDamage(float _damage);
     void setFireRate(float _fireRate);
     void setProjectileCount(int _projectileCount);
-
-    std::string getName() const { return "Wand"; }
 
     // Getters for base wand attributes
     float getDamage();

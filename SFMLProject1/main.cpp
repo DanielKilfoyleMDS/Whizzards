@@ -379,10 +379,10 @@ int main() {
             firstPlayerHealthText.setString("Wizard 1 Health: ");
             secondPlayerHealthText.setString("Wizard 2 Health: ");
 
-            player1WandText.setString("Wand: ");
-            player2WandText.setString("Wand: ");
+            player1WandText.setString("Wand: "+ Player1->getCurrentWandName());
+            player2WandText.setString("Wand: "+ Player2->getCurrentWandName());
 
-            Spawner.WaveManager(deltaTime, gameScore); 
+            Spawner.WaveManager(deltaTime, gameScore, level); 
             PlayerscoreText.setString("Score: " + std::to_string(gameScore.getScore()));
 
             window.draw(firstPlayerHealthText);

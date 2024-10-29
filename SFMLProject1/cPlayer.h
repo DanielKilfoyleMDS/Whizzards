@@ -29,6 +29,10 @@ public:
 
 	void castSpell();
 
+	std::string getCurrentWandName() const;
+
+	void setCurrentWand(const std::string& wandName);
+
 	void playerUpdate(float _deltaTime);
 
 	sf::Keyboard::Key leftRotateKey;
@@ -50,7 +54,6 @@ public:
 	void respawnPlayer();
 
 	void setWandRef(class cWand* _wand);  // Set wand reference
-	std::string getCurrentWandName() const;  // Get wand name
 
 	int getPlayerOneOrTwo();
 
@@ -80,6 +83,7 @@ private:
 	float m_fFireRate;
 	float m_fDamage;
 
+	std::string currentWandName;
 	cWand* m_currentWandRef = nullptr;  // Pointer to current wand
 
 	sf::Sound m_projectileFireSound;
