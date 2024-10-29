@@ -28,6 +28,7 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 #include "cLevelLoader.h"
 #include "cMenu.h"
 #include "cPauseMenu.h"
+#include "cScoreMenu.h"
 
 // Load textures for Grass and Sand tiles
 void LoadTileTextures(std::map<int, sf::Texture> textures) {
@@ -116,7 +117,9 @@ int main() {
     // Load the menu
     cMenu menu(window.getSize().x, window.getSize().y);
     cPauseMenu pauseMenu(window.getSize().x, window.getSize().y);  // Pause menu
+    cScoreMenu scoreMenu(window.getSize().x, window.getSize().y);
     bool isMenuActive = true;
+    bool isScoreMenuActive = false;
     bool isPaused = false;  // Track if the game is paused
 
     // Health bar dimensions and positioning
@@ -248,8 +251,22 @@ int main() {
                             isMenuActive = false;  // Start game
                         }
                         else if (selected == 1) {
-                            window.close();  // Quit game
+                            isScoreMenuActive = true;  // Open score menu
+                            isMenuActive = false;
+                            scoreMenu.loadScores("Resources/scores.txt");  // Load scores when score menu opens
                         }
+                        else if (selected == 2) {  // Assuming Quit is option 2
+                            window.close();
+                        }
+                    }
+                }
+            }
+            else if (isScoreMenuActive) {
+                // Score menu navigation
+                if (event.type == sf::Event::KeyReleased) {
+                    if (event.key.code == sf::Keyboard::Return) {
+                        isScoreMenuActive = false;  // Return to main menu
+                        isMenuActive = true;
                     }
                 }
             }
@@ -288,6 +305,9 @@ int main() {
         if (isMenuActive) {
             // Render the menu
             menu.draw(window);
+        }
+        else if (isScoreMenuActive) {
+            scoreMenu.draw(window);  // Draw score menu if active
         }
         else if (isPaused) {
             // Render the pause menu
