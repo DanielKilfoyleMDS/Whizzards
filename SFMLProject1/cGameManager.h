@@ -53,9 +53,9 @@ public:
 	void SetUpSounds();
 
 	sf::Sound getProjectileFireSound();
-	sf::Sound getProjectileHitSound();
+	sf::Sound* getProjectileHitSound();
 	
-	sf::Sound getPlayerDamageSound();
+	sf::Sound* getPlayerDamageSound();
 	sf::Sound getPlayerDeathSound();
 
 	sf::Sound getPlayerIdleSound();

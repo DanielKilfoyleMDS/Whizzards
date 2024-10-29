@@ -328,6 +328,10 @@ void cPlayer::setIdleSound(sf::Sound _sound)
 
 
 
+
+
+
+
 void cPlayer::setProjectileCount(int _count) {
 	m_iProjectileCount = _count;
 }

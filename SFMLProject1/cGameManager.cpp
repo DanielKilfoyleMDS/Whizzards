@@ -373,14 +373,14 @@ sf::Sound cGameManager::getProjectileFireSound()
 	return m_FireProjSound;
 }
 
-sf::Sound cGameManager::getProjectileHitSound()
+sf::Sound* cGameManager::getProjectileHitSound()
 {
-	return m_HitProjSound;
+	return &m_HitProjSound;
 }
 
-sf::Sound cGameManager::getPlayerDamageSound()
+sf::Sound* cGameManager::getPlayerDamageSound()
 {
-	return m_PlayerDamageSound;
+	return &m_PlayerDamageSound;
 }
 
 sf::Sound cGameManager::getPlayerDeathSound()

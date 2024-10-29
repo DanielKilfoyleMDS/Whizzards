@@ -60,6 +60,7 @@ public:
 	void setIdleSound(sf::Sound _sound);
 
 
+
 	
 
 

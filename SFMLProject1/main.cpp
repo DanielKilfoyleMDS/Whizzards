@@ -9,6 +9,7 @@ Description : Main program for Whizzards Game
 Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 **************************************************************************/
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
 #include <cstdlib>
@@ -104,6 +105,12 @@ int main() {
 
     cBurstWand* wand = new cBurstWand();
 
+    sf::Music backgroundMusic;
+    if (!backgroundMusic.openFromFile("Resources/Audio/Music/Whizzards-BackgroundMusic.WAV"))
+        std::cout << "Failed to load background music." << std::endl; // error
+    backgroundMusic.play();
+
+
     // Initialize level and load textures internally
     cLevel level(3000, 3000);
     std::vector<std::vector<int>> tileMap;
@@ -122,6 +129,19 @@ int main() {
     Player1->setProjectileList(Manager.getProjectilesList());
     Player2->setProjectileList(Manager.getProjectilesList());
 
+    // Set all player sounds
+
+    Player1->setProjectileSound(Manager.getProjectileFireSound());
+    Player1->setDamageSound(Manager.getPlayerDamageSound());
+    Player1->setDeathSound(Manager.getPlayerDeathSound());
+    Player1->setIdleSound(Manager.getPlayerIdleSound());
+    Player1->setProjectileHitSound(Manager.getProjectileHitSound());
+    
+    Player2->setProjectileSound(Manager.getProjectileFireSound());
+    Player2->setDamageSound(Manager.getPlayerDamageSound());
+    Player2->setDeathSound(Manager.getPlayerDeathSound());
+    Player2->setIdleSound(Manager.getPlayerIdleSound());
+    Player2->setProjectileHitSound(Manager.getProjectileHitSound());
 
     // Create the window with a set resolution
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
@@ -382,7 +402,7 @@ int main() {
             player1WandText.setString("Wand: ");
             player2WandText.setString("Wand: ");
 
-            Spawner.WaveManager(deltaTime, gameScore); 
+            Spawner.WaveManager(deltaTime, gameScore, level); 
             PlayerscoreText.setString("Score: " + std::to_string(gameScore.getScore()));
 
             window.draw(firstPlayerHealthText);

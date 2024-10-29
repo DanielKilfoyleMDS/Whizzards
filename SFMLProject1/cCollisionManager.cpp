@@ -184,19 +184,7 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 						// If the projectile belongs to a player, and it intersects with an enemy, then deal damage to the enemy
 						_activeCharacters[i]->applyDamage(_activeProjectiles[proj]->getDamage());
 						std::cout << "Enemy damaged! Remaining health: " << _activeCharacters[i]->getHealth() << std:: endl;
-						
-						// Check if the projectile hit sound is already playing
-						if (_activeCharacters[i]->getProjectileHitSound()->getStatus() == sf::SoundSource::Playing)
-						{
-							// do nothing since the sound is already playing
-						}
-						else
-						{
-							// play the sound, since it was not previously
-							_activeCharacters[i]->getProjectileHitSound()->play();
-						}
-						break;
-						
+												
 					}
 				}
 				else if (_activeProjectiles[proj]->getOwned())

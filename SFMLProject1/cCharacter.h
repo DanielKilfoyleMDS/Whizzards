@@ -67,10 +67,10 @@ public:
 
 	void checkScreenWrap(class cLevel _Level);
 
-	void setDamageSound(sf::Sound _sound);
+	void setDamageSound(sf::Sound* _sound);
 	sf::Sound* getDamageSound();
 
-	void setProjectileHitSound(sf::Sound _sound);
+	void setProjectileHitSound(sf::Sound* _sound);
 	sf::Sound* getProjectileHitSound();
 
 
@@ -115,8 +115,8 @@ protected:
 	float m_maxYPos;
 	float m_minYPos;
 
-	sf::Sound m_DamageSound;
-	sf::Sound m_ProjectileHitSound;
+	sf::Sound* m_DamageSound;
+	sf::Sound* m_ProjectileHitSound;
 	
 };
 
