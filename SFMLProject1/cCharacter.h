@@ -13,6 +13,7 @@ Mail : DanielKilfoyle@mds.ac.nz & JaydenBurns@mds.ac.nz
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <string>
 #include "cLevel.h"
@@ -66,6 +67,14 @@ public:
 
 	void checkScreenWrap(class cLevel _Level);
 
+	void setDamageSound(sf::Sound _sound);
+	sf::Sound* getDamageSound();
+
+	void setProjectileHitSound(sf::Sound _sound);
+	sf::Sound* getProjectileHitSound();
+
+
+
 protected:
 
 	// maxHealth and currentHealth  of characters, will be overriden by child classes, so was not set to const. 
@@ -105,5 +114,9 @@ protected:
 	float m_minXPos;
 	float m_maxYPos;
 	float m_minYPos;
+
+	sf::Sound m_DamageSound;
+	sf::Sound m_ProjectileHitSound;
+	
 };
 

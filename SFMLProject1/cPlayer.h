@@ -59,6 +59,16 @@ public:
 	void setWandRef(class cWand* _wand);
 
 	int getPlayerOneOrTwo();
+
+	void setProjectileSound(sf::Sound _sound);
+
+	void setDeathSound(sf::Sound _sound);
+	void setIdleSound(sf::Sound _sound);
+
+
+	
+
+
 private:
 
 	// character name, used for setting different controls for player 1 and player 2
@@ -79,5 +89,13 @@ private:
 	float m_fDamage;
 
 	class cWand* m_currentWandRef = nullptr;
+
+	sf::Sound m_projectileFireSound;
+	sf::Sound m_DeathSound;
+	sf::Sound m_IdleSound;
+
+
+
+
 };
 

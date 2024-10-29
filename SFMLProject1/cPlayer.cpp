@@ -91,6 +91,22 @@ void cPlayer::processInput()
 	}
 	if (m_bActive)
 	{
+		if (!sf::Keyboard::isKeyPressed(forwardMovementKey) && !sf::Keyboard::isKeyPressed(rightRotateKey) && !sf::Keyboard::isKeyPressed(leftRotateKey))
+		{
+			if (m_IdleSound.getStatus() == sf::SoundSource::Playing)
+			{
+				// do nothing since it was already playing
+			}
+			else
+			{
+				// Play the idling sound, since it was not previously playing
+				m_IdleSound.setVolume(50.0f);
+				m_IdleSound.play();
+			}
+		}
+		
+		
+		
 		if (sf::Keyboard::isKeyPressed(forwardMovementKey))
 		{
 			// Rotate the player, and then move player forward
@@ -160,10 +176,12 @@ void cPlayer::castSpell()
 
 			if (m_currentWandRef != nullptr)
 			{
+				m_projectileFireSound.play();
 				m_currentWandRef->castSpell( getPosition(), getRotation(), m_projectileSprite, m_projectilesList);
 			}
 			else 
 			{
+				m_projectileFireSound.play();
 				// Base projectile function. 
 				cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation(), false);
 				m_projectilesList->push_back(newProjectile);
@@ -241,6 +259,7 @@ void cPlayer::healthCheck()
 	// Check if health has reached or gone below 0, then call appropriate death function for the 
 	else if (m_fcurrentHealth <= 0)
 	{
+		m_DeathSound.play();
 		m_fcurrentHealth = 0;
 		// run death functions
 		m_bActive = false;
@@ -280,6 +299,25 @@ int cPlayer::getPlayerOneOrTwo()
 	}
 	return 0;
 }
+
+void cPlayer::setProjectileSound(sf::Sound _sound)
+{
+	m_projectileFireSound = _sound;
+}
+
+
+
+void cPlayer::setDeathSound(sf::Sound _sound)
+{
+	m_DeathSound = _sound;
+}
+
+void cPlayer::setIdleSound(sf::Sound _sound)
+{
+	m_IdleSound = _sound;
+}
+
+
 
 
 void cPlayer::setProjectileCount(int _count) {

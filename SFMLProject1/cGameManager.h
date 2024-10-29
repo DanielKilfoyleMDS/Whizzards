@@ -12,6 +12,7 @@ Mail : DanielKilfoyle@mds.ac.nz & JaydenBurns@mds.ac.nz
 
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
 #include "cCharacter.h"
 #include "cProjectile.h"
 
@@ -47,6 +48,17 @@ public:
 	void SetupEnemySprites();
 	void SetupProjectileSprites();
 	void SetupPlayerSprites();
+
+	void LoadSound(sf::Sound* _Sound, sf::SoundBuffer* _Buffer, const std::string& _FilePath);
+	void SetUpSounds();
+
+	sf::Sound getProjectileFireSound();
+	sf::Sound getProjectileHitSound();
+	
+	sf::Sound getPlayerDamageSound();
+	sf::Sound getPlayerDeathSound();
+
+	sf::Sound getPlayerIdleSound();
 
 private:
 	//Collision
@@ -121,5 +133,36 @@ private:
 	sf::Sprite m_wandPickupSprite;
 	//WandPickup Textures
 	sf::Texture m_wandPickupTexture;
+
+
+	// Player Sounds
+	sf::SoundBuffer m_PlayerDamageBuffer;
+	sf::Sound m_PlayerDamageSound;
+
+	sf::SoundBuffer m_PlayerDeathBuffer;
+	sf::Sound m_PlayerDeathSound;
+
+	sf::SoundBuffer m_MotorcycleMoveBuffer;
+	sf::Sound m_MotorcycleMoveSound;
+
+	sf::SoundBuffer m_MotorcycleIdleBuffer;
+	sf::Sound m_MotorcycleIdleSound;
+
+	// Enemy Sounds
+	sf::SoundBuffer m_EnemyDamageBuffer;
+	sf::Sound m_EnemyDamageSound;
+
+	sf::SoundBuffer m_EnemyDeathBuffer;
+	sf::Sound m_EnemyDeathSound;
+
+	// Shared Sounds
+	sf::SoundBuffer m_FireProjBuffer;
+	sf::Sound m_FireProjSound;
+
+	sf::SoundBuffer m_HitProjBuffer;
+	sf::Sound m_HitProjSound;
+
+
+
 };
 

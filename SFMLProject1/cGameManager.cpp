@@ -27,6 +27,9 @@ cGameManager::cGameManager()
 	//Pickups
 	LoadSprite(&m_wandPickupSprite,&m_wandPickupTexture,"Resources/Textures/Sprites/wandpickup.png");
 
+	// Loading all sounds
+	SetUpSounds();
+
 }
 
 void cGameManager::LoadSprite(sf::Sprite* _Sprite, sf::Texture* _Texture, const std::string& _FilePath)
@@ -340,3 +343,52 @@ void cGameManager::SetupPlayerSprites()
 	LoadSprite(&m_secondPlayerLeftSprite, &m_secondPlayerLeftTexture, "Resources/Textures/Sprites/whizzardBL.png");
 	LoadSprite(&m_playerInvincibleSprite, &m_playerInvincibleTexture, "Resources/Textures/Sprites/Shield.png");
 }
+
+void cGameManager::LoadSound(sf::Sound* _Sound, sf::SoundBuffer* _Buffer, const std::string& _FilePath)
+{
+	
+	if (!_Buffer->loadFromFile(_FilePath))
+		std::cout << "Error Loading Sound";
+
+	
+	_Sound->setBuffer(*_Buffer);
+}
+
+void cGameManager::SetUpSounds()
+{
+	LoadSound(&m_FireProjSound, &m_FireProjBuffer, "Resources/Audio/Projectile/FireSpellCast.WAV");
+	LoadSound(&m_HitProjSound, &m_HitProjBuffer, "Resources/Audio/Projectile/ProjectileHit.WAV");
+
+	LoadSound(&m_PlayerDamageSound, &m_PlayerDamageBuffer, "Resources/Audio/Player/PlayerHealth/Damage.WAV");
+	LoadSound(&m_PlayerDeathSound, &m_PlayerDeathBuffer, "Resources/Audio/Player/PlayerHealth/Death.WAV");
+
+	LoadSound(&m_MotorcycleIdleSound, &m_MotorcycleIdleBuffer, "Resources/Audio/Player/Motorcycle/NewIdle.wav");
+	//LoadSound(&m_MotorcycleMoveSound, &m_MotorcycleMoveBuffer, "Resources/Audio/Player/Motorcycle/");
+}
+
+sf::Sound cGameManager::getProjectileFireSound()
+{
+	return m_FireProjSound;
+}
+
+sf::Sound cGameManager::getProjectileHitSound()
+{
+	return m_HitProjSound;
+}
+
+sf::Sound cGameManager::getPlayerDamageSound()
+{
+	return m_PlayerDamageSound;
+}
+
+sf::Sound cGameManager::getPlayerDeathSound()
+{
+	return m_PlayerDeathSound;
+}
+
+sf::Sound cGameManager::getPlayerIdleSound()
+{
+	return m_MotorcycleIdleSound;
+}
+
+
