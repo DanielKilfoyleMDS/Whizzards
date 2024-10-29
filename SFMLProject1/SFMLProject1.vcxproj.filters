@@ -64,6 +64,7 @@
     <ClCompile Include="cShootBehaviour.cpp">
       <Filter>Enemy\Behaviour</Filter>
     </ClCompile>
+    <ClCompile Include="cScoreMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -131,6 +132,8 @@
     <ClInclude Include="cShootBehaviour.h">
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
+    <ClInclude Include="cScoreMenu.h" />
+    <ClInclude Include="cScore.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

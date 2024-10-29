@@ -12,7 +12,8 @@ Mail : JaydenBurns@mds.ac.nz
 #include "cEnemySpawner.h"
 #include "cLevel.h"
 #include "MathLibrary.h"
-#include "cLevel.h"
+#include "cScore.h"
+
 
 /************************************************************************
 Name: cEnemySpawner
@@ -84,9 +85,10 @@ Parameters: None
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cEnemySpawner::WaveManager(float _deltaTime, cLevel _level)
+void cEnemySpawner::WaveManager(float _deltaTime, cScore& score, cLevel _level)
 {
-	m_EnemyPoolRef->tickEnemies(_deltaTime, _level);
+	m_EnemyPoolRef->tickEnemies(_deltaTime, score, _level);
+
 
 	//Check if there are no enemies left on screen
 	if (m_EnemyPoolRef->getActiveEnemies().size() == 0)

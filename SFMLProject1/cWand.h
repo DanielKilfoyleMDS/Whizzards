@@ -26,6 +26,8 @@ public:
     void setFireRate(float _fireRate);
     void setProjectileCount(int _projectileCount);
 
+    std::string getName() const { return "Wand"; }
+
     // Getters for base wand attributes
     float getDamage();
     float getFireRate();
@@ -38,4 +40,5 @@ protected:
     sf::Vector2f m_position;  // Add position to track the wand's position
     sf::Texture wandTex; // Declare wandTex here
     sf::Sprite wandSprite; // Add a sprite to represent the wand
+    std::string m_name;  // Name of the wand
 };

@@ -12,6 +12,7 @@ Mail : DanielKilfoyle@mds.ac.nz
 
 #include "cPlayer.h"
 #include "SFML/Graphics.hpp"
+#include "cWand.h"
 
 
 cPlayer::cPlayer(sf::Sprite* _Sprite, std::string _PlayerName, sf::Vector2f _Position, std::vector<cCharacter*>* _activeCharacters, cLevel& _level)
@@ -286,6 +287,13 @@ void cPlayer::setWandRef(cWand* _wand)
 	m_currentWandRef = _wand;
 	_wand->applyEffect(this);
 }
+
+std::string cPlayer::getCurrentWandName() const
+{
+	return std::string();
+}
+
+
 
 int cPlayer::getPlayerOneOrTwo()
 {

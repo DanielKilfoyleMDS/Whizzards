@@ -21,8 +21,8 @@ public:
 
 	void setSpawnPoints(std::vector<sf::Vector2f>* _spawnpoints);
 
-	void WaveManager(float _deltaTime, cLevel _level);
-
+	void WaveManager(float _deltaTime, cScore& score, cLevel _level);
+	
 private:
 
 	int m_icurrentPoints;

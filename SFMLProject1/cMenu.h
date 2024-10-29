@@ -1,4 +1,3 @@
-
 #include <SFML/Graphics.hpp>
 
 class cMenu {
@@ -10,10 +9,9 @@ public:
     int GetPressedItem();
 
 private:
+    static const int MAX_NUMBER_OF_ITEMS = 3;  // Updated for "Scores" option
     int selectedItemIndex;
     sf::Font font;
-    sf::Text menu[2];  // Play and Quit buttons
-    sf::Text title;    // New title text
-
-    static const int MAX_NUMBER_OF_ITEMS = 2;
+    sf::Text menu[MAX_NUMBER_OF_ITEMS];
+    sf::Text title;
 };
