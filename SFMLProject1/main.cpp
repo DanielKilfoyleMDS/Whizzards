@@ -395,13 +395,14 @@ int main() {
             window.draw(player2WandText);
 
 
+            //// Update health bar sizes based on player health
 
-            // Update health bar sizes based on player health
-            float player1HealthPercentage = Player1->getHealth() / Player1->getHealth();
+            float player1HealthPercentage = Player1->getHealth() / Player1->getMaxHealth(); // Correct calculation
             firstPlayerHealthBar.setSize(sf::Vector2f(healthBarWidth* player1HealthPercentage, healthBarHeight));
 
-            float player2HealthPercentage = Player2->getHealth() / Player2->getHealth();
+            float player2HealthPercentage = Player2->getHealth() / Player2->getMaxHealth(); // Correct calculation
             secondPlayerHealthBar.setSize(sf::Vector2f(healthBarWidth* player2HealthPercentage, healthBarHeight));
+
 
             // Draw health bars
             window.draw(firstPlayerHealthBarBackground);

@@ -34,6 +34,8 @@ public:
 	void setHealth(float _Health);
 	float getHealth();
 
+	float getMaxHealth();
+
 	// Update health function, which works for positive and negative values. To be used for healing and damaging.
 	void updateHealth(float _Change);
 

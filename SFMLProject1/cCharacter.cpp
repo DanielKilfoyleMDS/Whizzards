@@ -67,6 +67,11 @@ float cCharacter::getHealth()
 	return m_fcurrentHealth;
 }
 
+float cCharacter::getMaxHealth()
+{
+	return m_fmaxHealth;
+}
+
 /*************************************************************************
 Name: updateHealth
 Description : updates the character's health by adding the change value to their current health
