@@ -133,6 +133,7 @@
       <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
     <ClInclude Include="cScoreMenu.h" />
+    <ClInclude Include="cScore.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

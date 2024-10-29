@@ -10,6 +10,7 @@ Author : Jayden Burns
 Mail : JaydenBurns@mds.ac.nz
 **************************************************************************/
 #include "cEnemyPool.h"
+#include "cScore.h"
 
 /************************************************************************
 Name: cEnemyPool
@@ -165,23 +166,22 @@ Parameters: None
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cEnemyPool::tickEnemies(float _deltaTime)
-{
-	for (int EnemyCount = 0; EnemyCount < m_enemiesActive.size(); EnemyCount++)
-	{
+void cEnemyPool::tickEnemies(float _deltaTime, cScore& score) {
+	for (int EnemyCount = 0; EnemyCount < m_enemiesActive.size(); EnemyCount++) {
 		cEnemy* Enemy = m_enemiesActive[EnemyCount];
 		Enemy->tick(_deltaTime);
 
-		if (Enemy->getAwake() != true)
-		{
-			//If the current enemy has been set to be asleep, it is "Dead"
-			//So we unload it
+		if (!Enemy->getAwake()) {
+			// Enemy is "dead" and should be unloaded
 			m_enemiesActive.erase(m_enemiesActive.begin() + EnemyCount);
-
 			m_enemiesInactive.push_back(Enemy);
+
+			// Add points for killing an enemy
+			score.addPoints(100);
 		}
 	}
 }
+
 
 /************************************************************************
 Name: getActiveEnemies

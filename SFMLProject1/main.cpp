@@ -29,6 +29,7 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 #include "cMenu.h"
 #include "cPauseMenu.h"
 #include "cScoreMenu.h"
+#include "cScore.h"
 
 // Load textures for Grass and Sand tiles
 void LoadTileTextures(std::map<int, sf::Texture> textures) {
@@ -79,6 +80,18 @@ void RenderTileMap(sf::RenderWindow& window, const std::vector<std::vector<int>>
     }
 }
 
+// Function to save score to a file
+void SaveScoreToFile(int score) {
+    std::ofstream scoreFile("Resources/scores.txt", std::ios::app);
+    if (scoreFile.is_open()) {
+        scoreFile << score << std::endl;  // Append the score to the file
+        scoreFile.close();
+    }
+    else {
+        std::cerr << "Could not open score file!" << std::endl;
+    }
+}
+
 sf::Clock castTimer;
 sf::Clock gameClock;
 
@@ -100,6 +113,10 @@ int main() {
     std::vector<std::vector<int>> tileMap;
     std::vector<sf::Vector2f> enemySpawnPoints;
     sf::Vector2f player1Pos, player2Pos;
+
+
+    // Initialize cScore object
+    cScore gameScore;
 
     // Create player instances
     cPlayer* Player1 = new cPlayer(Manager.getFirstPlayerSprite(0), "Player 1", sf::Vector2f(1000, 800), Manager.getCollisionList(), level);
@@ -171,19 +188,13 @@ int main() {
     secondPlayerHealthBar.setPosition(950, 75);
     secondPlayerHealthBar.setFillColor(sf::Color::Red);
 
-    sf::Text Player1scoreText;
-    Player1scoreText.setFont(WizardFont);
-    Player1scoreText.setFillColor(sf::Color::White);
-    Player1scoreText.setCharacterSize(24);
-    Player1scoreText.setPosition(50, 130);  // Position below the health bar
-    Player1scoreText.setString("Score: 0");  // Initial score
+    sf::Text PlayerscoreText;
+    PlayerscoreText.setFont(WizardFont);
+    PlayerscoreText.setFillColor(sf::Color::White);
+    PlayerscoreText.setCharacterSize(24);
+    PlayerscoreText.setPosition(600, 50);  // Position below the health bar
+    PlayerscoreText.setString("Score: 0");  // Initial score
 
-    sf::Text Player2scoreText;
-    Player2scoreText.setFont(WizardFont);
-    Player2scoreText.setFillColor(sf::Color::White);
-    Player2scoreText.setCharacterSize(24);
-    Player2scoreText.setPosition(950, 130);  // Position below the health bar
-    Player2scoreText.setString("Score: 0");  // Initial score
 
     // Set up the UI view for drawing
     sf::View uiViewPort(sf::Vector2f(640, 360), sf::Vector2f(1280, 720));
@@ -320,6 +331,14 @@ int main() {
             Player1->processInput();
             Player2->processInput();
 
+            // Check for player health
+            if (Player1->getHealth() <= 0 && Player2->getHealth() <= 0) {
+                // Both players are dead, save score and show score menu
+                SaveScoreToFile(gameScore.getScore());  // Save the score to file
+                isScoreMenuActive = true;                // Show score menu
+                isPaused = true;                         // Optional: pause the game
+            }
+
             // Update projectiles
             for (auto projectile : *Manager.getProjectilesList()) {
                 projectile->tick(deltaTime);
@@ -329,7 +348,7 @@ int main() {
             m_Cameras.UpdatePositions(Player1->getPosition(), Player2->getPosition());
 
             // Manage enemy waves
-            Spawner.WaveManager(deltaTime);
+            Spawner.WaveManager(deltaTime, gameScore);
 
             // Update the wand manager
             wandManager.update(deltaTime);
@@ -407,16 +426,13 @@ int main() {
             player1WandText.setString("Wand: ");
             player2WandText.setString("Wand: ");
 
-            // Update the score
-            int score = 100;  // Example score, update this based on game logic
-            Player1scoreText.setString("Score: " + std::to_string(score));
-            Player2scoreText.setString("Score: " + std::to_string(score));
+            Spawner.WaveManager(deltaTime, gameScore); 
+            PlayerscoreText.setString("Score: " + std::to_string(gameScore.getScore()));
 
             window.draw(firstPlayerHealthText);
             window.draw(secondPlayerHealthText);
 
-            window.draw(Player1scoreText);
-            window.draw(Player2scoreText);
+            window.draw(PlayerscoreText);
 
 
             window.draw(player1WandText);

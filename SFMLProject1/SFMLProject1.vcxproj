@@ -193,6 +193,7 @@
     <ClInclude Include="cProjectile.h" />
     <ClInclude Include="cRandomBehaviour.h" />
     <ClInclude Include="cRapidWand.h" />
+    <ClInclude Include="cScore.h" />
     <ClInclude Include="cScoreMenu.h" />
     <ClInclude Include="cShootBehaviour.h" />
     <ClInclude Include="cWand.h" />

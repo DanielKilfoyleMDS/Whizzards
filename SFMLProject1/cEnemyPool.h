@@ -15,6 +15,7 @@ Mail : JaydenBurns@mds.ac.nz
 #include "cRandomBehaviour.h"
 #include "cChaseBehaviour.h"
 #include "cShootBehaviour.h"
+#include "cScore.h"
 
 class cEnemyPool
 {
@@ -29,7 +30,7 @@ public:
 
 	void setPlayers(cCharacter* _player1, cCharacter* _player2);
 
-	void tickEnemies(float _deltaTime);
+	void tickEnemies(float _deltaTime, cScore& score);
 
 	std::vector<cEnemy*> getActiveEnemies();
 	std::vector<cEnemy*> getInactiveEnemies();

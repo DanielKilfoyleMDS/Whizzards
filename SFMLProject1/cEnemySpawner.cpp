@@ -11,7 +11,7 @@ Mail : JaydenBurns@mds.ac.nz
 **************************************************************************/
 #include "cEnemySpawner.h"
 #include "MathLibrary.h"
-
+#include "cScore.h"
 /************************************************************************
 Name: cEnemySpawner
 Description : Constructor for Enemy Spawner. Sets Max values based on Pool Size
@@ -82,9 +82,9 @@ Parameters: None
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-void cEnemySpawner::WaveManager(float _deltaTime)
+void cEnemySpawner::WaveManager(float _deltaTime, cScore& score)
 {
-	m_EnemyPoolRef->tickEnemies(_deltaTime);
+	m_EnemyPoolRef->tickEnemies(_deltaTime, score);
 
 	//Check if there are no enemies left on screen
 	if (m_EnemyPoolRef->getActiveEnemies().size() == 0)
