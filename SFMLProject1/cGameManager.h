@@ -76,6 +76,7 @@ private:
 	sf::Texture m_chaseEnemyTexture1;
 	sf::Texture m_chaseEnemyTexture2;
 	sf::Texture m_chaseEnemyTexture3;
+	sf::Texture m_shootEnemyTexture;
 
 	sf::Texture m_chaseEnemyTextureHurt;
 	sf::Texture m_randomEnemyTextureHurt;
@@ -92,6 +93,8 @@ private:
 	sf::Sprite m_chaseEnemySprite3;
 	sf::Sprite m_chaseEnemySpriteHurt;
 	sf::Sprite m_randomEnemySpriteHurt;
+
+	sf::Sprite m_shootEnemySprite;
 
 	//Projectile Textures
 	sf::Texture m_FireProjTex1;

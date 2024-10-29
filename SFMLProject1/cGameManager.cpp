@@ -319,6 +319,8 @@ void cGameManager::SetupEnemySprites()
 	LoadSprite(&m_chaseEnemySpriteHurt, &m_chaseEnemyTextureHurt, "Resources/Textures/Sprites/EnemyChaseHurt2.png");
 	LoadSprite(&m_randomEnemySpriteHurt, &m_randomEnemyTextureHurt, "Resources/Textures/Sprites/EnemyRandomHurt2.png");
 
+	LoadSprite(&m_shootEnemySprite, &m_shootEnemyTexture, "Resources/Textures/Sprites/EnemyProjectile.png");
+
 	LoadSprite(&m_defaultEnemySprite, &m_defaultEnemyTexture, "Resources/Textures/Sprites/EnemyDefault.png");
 
 }
