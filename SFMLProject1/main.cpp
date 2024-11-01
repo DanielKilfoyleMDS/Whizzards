@@ -102,13 +102,11 @@ int main() {
     srand(static_cast<unsigned>(time(0)));
     cGameManager Manager;
     cCollisionManager Collision;
+    cSoundManager Sounds;
+    Collision.setSoundManager(&Sounds);
 
     cBurstWand* wand = new cBurstWand();
 
-    sf::Music backgroundMusic;
-    if (!backgroundMusic.openFromFile("Resources/Audio/Music/Whizzards-BackgroundMusic.WAV"))
-        std::cout << "Failed to load background music." << std::endl; // error
-    backgroundMusic.play();
 
 
     // Initialize level and load textures internally
@@ -142,6 +140,9 @@ int main() {
     Player2->setDeathSound(Manager.getPlayerDeathSound());
     Player2->setIdleSound(Manager.getPlayerIdleSound());
     Player2->setProjectileHitSound(Manager.getProjectileHitSound());
+
+    Player1->setSoundManager(&Sounds);
+    Player2->setSoundManager(&Sounds);
 
     // Create the window with a set resolution
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
@@ -283,6 +284,7 @@ int main() {
                             scoreMenu.loadScores("Resources/scores.txt");  // Load scores when score menu opens
                         }
                         else if (selected == 2) {  // Assuming Quit is option 2
+
                             window.close();
                         }
                     }

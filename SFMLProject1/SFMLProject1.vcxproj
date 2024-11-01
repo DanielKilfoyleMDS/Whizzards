@@ -168,6 +168,7 @@
     <ClCompile Include="cRapidWand.cpp" />
     <ClCompile Include="cScoreMenu.cpp" />
     <ClCompile Include="cShootBehaviour.cpp" />
+    <ClCompile Include="cSoundManager.cpp" />
     <ClCompile Include="cWand.cpp" />
     <ClCompile Include="cWandManager.cpp" />
     <ClCompile Include="cWandPickup.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="cScore.h" />
     <ClInclude Include="cScoreMenu.h" />
     <ClInclude Include="cShootBehaviour.h" />
+    <ClInclude Include="cSoundManager.h" />
     <ClInclude Include="cWand.h" />
     <ClInclude Include="cWandManager.h" />
     <ClInclude Include="cWandPickup.h" />

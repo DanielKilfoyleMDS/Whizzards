@@ -17,6 +17,7 @@ Mail : DanielKilfoyle@mds.ac.nz
 #include "cProjectile.h"
 #include "cWand.h" 
 #include <string>
+#include "cSoundManager.h"
 
 class cPlayer : public cCharacter
 {
@@ -62,7 +63,7 @@ public:
 	void setDeathSound(sf::Sound _sound);
 	void setIdleSound(sf::Sound _sound);
 
-
+	void setSoundManager(cSoundManager* _Sounds);
 
 	
 
@@ -91,7 +92,7 @@ private:
 	sf::Sound m_DeathSound;
 	sf::Sound m_IdleSound;
 
-
+	cSoundManager*  m_Sounds = nullptr;
 
 
 };
