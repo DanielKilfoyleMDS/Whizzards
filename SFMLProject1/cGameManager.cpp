@@ -104,6 +104,11 @@ sf::Sprite* cGameManager::getEnemyChaseSprite(int _Frame)
 	}
 }
 
+sf::Sprite* cGameManager::getEnemyShootSprite(int _Frame)
+{
+	return &m_shootEnemySprite;
+}
+
 /*************************************************************************
 Name: getEnemyRandomSprite
 Description : gets the sprite for the random enemy type

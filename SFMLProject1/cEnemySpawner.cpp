@@ -207,7 +207,7 @@ bool cEnemySpawner::spawnEnemy()
 	{
 		if (spawnShootEnemy(SpawnPosition))
 		{
-			m_icurrentPoints -= 2;
+			m_icurrentPoints -= 5;
 			return true;
 		} else return false;
 	}
