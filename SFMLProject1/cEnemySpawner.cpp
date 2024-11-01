@@ -13,6 +13,7 @@ Mail : JaydenBurns@mds.ac.nz
 #include "cLevel.h"
 #include "MathLibrary.h"
 #include "cScore.h"
+#include "cPlayer.h"
 
 
 /************************************************************************
@@ -22,7 +23,7 @@ Parameters: int _basePoints, int _wavePointGain, cEnemyPool* _Pool
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool)
+cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool, cPlayer* _PlayerOne, cPlayer* _PlayerTwo)
 {
 	m_icurrentWave = 0;
 	m_iwavePointGain = _wavePointGain;
@@ -33,6 +34,8 @@ cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _P
 	m_imaxEnemiesAtOnce = m_EnemyPoolRef->getInactiveEnemies().size();
 	m_imaxEnemiesInWave = m_imaxEnemiesAtOnce * 2;
 
+	m_playerOne = _PlayerOne;
+	m_playerTwo = _PlayerTwo;
 }
 
 /************************************************************************
@@ -42,7 +45,7 @@ Parameters: int _basePoints, int _wavePointGain, cEnemyPool* _Pool, int _enemies
 Returns: None
 Author : Jayden Burns
 **************************************************************************/
-cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool, int _enemiesOnScreen, int _enemiesTotal)
+cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool, int _enemiesOnScreen, int _enemiesTotal, cPlayer* _PlayerOne, cPlayer* _PlayerTwo)
 {
 	m_icurrentWave = 0;
 	m_iwavePointGain = _wavePointGain;
@@ -52,6 +55,9 @@ cEnemySpawner::cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _P
 	m_EnemyPoolRef = _Pool;
 	m_imaxEnemiesAtOnce = _enemiesOnScreen;
 	m_imaxEnemiesInWave = _enemiesTotal;
+
+	m_playerOne = _PlayerOne;
+	m_playerTwo = _PlayerTwo;
 }
 
 /************************************************************************
@@ -163,8 +169,7 @@ bool cEnemySpawner::spawnEnemy()
 	{
 		if (m_spawnPoints->size() > 1)
 		{
-			int ispawnPointChoice = randRangeInt(0, m_spawnPoints->size() - 1);
-			SpawnPosition = (*m_spawnPoints)[ispawnPointChoice];
+			SpawnPosition = chooseSpawnPoint();
 		}
 		else if (m_spawnPoints->size() == 1)
 		{
@@ -215,6 +220,29 @@ bool cEnemySpawner::spawnEnemy()
 	}
 	
 }
+
+sf::Vector2f cEnemySpawner::chooseSpawnPoint()
+{
+	int ispawnPointChoice = randRangeInt(0, m_spawnPoints->size() - 1);
+
+	if (isSpawnPointSafe((*m_spawnPoints)[ispawnPointChoice]))
+	{
+		return (*m_spawnPoints)[ispawnPointChoice];
+	}
+	else return chooseSpawnPoint();
+}
+
+bool cEnemySpawner::isSpawnPointSafe(sf::Vector2f _spawnpoint)
+{
+	float DistanceToPlayer = VectorLength(m_playerOne->getPosition() - _spawnpoint);
+	std::cout << "Player1 Dist " << DistanceToPlayer << std::endl;
+	if (DistanceToPlayer < m_fsafeSpawnRange) return false;
+	DistanceToPlayer = VectorLength(m_playerTwo->getPosition() - _spawnpoint);
+	std::cout << "Player2 Dist " << DistanceToPlayer << std::endl;
+	if (DistanceToPlayer < m_fsafeSpawnRange) return false;
+	return true;
+}
+
 
 /************************************************************************
 Name: spawnRandomEnemy

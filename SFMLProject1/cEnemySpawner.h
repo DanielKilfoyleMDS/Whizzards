@@ -15,8 +15,8 @@ Mail : JaydenBurns@mds.ac.nz
 class cEnemySpawner
 {
 public:
-	cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool);
-	cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool, int _enemiesOnScreen, int _enemiesTotal);
+	cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool, class cPlayer* _PlayerOne, class cPlayer* _PlayerTwo);
+	cEnemySpawner(int _basePoints, int _wavePointGain, cEnemyPool* _Pool, int _enemiesOnScreen, int _enemiesTotal, class cPlayer* _PlayerOne, class cPlayer* _PlayerTwo);
 	~cEnemySpawner();
 
 	void setSpawnPoints(std::vector<sf::Vector2f>* _spawnpoints);
@@ -36,15 +36,25 @@ private:
 
 	std::vector<sf::Vector2f>* m_spawnPoints = nullptr;
 
+	class cPlayer* m_playerOne;
+	class cPlayer* m_playerTwo;
+	float m_fsafeSpawnRange = 300;
+
+
 	int calculateWavePoints();
 	void startWave();
 	bool spawnEnemy();
+
+	sf::Vector2f chooseSpawnPoint();
+
+	bool isSpawnPointSafe(sf::Vector2f _spawnpoint);
 
 	bool spawnRandomEnemy(sf::Vector2f _position);
 	bool spawnAsteroidEnemy(sf::Vector2f _position);
 	bool spawnChaseEnemy(sf::Vector2f _position);
 	bool spawnShootEnemy(sf::Vector2f _position);
 	
+
 
 };
 
