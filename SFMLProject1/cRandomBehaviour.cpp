@@ -124,7 +124,7 @@ void cRandomBehaviour::enemyMove(cEnemy* _parent)
 void cRandomBehaviour::setupEnemy(cEnemy* _parent, sf::Vector2f _position)
 {
 	_parent->setPosition(_position);
-	_parent->setHealth(10);
+	_parent->setHealth(7);
 	_parent->setEnemyType(Type_Random);
 	_parent->setState(Idle);
 	_parent->setAwake(true);
