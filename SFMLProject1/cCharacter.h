@@ -69,11 +69,7 @@ public:
 
 	void checkScreenWrap(class cLevel _Level);
 
-	void setDamageSound(sf::Sound* _sound);
-	sf::Sound* getDamageSound();
 
-	void setProjectileHitSound(sf::Sound* _sound);
-	sf::Sound* getProjectileHitSound();
 
 	bool isInvincible();
 
@@ -121,8 +117,7 @@ protected:
 	
 
 	float m_InvincibilityTimer = 0.0f;
-	sf::Sound* m_DamageSound;
-	sf::Sound* m_ProjectileHitSound;
+
 	
 };
 

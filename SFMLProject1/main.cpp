@@ -128,21 +128,12 @@ int main() {
     Player2->setProjectileList(Manager.getProjectilesList());
 
     // Set all player sounds
-
-    Player1->setProjectileSound(Manager.getProjectileFireSound());
-    Player1->setDamageSound(Manager.getPlayerDamageSound());
-    Player1->setDeathSound(Manager.getPlayerDeathSound());
-    Player1->setIdleSound(Manager.getPlayerIdleSound());
-    Player1->setProjectileHitSound(Manager.getProjectileHitSound());
-    
-    Player2->setProjectileSound(Manager.getProjectileFireSound());
-    Player2->setDamageSound(Manager.getPlayerDamageSound());
-    Player2->setDeathSound(Manager.getPlayerDeathSound());
-    Player2->setIdleSound(Manager.getPlayerIdleSound());
-    Player2->setProjectileHitSound(Manager.getProjectileHitSound());
-
     Player1->setSoundManager(&Sounds);
     Player2->setSoundManager(&Sounds);
+
+    // Set otherPlayer references
+    Player1->setOtherPlayerRef(Player2);
+    Player2->setOtherPlayerRef(Player1);
 
     // Create the window with a set resolution
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");

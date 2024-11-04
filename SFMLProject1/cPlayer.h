@@ -58,14 +58,9 @@ public:
 
 	int getPlayerOneOrTwo();
 
-	void setProjectileSound(sf::Sound _sound);
-
-	void setDeathSound(sf::Sound _sound);
-	void setIdleSound(sf::Sound _sound);
-
 	void setSoundManager(cSoundManager* _Sounds);
 
-	
+	void setOtherPlayerRef(cPlayer* _otherPlayer);
 
 
 private:
@@ -88,11 +83,7 @@ private:
 	std::string currentWandName;
 	cWand* m_currentWandRef = nullptr;  // Pointer to current wand
 
-	sf::Sound m_projectileFireSound;
-	sf::Sound m_DeathSound;
-	sf::Sound m_IdleSound;
-
 	cSoundManager*  m_Sounds = nullptr;
 
-
+	cPlayer* m_otherPlayer = nullptr;
 };

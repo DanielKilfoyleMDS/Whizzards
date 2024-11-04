@@ -270,7 +270,9 @@ void cPlayer::respawnPlayer()
 {
 	m_fcurrentHealth = m_fmaxHealth;
 	m_bActive = true;
-	setPosition(m_previousPosition);
+	sf::Vector2f RespawnPos = m_otherPlayer->getPosition();
+	RespawnPos.x = RespawnPos.x - 100;
+	setPosition(RespawnPos);	
 	m_InvincibilityTimer = 5.0f;
 }
 
@@ -309,26 +311,15 @@ int cPlayer::getPlayerOneOrTwo()
 	return 0;
 }
 
-void cPlayer::setProjectileSound(sf::Sound _sound)
-{
-	m_projectileFireSound = _sound;
-}
-
-
-
-void cPlayer::setDeathSound(sf::Sound _sound)
-{
-	m_DeathSound = _sound;
-}
-
-void cPlayer::setIdleSound(sf::Sound _sound)
-{
-	m_IdleSound = _sound;
-}
 
 void cPlayer::setSoundManager(cSoundManager* _Sounds)
 {
 	m_Sounds = _Sounds;
+}
+
+void cPlayer::setOtherPlayerRef(cPlayer* _otherPlayer)
+{
+	m_otherPlayer = _otherPlayer;
 }
 
 

@@ -246,28 +246,6 @@ void cCharacter::checkScreenWrap(cLevel _level)
 	setPosition(position);
 }
 
-void cCharacter::setDamageSound(sf::Sound* _sound)
-{
-	m_DamageSound = _sound;
-}
-
-sf::Sound* cCharacter::getDamageSound()
-{
-	return m_DamageSound;
-}
-
-
-
-
-void cCharacter::setProjectileHitSound(sf::Sound* _sound)
-{
-	m_ProjectileHitSound = _sound;
-}
-
-sf::Sound* cCharacter::getProjectileHitSound()
-{
-	return m_ProjectileHitSound;
-}
 
 bool cCharacter::isInvincible()
 {

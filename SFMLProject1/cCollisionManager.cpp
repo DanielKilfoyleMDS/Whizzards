@@ -199,16 +199,6 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 
 
 						m_Sounds->playHitSound();
-						// Check if the projectile hit sound is already playing
-						if (_activeCharacters[i]->getProjectileHitSound()->getStatus() == sf::SoundSource::Playing)
-						{
-							// do nothing since the sound is already playing
-						}
-						else
-						{
-							// play the sound, since it was not previously
-							_activeCharacters[i]->getProjectileHitSound()->play();
-						}
 						break;
 
 					}
