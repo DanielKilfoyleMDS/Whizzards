@@ -17,6 +17,7 @@ Mail : DanielKilfoyle@mds.ac.nz
 #include "cProjectile.h"
 #include "MathLibrary.h"
 #include "cWandManager.h"
+#include "cSoundManager.h"
 
 
 class cCollisionManager
@@ -31,5 +32,9 @@ public:
 
 	void wandCheck(std::vector <cCharacter*> _activeCharacters, std::vector<cWandPickup*> _wandPickups);
 
+	void setSoundManager(cSoundManager* _Sounds);
+
+private:
+	cSoundManager* m_Sounds = nullptr;
 };
 

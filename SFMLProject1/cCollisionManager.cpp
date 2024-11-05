@@ -87,16 +87,17 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 
 							std::cout << "BONK!!" << std::endl;
 
+							m_Sounds->playDamageSound();
 							
-							if (_activeCharacters[j]->getDamageSound()->getStatus() == sf::SoundSource::Playing)
-							{
-								// do nothing
-							}
-							else
-							{
-								// Play the damage sound, since it was not previously playing
-								_activeCharacters[j]->getDamageSound()->play();
-							}
+							//if (_activeCharacters[j]->getDamageSound()->getStatus() == sf::SoundSource::Playing)
+							//{
+							//	// do nothing
+							//}
+							//else
+							//{
+							//	// Play the damage sound, since it was not previously playing
+							//	_activeCharacters[j]->getDamageSound()->play();
+							//}
 						}
 						else if (_activeCharacters[j]->getCharacterType() == Enemy)
 						{
@@ -123,17 +124,18 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 								}
 								else
 								{
+									m_Sounds->playDamageSound();
 									collidingEnemy->otherCollide(_activeCharacters[j]);
 									// Colliding player
 									std::cout << "Damage sound" << std::endl;
-									if (_activeCharacters[j]->getDamageSound()->getStatus() == sf::SoundSource::Playing)
-									{
-										// do nothing
-									}
-									else
-									{
-										_activeCharacters[j]->getDamageSound()->play();
-									}
+									//if (_activeCharacters[j]->getDamageSound()->getStatus() == sf::SoundSource::Playing)
+									//{
+									//	// do nothing
+									//}
+									//else
+									//{
+									//	_activeCharacters[j]->getDamageSound()->play();
+									//}
 								}
 							}
 
@@ -181,19 +183,7 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 						// If the projectile belongs to a player, and it intersects with an enemy, then deal damage to the enemy
 						_activeCharacters[i]->applyDamage(_activeProjectiles[proj]->getDamage());
 						std::cout << "Enemy damaged! Remaining health: " << _activeCharacters[i]->getHealth() << std:: endl;
-						
-						// Check if the projectile hit sound is already playing
-						if (_activeCharacters[i]->getProjectileHitSound()->getStatus() == sf::SoundSource::Playing)
-						{
-							// do nothing since the sound is already playing
-						}
-						else
-						{
-							// play the sound, since it was not previously
-							_activeCharacters[i]->getProjectileHitSound()->play();
-						}
-						break;
-						
+												
 					}
 				}
 				else if (_activeProjectiles[proj]->getOwned())
@@ -207,16 +197,8 @@ void cCollisionManager::projectileCheck(std::vector<cCharacter*> _activeCharacte
 							std::cout << "Player damaged! Remaining health: " << _activeCharacters[i]->getHealth() << std::endl;
 						}
 
-						// Check if the projectile hit sound is already playing
-						if (_activeCharacters[i]->getProjectileHitSound()->getStatus() == sf::SoundSource::Playing)
-						{
-							// do nothing since the sound is already playing
-						}
-						else
-						{
-							// play the sound, since it was not previously
-							_activeCharacters[i]->getProjectileHitSound()->play();
-						}
+
+						m_Sounds->playHitSound();
 						break;
 
 					}
@@ -260,5 +242,10 @@ void cCollisionManager::wandCheck(std::vector <cCharacter*> _activeCharacters, s
 			}
 		}
 	}
+}
+
+void cCollisionManager::setSoundManager(cSoundManager* _Sounds)
+{
+	m_Sounds = _Sounds;
 }
 

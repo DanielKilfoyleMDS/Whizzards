@@ -44,9 +44,9 @@ private:
 	class cCharacter* m_FirstPlayer = nullptr;
 	class cCharacter* m_SecondPlayer = nullptr;
 
-	float m_fmovespeed = 3;
+	float m_fmovespeed = 2;
 	float m_fAttackRange = 300.0f;
-	float m_fDetectRange = 900.0f;
+	float m_fDetectRange = 600.0f;
 
 	//Projectile Stuff
 	sf::Sprite* m_projSprite;

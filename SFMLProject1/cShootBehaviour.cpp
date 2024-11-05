@@ -116,9 +116,8 @@ void cShootBehaviour::setProjectiles(sf::Sprite* _projSprite, std::vector<cProje
 void cShootBehaviour::setupEnemy(cEnemy* _parent, sf::Vector2f _position)
 {
 	_parent->setPosition(_position);
-	_parent->setHealth(10);
+	_parent->setHealth(5);
 	_parent->setEnemyType(Type_Projectile);
-
 	_parent->setState(Idle);
 	_parent->setAwake(true);
 	_parent->setBehaviour(this);

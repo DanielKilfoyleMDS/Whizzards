@@ -97,19 +97,7 @@ void cPlayer::processInput()
 	}
 	if (m_bActive)
 	{
-		if (!sf::Keyboard::isKeyPressed(forwardMovementKey) && !sf::Keyboard::isKeyPressed(rightRotateKey) && !sf::Keyboard::isKeyPressed(leftRotateKey))
-		{
-			if (m_IdleSound.getStatus() == sf::SoundSource::Playing)
-			{
-				// do nothing since it was already playing
-			}
-			else
-			{
-				// Play the idling sound, since it was not previously playing
-				m_IdleSound.setVolume(50.0f);
-				m_IdleSound.play();
-			}
-		}
+		m_Sounds->playIdleSound();
 		
 		
 		
@@ -182,12 +170,12 @@ void cPlayer::castSpell()
 
 			if (m_currentWandRef != nullptr)
 			{
-				m_projectileFireSound.play();
+				m_Sounds->playFireSound();
 				m_currentWandRef->castSpell( getPosition(), getRotation(), m_projectileSprite, m_projectilesList);
 			}
 			else 
 			{
-				m_projectileFireSound.play();
+				m_Sounds->playFireSound();
 				// Base projectile function. 
 				cProjectile* newProjectile = new cProjectile(m_projectileSprite, getPosition(), getRotation(), false);
 				m_projectilesList->push_back(newProjectile);
@@ -263,12 +251,12 @@ void cPlayer::healthCheck()
 	// Check if health has reached or gone below 0, then call appropriate death function for the 
 	else if (m_fcurrentHealth <= 0)
 	{
-		m_DeathSound.play();
+		m_Sounds->playDeathSound();
 		m_fcurrentHealth = 0;
 		// run death functions
 		m_bActive = false;
 		m_previousPosition = m_characterPosition;
-		setPosition(sf::Vector2f(-10000, -10000));
+		setPosition(sf::Vector2f(getPlayerOneOrTwo() * - 10000, -10000));
 		std::cout << m_playerName << " has died." << std::endl;
 		m_respawnTimer.restart();
 	}
@@ -282,7 +270,9 @@ void cPlayer::respawnPlayer()
 {
 	m_fcurrentHealth = m_fmaxHealth;
 	m_bActive = true;
-	setPosition(m_previousPosition);
+	sf::Vector2f RespawnPos = m_otherPlayer->getPosition();
+	RespawnPos.x = RespawnPos.x - 100;
+	setPosition(RespawnPos);	
 	m_InvincibilityTimer = 5.0f;
 }
 
@@ -321,22 +311,20 @@ int cPlayer::getPlayerOneOrTwo()
 	return 0;
 }
 
-void cPlayer::setProjectileSound(sf::Sound _sound)
+
+void cPlayer::setSoundManager(cSoundManager* _Sounds)
 {
-	m_projectileFireSound = _sound;
+	m_Sounds = _Sounds;
+}
+
+void cPlayer::setOtherPlayerRef(cPlayer* _otherPlayer)
+{
+	m_otherPlayer = _otherPlayer;
 }
 
 
 
-void cPlayer::setDeathSound(sf::Sound _sound)
-{
-	m_DeathSound = _sound;
-}
 
-void cPlayer::setIdleSound(sf::Sound _sound)
-{
-	m_IdleSound = _sound;
-}
 
 
 

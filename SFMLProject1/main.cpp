@@ -9,6 +9,7 @@ Description : Main program for Whizzards Game
 Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 **************************************************************************/
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
 #include <cstdlib>
@@ -111,8 +112,12 @@ int main() {
     srand(static_cast<unsigned>(time(0)));
     cGameManager Manager;
     cCollisionManager Collision;
+    cSoundManager Sounds;
+    Collision.setSoundManager(&Sounds);
 
     cBurstWand* wand = new cBurstWand();
+
+
 
     // Initialize level and load textures internally
     cLevel level(3000, 3000);
@@ -132,6 +137,13 @@ int main() {
     Player1->setProjectileList(Manager.getProjectilesList());
     Player2->setProjectileList(Manager.getProjectilesList());
 
+    // Set all player sounds
+    Player1->setSoundManager(&Sounds);
+    Player2->setSoundManager(&Sounds);
+
+    // Set otherPlayer references
+    Player1->setOtherPlayerRef(Player2);
+    Player2->setOtherPlayerRef(Player1);
 
     // Create the window with a set resolution
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
@@ -236,7 +248,7 @@ int main() {
     Pool.setProjectiles(Manager.getFireProjectile(0), Manager.getProjectilesList());
 
     // Load enemy spawn points from level
-    cEnemySpawner Spawner(10, 5, &Pool, 20, 30);
+    cEnemySpawner Spawner(15, 10, &Pool, 20, 30, Player1, Player2);
     Spawner.setSpawnPoints(level.getEnemySpawnPoints());
 
     // Load tile textures
@@ -273,6 +285,7 @@ int main() {
                             scoreMenu.loadScores("Resources/scores.txt");  // Load scores when score menu opens
                         }
                         else if (selected == 2) {  // Assuming Quit is option 2
+
                             window.close();
                         }
                     }

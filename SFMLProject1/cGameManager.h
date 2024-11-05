@@ -27,6 +27,7 @@ public:
 	sf::Sprite* getEnemyRandomSprite(int _Frame);
 	sf::Sprite* getEnemyDefaultSprite();
 	sf::Sprite* getEnemyChaseSprite(int _Frame);
+	sf::Sprite* getEnemyShootSprite(int _Frame);
 
 
 	sf::Sprite* getFirstPlayerSprite(int _frame);
@@ -53,9 +54,9 @@ public:
 	void SetUpSounds();
 
 	sf::Sound getProjectileFireSound();
-	sf::Sound getProjectileHitSound();
+	sf::Sound* getProjectileHitSound();
 	
-	sf::Sound getPlayerDamageSound();
+	sf::Sound* getPlayerDamageSound();
 	sf::Sound getPlayerDeathSound();
 
 	sf::Sound getPlayerIdleSound();

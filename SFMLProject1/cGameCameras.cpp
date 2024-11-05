@@ -178,7 +178,7 @@ void cGameCameras::Render(cEnemy* _Enemy, sf::RenderWindow* _window)
 		RenderSprite = m_currentGameManager->getEnemyChaseSprite(_Enemy->getFrame());
 		break;
 	case Type_Projectile:
-		RenderSprite = m_currentGameManager->getEnemyDefaultSprite();
+		RenderSprite = m_currentGameManager->getEnemyShootSprite(_Enemy->getFrame());
 		break;
 	default:
 		RenderSprite = m_currentGameManager->getEnemyDefaultSprite();
