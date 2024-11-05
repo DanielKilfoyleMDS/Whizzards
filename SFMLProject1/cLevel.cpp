@@ -29,10 +29,14 @@ void cLevel::loadTileTextures()
     {
         std::cerr << "Failed to load sand texture!" << std::endl;
     }
-    if (!m_tileTextures[3].loadFromFile("Resources/Textures/Wand.png"))
+    if (!m_tileTextures[3].loadFromFile("Resources/Textures/Grass2.png"))
     {
         std::cerr << "Failed to load water texture!" << std::endl;
-    }
+    }      
+    if (!m_tileTextures[4].loadFromFile("Resources/Textures/Tree.png"))
+    {
+        std::cerr << "Failed to load water texture!" << std::endl;
+    }    
 
 }
 
@@ -57,9 +61,12 @@ bool cLevel::LoadLevel(const std::string& filename, const std::map<int, sf::Text
             else if (tile == 'S') {
                 row.push_back(2); // Sand
             }
-            else if (tile == 'W') {
-                m_wandSpawnPoints.emplace_back(y * 64, row.size() * 64);
-            }
+            else if (tile == 'g') {
+                row.push_back(3); // Grass 2
+            }     
+            else if (tile == 'T') {
+                row.push_back(4); // Tree
+            }    
             else {
                 row.push_back(0);
             }

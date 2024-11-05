@@ -35,6 +35,9 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 void LoadTileTextures(std::map<int, sf::Texture> textures) {
     textures[1].loadFromFile("Resources/Textures/Grass.png"); // Grass tile
     textures[2].loadFromFile("Resources/Textures/Sand.png");  // Sand tile
+    textures[3].loadFromFile("Resources/Textures/Grass2.png"); // Grass2 tile
+    textures[4].loadFromFile("Resources/Textures/Tree.png"); // Tree tile
+
 }
 
 // Load the tile map from a text file
@@ -55,6 +58,12 @@ std::vector<std::vector<int>> LoadLevel(const std::string& filename) {
             }
             else if (tile == 'S') {
                 row.push_back(2); // Sand
+            }
+            else if (tile == 'g') {
+                row.push_back(3); // Grass 2
+            }
+            else if (tile == 'T') {
+                row.push_back(4); // Tree
             }
             else {
                 row.push_back(0); // Empty or other tiles can be added later
@@ -79,6 +88,7 @@ void RenderTileMap(sf::RenderWindow& window, const std::vector<std::vector<int>>
         }
     }
 }
+
 
 // Function to save score to a file
 void SaveScoreToFile(int score) {
