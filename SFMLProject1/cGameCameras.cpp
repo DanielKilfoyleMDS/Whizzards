@@ -169,7 +169,7 @@ void cGameCameras::Render(cEnemy* _Enemy, sf::RenderWindow* _window)
 	switch (_Enemy->getEnemyType())
 	{
 	case Type_Asteroid:
-		RenderSprite = m_currentGameManager->getEnemyAsteroidSprite();
+		RenderSprite = m_currentGameManager->getEnemyAsteroidSprite(_Enemy->getFrame());
 		break;
 	case Type_Random:
 		RenderSprite = m_currentGameManager->getEnemyRandomSprite(_Enemy->getFrame());

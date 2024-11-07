@@ -57,9 +57,12 @@ Returns: sf::Sprite pointer
 Author : Daniel Kilfoyle
 **************************************************************************/
 
-sf::Sprite* cGameManager::getEnemyAsteroidSprite()
+sf::Sprite* cGameManager::getEnemyAsteroidSprite(int _Frame)
 {
-	return &m_asteroidEnemySprite;
+	if (_Frame == 0)
+	{
+		return  &m_asteroidEnemySprite;
+	} else return &m_asteroidEnemySpriteHurt;
 }
 
 
@@ -106,7 +109,15 @@ sf::Sprite* cGameManager::getEnemyChaseSprite(int _Frame)
 
 sf::Sprite* cGameManager::getEnemyShootSprite(int _Frame)
 {
-	return &m_shootEnemySprite;
+	if (_Frame == 0)
+	{
+		return  &m_shootEnemySprite;
+	}
+	else if (_Frame == -1)
+	{
+		return &m_shootEnemySpriteHurt;
+	}
+	return &m_shootEnemySprite2;
 }
 
 /*************************************************************************
@@ -314,6 +325,9 @@ void cGameManager::SetupEnemySprites()
 {
 
 	LoadSprite(&m_asteroidEnemySprite, &m_asteroidTexture, "Resources/Textures/Sprites/EnemyAsteroid.png");
+	LoadSprite(&m_asteroidEnemySpriteHurt, &m_asteroidTextureHurt, "Resources/Textures/Sprites/EnemyAsteroidDamage.png");
+	
+	
 	LoadSprite(&m_randomEnemySprite1, &m_randomEnemyTexture1, "Resources/Textures/Sprites/EnemyRandom1.png");
 	LoadSprite(&m_randomEnemySprite2, &m_randomEnemyTexture2, "Resources/Textures/Sprites/EnemyRandom2.png");
 	LoadSprite(&m_randomEnemySprite3, &m_randomEnemyTexture3, "Resources/Textures/Sprites/EnemyRandom3.png");
@@ -325,6 +339,9 @@ void cGameManager::SetupEnemySprites()
 	LoadSprite(&m_randomEnemySpriteHurt, &m_randomEnemyTextureHurt, "Resources/Textures/Sprites/EnemyRandomHurt2.png");
 
 	LoadSprite(&m_shootEnemySprite, &m_shootEnemyTexture, "Resources/Textures/Sprites/EnemyProjectile.png");
+	LoadSprite(&m_shootEnemySprite2, &m_shootEnemyTexture2, "Resources/Textures/Sprites/EnemyProjectileB.png");
+	LoadSprite(&m_shootEnemySpriteHurt, &m_shootEnemyTextureHurt, "Resources/Textures/Sprites/EnemyProjectileHurt.png");
+
 
 	LoadSprite(&m_defaultEnemySprite, &m_defaultEnemyTexture, "Resources/Textures/Sprites/EnemyDefault.png");
 

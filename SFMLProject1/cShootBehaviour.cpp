@@ -16,14 +16,12 @@ bool cShootBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 	//If it's not reloading, and player is in range, shoots. Otherwise, moves.
 	if (_parent->canShoot(_deltaTime))
 	{
+		_parent->setFrame(0);
 		if (!canAttack(_parent)) enemyMove(_parent);
+		
 	}
 
-	_parent->setFrame(_parent->getFrame() + _parent->framesPassed(_deltaTime));
-	if (_parent->getFrame() > 2)
-	{
-		_parent->setFrame(0);
-	}
+
 
 
 	if (checkDeath(_parent))
@@ -149,6 +147,7 @@ float cShootBehaviour::getDistanceToPlayer(cEnemy* _parent, cCharacter* _player)
 
 void cShootBehaviour::shootPlayer(cEnemy* _parent, cCharacter* _target)
 {
+	_parent->setFrame(1);
 	_parent->resetShootTime();
 	//Projectile Time
 	cProjectile* newProjectile = new cProjectile(*m_projSprite, _parent->getPosition(), _parent->getRotation() + 90, true);

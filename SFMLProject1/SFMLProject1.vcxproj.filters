@@ -33,9 +33,6 @@
     <ClCompile Include="cPlayer.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="cFollowBehaviour.cpp">
-      <Filter>Enemy\Behaviour</Filter>
-    </ClCompile>
     <ClCompile Include="cProjectile.cpp">
       <Filter>Player</Filter>
     </ClCompile>
@@ -101,9 +98,6 @@
     <ClInclude Include="cGameManager.h" />
     <ClInclude Include="cPlayer.h">
       <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="cFollowBehaviour.h">
-      <Filter>Enemy\Behaviour</Filter>
     </ClInclude>
     <ClInclude Include="cProjectile.h">
       <Filter>Player</Filter>

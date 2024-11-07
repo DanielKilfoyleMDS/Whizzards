@@ -155,7 +155,6 @@
     <ClCompile Include="cAsteroidBehaviour.cpp" />
     <ClCompile Include="cEnemyPool.cpp" />
     <ClCompile Include="cEnemySpawner.cpp" />
-    <ClCompile Include="cFollowBehaviour.cpp" />
     <ClCompile Include="cGameCameras.cpp" />
     <ClCompile Include="cGameManager.cpp" />
     <ClCompile Include="cLevel.cpp" />
@@ -184,7 +183,6 @@
     <ClInclude Include="cAsteroidBehaviour.h" />
     <ClInclude Include="cEnemyPool.h" />
     <ClInclude Include="cEnemySpawner.h" />
-    <ClInclude Include="cFollowBehaviour.h" />
     <ClInclude Include="cGameManager.h" />
     <ClInclude Include="cLevel.h" />
     <ClInclude Include="cLevelLoader.h" />

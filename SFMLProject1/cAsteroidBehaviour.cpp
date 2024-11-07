@@ -44,6 +44,11 @@ Author : Jayden Burns
 **************************************************************************/
 bool cAsteroidBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 {
+	_parent->setFrame(_parent->getFrame() + _parent->framesPassed(_deltaTime));
+	if (_parent->getFrame() > 0)
+	{
+		_parent->setFrame(0);
+	}
 	if (_parent != nullptr)
 	{
 		if (_parent->getAwake())
@@ -131,6 +136,7 @@ void cAsteroidBehaviour::setupEnemy(cEnemy* _parent, sf::Vector2f _position)
 	_parent->setAwake(true);
 	_parent->setBehaviour(this);
 	_parent->setEnemyType(Type_Asteroid);
+	_parent->setRotation(randRangeFloat(0, 180));
 	pickDirection(_parent);
 	_parent->setDamageStrength(1);
 }

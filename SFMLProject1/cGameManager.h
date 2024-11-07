@@ -23,7 +23,7 @@ public:
 
 	void LoadSprite(sf::Sprite* _Sprite, sf::Texture* _Texture, const std::string& _FilePath);
 
-	sf::Sprite* getEnemyAsteroidSprite();
+	sf::Sprite* getEnemyAsteroidSprite(int _Frame);
 	sf::Sprite* getEnemyRandomSprite(int _Frame);
 	sf::Sprite* getEnemyDefaultSprite();
 	sf::Sprite* getEnemyChaseSprite(int _Frame);
@@ -78,13 +78,18 @@ private:
 	sf::Texture m_chaseEnemyTexture2;
 	sf::Texture m_chaseEnemyTexture3;
 	sf::Texture m_shootEnemyTexture;
+	sf::Texture m_shootEnemyTexture2;
 
 	sf::Texture m_chaseEnemyTextureHurt;
 	sf::Texture m_randomEnemyTextureHurt;
+	sf::Texture m_asteroidTextureHurt;
+	sf::Texture m_shootEnemyTextureHurt;
 
 
 	// Enemy Sprites
 	sf::Sprite m_asteroidEnemySprite;
+	sf::Sprite m_asteroidEnemySpriteHurt;
+
 	sf::Sprite m_defaultEnemySprite;
 	sf::Sprite m_randomEnemySprite1;
 	sf::Sprite m_randomEnemySprite2;
@@ -96,6 +101,8 @@ private:
 	sf::Sprite m_randomEnemySpriteHurt;
 
 	sf::Sprite m_shootEnemySprite;
+	sf::Sprite m_shootEnemySprite2;
+	sf::Sprite m_shootEnemySpriteHurt;
 
 	//Projectile Textures
 	sf::Texture m_FireProjTex1;
