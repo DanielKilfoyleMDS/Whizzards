@@ -23,6 +23,9 @@ private:
     int selectedItemIndex;
 
     static const int MAX_SCORES = 5;
+
+    sf::Texture backgroundTexture;  // Background texture
+    sf::Sprite backgroundSprite;    // Background sprite
 };
 
 #endif

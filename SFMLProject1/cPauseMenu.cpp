@@ -2,8 +2,22 @@
 #include <iostream>
 
 cPauseMenu::cPauseMenu(float width, float height) {
+    // Load font
     if (!font.loadFromFile("Resources/Fonts/Wizard.ttf")) {
         std::cerr << "Failed to load font!" << std::endl;
+    }
+
+    // Load background texture
+    if (!backgroundTexture.loadFromFile("Resources/Textures/PauseMenuBackground.png")) {
+        std::cerr << "Failed to load pause menu background image!" << std::endl;
+    }
+    else {
+        // Set background sprite and scale to fit window
+        backgroundSprite.setTexture(backgroundTexture);
+        backgroundSprite.setScale(
+            width / backgroundTexture.getSize().x,
+            height / backgroundTexture.getSize().y
+        );
     }
 
     // Setup "Resume" button
@@ -24,8 +38,12 @@ cPauseMenu::cPauseMenu(float width, float height) {
 }
 
 void cPauseMenu::draw(sf::RenderWindow& window) {
+    // Draw the background first
+    window.draw(backgroundSprite);
+
+    // Draw menu items on top of the background
     for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++) {
-        window.draw(menu[i]);  // Draw the pause menu items
+        window.draw(menu[i]);
     }
 }
 

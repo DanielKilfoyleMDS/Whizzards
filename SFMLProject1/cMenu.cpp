@@ -2,8 +2,22 @@
 #include <iostream>
 
 cMenu::cMenu(float width, float height) {
+    // Load font
     if (!font.loadFromFile("Resources/Fonts/Wizard.ttf")) {
         std::cerr << "Failed to load font!" << std::endl;
+    }
+
+    // Load background texture
+    if (!backgroundTexture.loadFromFile("Resources/Textures/MainMenuBackground.png")) {
+        std::cerr << "Failed to load main menu background image!" << std::endl;
+    }
+    else {
+        // Set background sprite and scale to fit window
+        backgroundSprite.setTexture(backgroundTexture);
+        backgroundSprite.setScale(
+            width / backgroundTexture.getSize().x,
+            height / backgroundTexture.getSize().y
+        );
     }
 
     // Setup title
@@ -38,6 +52,10 @@ cMenu::cMenu(float width, float height) {
 }
 
 void cMenu::draw(sf::RenderWindow& window) {
+    // Draw the background first
+    window.draw(backgroundSprite);
+
+    // Draw title and menu items
     window.draw(title);
     for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++) {
         window.draw(menu[i]);

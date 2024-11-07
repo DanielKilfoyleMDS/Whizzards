@@ -4,8 +4,22 @@
 #include <algorithm>
 
 cScoreMenu::cScoreMenu(float width, float height) : selectedItemIndex(0) {
+    // Load font
     if (!font.loadFromFile("Resources/Fonts/Wizard.ttf")) {
         std::cerr << "Failed to load font!" << std::endl;
+    }
+
+    // Load background texture
+    if (!backgroundTexture.loadFromFile("Resources/Textures/ScoreMenuBackground.png")) {
+        std::cerr << "Failed to load score menu background image!" << std::endl;
+    }
+    else {
+        // Set background sprite and scale to fit window
+        backgroundSprite.setTexture(backgroundTexture);
+        backgroundSprite.setScale(
+            width / backgroundTexture.getSize().x,
+            height / backgroundTexture.getSize().y
+        );
     }
 
     // Setup title
@@ -56,6 +70,10 @@ void cScoreMenu::loadScores(const std::string& filename) {
 }
 
 void cScoreMenu::draw(sf::RenderWindow& window) {
+    // Draw the background first
+    window.draw(backgroundSprite);
+
+    // Draw title, scores, and "Back" button
     window.draw(title);
     for (int i = 0; i < MAX_SCORES; i++) {
         window.draw(scoreTexts[i]);

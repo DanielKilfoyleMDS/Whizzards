@@ -14,4 +14,7 @@ private:
     sf::Text menu[2];  // Resume and Quit buttons
 
     static const int MAX_NUMBER_OF_ITEMS = 2;
+
+    sf::Texture backgroundTexture;  // Background texture
+    sf::Sprite backgroundSprite;    // Background sprite
 };

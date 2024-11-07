@@ -14,4 +14,6 @@ private:
     sf::Font font;
     sf::Text menu[MAX_NUMBER_OF_ITEMS];
     sf::Text title;
+    sf::Texture backgroundTexture;  // Background texture
+    sf::Sprite backgroundSprite;    // Background sprite
 };

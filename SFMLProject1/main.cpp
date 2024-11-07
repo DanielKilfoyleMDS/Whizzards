@@ -149,6 +149,45 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Project");
     window.setFramerateLimit(60);
 
+    //menu backgrounds
+        // Load textures for each menu background
+    sf::Texture mainMenuBackgroundTexture;
+    if (!mainMenuBackgroundTexture.loadFromFile("Resources/Textures/MainMenuBackground.png")) {
+        std::cerr << "Failed to load main menu background texture!" << std::endl;
+        return -1;
+    }
+    sf::Sprite mainMenuBackgroundSprite;
+    mainMenuBackgroundSprite.setTexture(mainMenuBackgroundTexture);
+    mainMenuBackgroundSprite.setScale(
+        window.getSize().x / mainMenuBackgroundTexture.getSize().x,
+        window.getSize().y / mainMenuBackgroundTexture.getSize().y
+    );
+
+    sf::Texture scoreMenuBackgroundTexture;
+    if (!scoreMenuBackgroundTexture.loadFromFile("Resources/Textures/ScoreMenuBackground.png")) {
+        std::cerr << "Failed to load score menu background texture!" << std::endl;
+        return -1;
+    }
+    sf::Sprite scoreMenuBackgroundSprite;
+    scoreMenuBackgroundSprite.setTexture(scoreMenuBackgroundTexture);
+    scoreMenuBackgroundSprite.setScale(
+        window.getSize().x / scoreMenuBackgroundTexture.getSize().x,
+        window.getSize().y / scoreMenuBackgroundTexture.getSize().y
+    );
+
+    sf::Texture pauseMenuBackgroundTexture;
+    if (!pauseMenuBackgroundTexture.loadFromFile("Resources/Textures/PauseMenuBackground.png")) {
+        std::cerr << "Failed to load pause menu background texture!" << std::endl;
+        return -1;
+    }
+    sf::Sprite pauseMenuBackgroundSprite;
+    pauseMenuBackgroundSprite.setTexture(pauseMenuBackgroundTexture);
+    pauseMenuBackgroundSprite.setScale(
+        window.getSize().x / pauseMenuBackgroundTexture.getSize().x,
+        window.getSize().y / pauseMenuBackgroundTexture.getSize().y
+    );
+
+
     // Load the menu
     cMenu menu(window.getSize().x, window.getSize().y);
     cPauseMenu pauseMenu(window.getSize().x, window.getSize().y);  // Pause menu
@@ -336,13 +375,16 @@ int main() {
 
         if (isMenuActive) {
             // Render the menu
+            window.draw(mainMenuBackgroundSprite); // Main menu background
             menu.draw(window);
         }
         else if (isScoreMenuActive) {
+            window.draw(scoreMenuBackgroundSprite); // Score menu background
             scoreMenu.draw(window);  // Draw score menu if active
         }
         else if (isPaused) {
             // Render the pause menu
+            window.draw(pauseMenuBackgroundSprite); // Pause menu background
             pauseMenu.draw(window);
         }
         else {
