@@ -49,6 +49,9 @@ bool cAsteroidBehaviour::tickEnemy(cEnemy* _parent, float _deltaTime)
 	{
 		_parent->setFrame(0);
 	}
+
+	_parent->setRotation(_parent->getRotation() + _deltaTime * 5);
+
 	if (_parent != nullptr)
 	{
 		if (_parent->getAwake())
