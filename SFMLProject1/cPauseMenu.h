@@ -9,12 +9,11 @@ public:
     int GetPressedItem();
 
 private:
-    int selectedItemIndex;
     sf::Font font;
-    sf::Text menu[2];  // Resume and Quit buttons
-
-    static const int MAX_NUMBER_OF_ITEMS = 2;
-
-    sf::Texture backgroundTexture;  // Background texture
-    sf::Sprite backgroundSprite;    // Background sprite
+    sf::Text menu[2];
+    sf::Text title; 
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
+    int selectedItemIndex;
+    const int MAX_NUMBER_OF_ITEMS = 2;
 };

@@ -20,33 +20,36 @@ cMenu::cMenu(float width, float height) {
         );
     }
 
+    float TitleMargin = 50.0f;
+    float rightMargin = 225.0f;
+
     // Setup title
     title.setFont(font);
-    title.setFillColor(sf::Color::Yellow);
+    title.setFillColor(sf::Color::White);
     title.setString("WHIZZARDS");
     title.setCharacterSize(100);
-    title.setPosition(sf::Vector2f(width / 2 - 300, height / 6));
+    title.setPosition(sf::Vector2f(width - title.getGlobalBounds().width - TitleMargin, height / 60));
 
-    // Setup "Play" button
-    menu[0].setFont(font);
-    menu[0].setFillColor(sf::Color::Red);  // Initially selected
-    menu[0].setString("Play");
-    menu[0].setCharacterSize(50);
-    menu[0].setPosition(sf::Vector2f(width / 2 - 100, height / 2));
+    // Setup menu items
+    std::string labels[] = { "Play", "Scores", "Quit" };
+    float maxWidth = 0.0f;
 
-    // Setup "Scores" button
-    menu[1].setFont(font);
-    menu[1].setFillColor(sf::Color::White);
-    menu[1].setString("Scores");
-    menu[1].setCharacterSize(50);
-    menu[1].setPosition(sf::Vector2f(width / 2 - 100, height / 2 + 100));
+    // Determine the maximum width of the menu items
+    for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++) {
+        menu[i].setFont(font);
+        menu[i].setString(labels[i]);
+        menu[i].setCharacterSize(50);
+        float itemWidth = menu[i].getGlobalBounds().width;
+        if (itemWidth > maxWidth) {
+            maxWidth = itemWidth;
+        }
+    }
 
-    // Setup "Quit" button
-    menu[2].setFont(font);
-    menu[2].setFillColor(sf::Color::White);
-    menu[2].setString("Quit");
-    menu[2].setCharacterSize(50);
-    menu[2].setPosition(sf::Vector2f(width / 2 - 100, height / 2 + 200));
+    // Center-align menu items based on maxWidth
+    for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++) {
+        menu[i].setFillColor(i == 0 ? sf::Color::Yellow : sf::Color::Black);  // Highlight the first item
+        menu[i].setPosition(sf::Vector2f(width - maxWidth - rightMargin, height / 3 + i * 100));
+    }
 
     selectedItemIndex = 0;
 }
@@ -64,17 +67,17 @@ void cMenu::draw(sf::RenderWindow& window) {
 
 void cMenu::MoveUp() {
     if (selectedItemIndex - 1 >= 0) {
-        menu[selectedItemIndex].setFillColor(sf::Color::White);
+        menu[selectedItemIndex].setFillColor(sf::Color::Black);
         selectedItemIndex--;
-        menu[selectedItemIndex].setFillColor(sf::Color::Red);
+        menu[selectedItemIndex].setFillColor(sf::Color::Yellow);
     }
 }
 
 void cMenu::MoveDown() {
     if (selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS) {
-        menu[selectedItemIndex].setFillColor(sf::Color::White);
+        menu[selectedItemIndex].setFillColor(sf::Color::Black);
         selectedItemIndex++;
-        menu[selectedItemIndex].setFillColor(sf::Color::Red);
+        menu[selectedItemIndex].setFillColor(sf::Color::Yellow);
     }
 }
 

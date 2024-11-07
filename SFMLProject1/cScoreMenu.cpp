@@ -22,26 +22,28 @@ cScoreMenu::cScoreMenu(float width, float height) : selectedItemIndex(0) {
         );
     }
 
-    // Setup title
+    // Setup title (centered at the top)
     title.setFont(font);
-    title.setFillColor(sf::Color::Yellow);
+    title.setFillColor(sf::Color::White);
     title.setString("Top Scores");
     title.setCharacterSize(100);
-    title.setPosition(sf::Vector2f(width / 2 - 200, height / 6));
+    title.setPosition(sf::Vector2f((width - title.getGlobalBounds().width) / 2, height / 20));
 
-    // Setup "Back" button
+    // Setup "Back" button (centered at the bottom)
     menu[0].setFont(font);
-    menu[0].setFillColor(sf::Color::Red);
+    menu[0].setFillColor(sf::Color::Yellow);
     menu[0].setString("Back");
     menu[0].setCharacterSize(50);
-    menu[0].setPosition(sf::Vector2f(width / 2 - 50, height - 150));
+    menu[0].setPosition(sf::Vector2f((width - menu[0].getGlobalBounds().width) / 2, height - 100));
 
-    // Initialize score texts
+    // Initialize score texts (shifted slightly to the left)
+    float scoreOffset = 50.0f; // Adjust this value as needed
     for (int i = 0; i < MAX_SCORES; i++) {
         scoreTexts[i].setFont(font);
         scoreTexts[i].setFillColor(sf::Color::White);
         scoreTexts[i].setCharacterSize(40);
-        scoreTexts[i].setPosition(sf::Vector2f(width / 2 - 100, height / 3 + i * 50));
+        // Adjust X position to move slightly left
+        scoreTexts[i].setPosition(sf::Vector2f((width - scoreTexts[i].getGlobalBounds().width) / 2 - scoreOffset, height / 3 + i * 50));
     }
 }
 
@@ -85,7 +87,7 @@ void cScoreMenu::MoveUp() {
     if (selectedItemIndex > 0) {
         menu[selectedItemIndex].setFillColor(sf::Color::White);
         selectedItemIndex--;
-        menu[selectedItemIndex].setFillColor(sf::Color::Red);
+        menu[selectedItemIndex].setFillColor(sf::Color::Yellow);
     }
 }
 
@@ -93,7 +95,7 @@ void cScoreMenu::MoveDown() {
     if (selectedItemIndex < 0) {
         menu[selectedItemIndex].setFillColor(sf::Color::White);
         selectedItemIndex++;
-        menu[selectedItemIndex].setFillColor(sf::Color::Red);
+        menu[selectedItemIndex].setFillColor(sf::Color::Yellow);
     }
 }
 
