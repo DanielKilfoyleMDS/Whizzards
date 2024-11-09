@@ -14,6 +14,7 @@ cWandManager::cWandManager(sf::Sprite* _pickupSprite, std::vector<sf::Vector2f>*
     cBurstWand* BurstWandType = new cBurstWand;
     cRapidWand* RapidWandType = new cRapidWand;
     m_wandTypes.push_back(BurstWandType);
+    m_wandTypes.push_back(RapidWandType);
     m_wandSpawnPoints = *_wandSpawns;
 }
 
