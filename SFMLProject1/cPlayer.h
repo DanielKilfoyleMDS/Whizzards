@@ -62,6 +62,8 @@ public:
 
 	void setOtherPlayerRef(cPlayer* _otherPlayer);
 
+	bool isMoving() { return m_bMoving; };
+
 
 private:
 	std::string m_playerName;
@@ -86,4 +88,6 @@ private:
 	cSoundManager*  m_Sounds = nullptr;
 
 	cPlayer* m_otherPlayer = nullptr;
+
+	bool m_bMoving = false;
 };

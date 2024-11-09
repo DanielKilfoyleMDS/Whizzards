@@ -113,17 +113,20 @@ void cPlayer::processInput()
 				rotateCharacter(rightRotateKey, 3);
 			}
 			movePlayer();
+			m_bMoving = true;
 		}
 		// If the left rotate key is pressed, but not the forward movement, rotate the player slowly
 		else if (sf::Keyboard::isKeyPressed(leftRotateKey))
 		{
 			rotateCharacter(leftRotateKey, 1);
+			m_bMoving = false;
 		}
 		// If the right rotate key is pressed, but not the forward movement, rotate the player slowly
 		else if (sf::Keyboard::isKeyPressed(rightRotateKey))
 		{
 			rotateCharacter(rightRotateKey, 1);
-		}
+			m_bMoving = false;
+		} else m_bMoving = false;
 
 		// Separate if check from the movement. Process the input of casting spell after making the player move.
 		if (sf::Keyboard::isKeyPressed(castSpellKey))
@@ -146,7 +149,6 @@ void cPlayer::movePlayer()
 {
 	sf::Vector2f NewPos(SPEED_SCALAR * sin(m_fradiansRotation), SPEED_SCALAR * -cos(m_fradiansRotation));
 	setPosition(getPosition() + NewPos);
-
 	checkScreenWrap(level);
 
 }

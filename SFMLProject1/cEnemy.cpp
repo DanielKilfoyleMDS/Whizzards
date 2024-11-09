@@ -10,6 +10,7 @@ Author : Jayden Burns
 Mail : JaydenBurns@mds.ac.nz
 **************************************************************************/
 #include "cEnemy.h"
+#include "cPlayer.h"
 
 /************************************************************************
 Name: cEnemy
@@ -212,7 +213,9 @@ void cEnemy::otherCollide(cCharacter* _Character)
 
 	if(m_bAwake != true) return;
 	_Character->applyDamage(m_fdamage);
-	applyDamage(2);
+
+	cPlayer* collidingPlayer = dynamic_cast<cPlayer*>(_Character);
+	if(collidingPlayer->isMoving())	applyDamage(2);
 }
 
 /************************************************************************
