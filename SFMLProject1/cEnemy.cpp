@@ -209,8 +209,10 @@ Author : Jayden Burns
 void cEnemy::otherCollide(cCharacter* _Character)
 {
 	//THIS IS ALWAYS A PLAYER!!!
+
 	if(m_bAwake != true) return;
 	_Character->applyDamage(m_fdamage);
+	applyDamage(2);
 }
 
 /************************************************************************

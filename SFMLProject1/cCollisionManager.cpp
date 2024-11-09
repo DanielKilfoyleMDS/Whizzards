@@ -106,6 +106,7 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 							// Colliding enemy
 							cEnemy* collidingEnemy = dynamic_cast<cEnemy*>(_activeCharacters[j]);
 							if (!_activeCharacters[i]->isInvincible()) collidingEnemy->otherCollide(_activeCharacters[i]);
+
 						}
 					}
 					// If the first character type is enemy, and colliding character is a player
@@ -127,15 +128,16 @@ void cCollisionManager::collisionCheck(std::vector<cCharacter*> _activeCharacter
 									m_Sounds->playDamageSound();
 									collidingEnemy->otherCollide(_activeCharacters[j]);
 									// Colliding player
-									std::cout << "Damage sound" << std::endl;
-									//if (_activeCharacters[j]->getDamageSound()->getStatus() == sf::SoundSource::Playing)
-									//{
-									//	// do nothing
-									//}
-									//else
-									//{
-									//	_activeCharacters[j]->getDamageSound()->play();
-									//}
+
+									//Apply Knockback?
+									sf::Vector2f newPos(-30.0f * sin(DegreesToRadians(_activeCharacters[i]->getRotation())), 30.0f * cos(DegreesToRadians(_activeCharacters[i]->getRotation())));
+									// Move the player backward.
+									_activeCharacters[i]->setPosition(_activeCharacters[i]->getPosition() + newPos);
+
+									/// Move the enemy in the direction the first player was moving
+									_activeCharacters[j]->setPosition(_activeCharacters[j]->getPosition() - newPos);
+
+
 								}
 							}
 
