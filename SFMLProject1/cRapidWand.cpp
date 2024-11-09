@@ -3,7 +3,7 @@
 cRapidWand::cRapidWand()
 {
     setDamage(2); // Less damage
-    setFireRate(0.1f); // Faster fire rate
+    setFireRate(0.2f); // Faster fire rate
     setProjectileCount(1); // Fires 3 projectiles
 }
 
