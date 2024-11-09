@@ -103,6 +103,6 @@ private:
 
 	//Shoot Behaviour
 	float m_fShootTime = 0;
-	float m_fMaxShootTime = 2.0f;
+	float m_fMaxShootTime = 2.5f;
 
 };

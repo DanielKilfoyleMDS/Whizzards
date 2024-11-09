@@ -29,6 +29,10 @@ cProjectile::cProjectile(sf::Sprite _sprite, sf::Vector2f _pos, float _rotation,
 	m_velocity.y = 10.0f * -cos(DegreesToRadians(_rotation));
 
 	b_enemyOwned = _enemy;
+	if (b_enemyOwned)
+	{
+		m_fDamage = 3.0f;
+	}
 
 
 	m_hitboxSize.x = _sprite.getTexture()->getSize().x;

@@ -77,7 +77,7 @@ void cShootBehaviour::enemyMove(cEnemy* _parent)
 	}
 	else if (DistanceSecondPlayer < DistanceFirstPlayer && DistanceSecondPlayer < m_fDetectRange)
 	{
-		sf::Vector2f Direction = m_FirstPlayer->getPosition() - _parent->getPosition();
+		sf::Vector2f Direction = m_SecondPlayer->getPosition() - _parent->getPosition();
 		Direction = Normalize(Direction);
 		_parent->setMovement(sf::Vector2f(Direction.x * m_fmovespeed, Direction.y * m_fmovespeed));
 	}

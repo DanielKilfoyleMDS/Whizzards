@@ -83,7 +83,7 @@ protected:
 
 	// Constant variables. These will not change. Therefore, have been made as const. 
 	const float MAX_SPEED = 50.0f;
-	const float SPEED_SCALAR = 15.0f;
+	const float SPEED_SCALAR = 12.0f;
 		
 	CharacterType m_characterType;
 
