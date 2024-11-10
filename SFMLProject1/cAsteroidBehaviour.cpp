@@ -134,7 +134,7 @@ void cAsteroidBehaviour::enemyMove(cEnemy* _parent)
 void cAsteroidBehaviour::setupEnemy(cEnemy* _parent, sf::Vector2f _position)
 {
 	_parent->setPosition(_position);
-	_parent->setHealth(2);
+	_parent->setHealth(5);
 	_parent->setState(Idle);
 	_parent->setAwake(true);
 	_parent->setBehaviour(this);
