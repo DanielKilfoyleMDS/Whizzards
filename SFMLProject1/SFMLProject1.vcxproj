@@ -150,6 +150,7 @@
     <ClCompile Include="cCharacter.cpp" />
     <ClCompile Include="cChaseBehaviour.cpp" />
     <ClCompile Include="cCollisionManager.cpp" />
+    <ClCompile Include="cControlMenu.cpp" />
     <ClCompile Include="cEnemy.cpp" />
     <ClCompile Include="cEnemyBehaviour.cpp" />
     <ClCompile Include="cAsteroidBehaviour.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="cCharacter.h" />
     <ClInclude Include="cChaseBehaviour.h" />
     <ClInclude Include="cCollisionManager.h" />
+    <ClInclude Include="cControlMenu.h" />
     <ClInclude Include="cEnemy.h" />
     <ClInclude Include="cEnemyBehaviour.h" />
     <ClInclude Include="cAsteroidBehaviour.h" />

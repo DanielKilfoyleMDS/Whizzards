@@ -63,6 +63,7 @@
     </ClCompile>
     <ClCompile Include="cScoreMenu.cpp" />
     <ClCompile Include="cSoundManager.cpp" />
+    <ClCompile Include="cControlMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cEnemyPool.h">
@@ -130,6 +131,7 @@
     <ClInclude Include="cScoreMenu.h" />
     <ClInclude Include="cScore.h" />
     <ClInclude Include="cSoundManager.h" />
+    <ClInclude Include="cControlMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

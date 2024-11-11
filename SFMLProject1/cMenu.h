@@ -9,7 +9,7 @@ public:
     int GetPressedItem();
 
 private:
-    static const int MAX_NUMBER_OF_ITEMS = 3;  // Updated for "Scores" option
+    static const int MAX_NUMBER_OF_ITEMS = 4;  // Updated for "Scores" option
     int selectedItemIndex;
     sf::Font font;
     sf::Text menu[MAX_NUMBER_OF_ITEMS];

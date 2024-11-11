@@ -30,6 +30,7 @@ Author : Jayden Burns, Jandre Cronje, Daniel Kilfoyle, William Kuzmic
 #include "cMenu.h"
 #include "cPauseMenu.h"
 #include "cScoreMenu.h"
+#include "cControlMenu.h"
 #include "cScore.h"
 
 // Load textures for Grass and Sand tiles
@@ -192,8 +193,10 @@ int main() {
     cMenu menu(window.getSize().x, window.getSize().y);
     cPauseMenu pauseMenu(window.getSize().x, window.getSize().y);  // Pause menu
     cScoreMenu scoreMenu(window.getSize().x, window.getSize().y);
+    cControlMenu controlMenu(window.getSize().x, window.getSize().y);
     bool isMenuActive = true;
     bool isScoreMenuActive = false;
+    bool isControlMenuActive = false;
     bool isPaused = false;  // Track if the game is paused
 
     // Health bar dimensions and positioning
@@ -323,7 +326,12 @@ int main() {
                             isMenuActive = false;
                             scoreMenu.loadScores("Resources/scores.txt");  // Load scores when score menu opens
                         }
-                        else if (selected == 2) {  // Assuming Quit is option 2
+                        else if (selected == 2) {
+
+                            isControlMenuActive = true;  // Open score menu
+                            isMenuActive = false;
+                        }                        
+                        else if (selected == 3) {  // Assuming Quit is option 2
 
                             window.close();
                         }
@@ -335,6 +343,15 @@ int main() {
                 if (event.type == sf::Event::KeyReleased) {
                     if (event.key.code == sf::Keyboard::Return) {
                         isScoreMenuActive = false;  // Return to main menu
+                        isMenuActive = true;
+                    }
+                }
+            }
+            else if (isControlMenuActive) {
+                // Score menu navigation
+                if (event.type == sf::Event::KeyReleased) {
+                    if (event.key.code == sf::Keyboard::Return) {
+                        isControlMenuActive = false;  // Return to main menu
                         isMenuActive = true;
                     }
                 }
@@ -381,6 +398,10 @@ int main() {
         else if (isScoreMenuActive) {
             window.draw(scoreMenuBackgroundSprite); // Score menu background
             scoreMenu.draw(window);  // Draw score menu if active
+        }
+        else if (isControlMenuActive) {
+            window.draw(scoreMenuBackgroundSprite); // Score menu background
+            controlMenu.draw(window);  // Draw score menu if active
         }
         else if (isPaused) {
             // Render the pause menu

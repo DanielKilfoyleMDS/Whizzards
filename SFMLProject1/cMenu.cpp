@@ -31,7 +31,7 @@ cMenu::cMenu(float width, float height) {
     title.setPosition(sf::Vector2f(width - title.getGlobalBounds().width - TitleMargin, height / 60));
 
     // Setup menu items
-    std::string labels[] = { "Play", "Scores", "Quit" };
+    std::string labels[] = { "Play", "Scores", "Control", "Quit"};
     float maxWidth = 0.0f;
 
     // Determine the maximum width of the menu items
